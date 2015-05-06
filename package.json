@@ -1,11 +1,29 @@
 {
   "name": "CommonRepo",
-  "description": "Client of CommonRepo.",
-  "version": "0.1",
+  "version": "0.0.1",
+  "description": "CommonRepo Client Application",
   "main": "index.html",
+  "private": true,
+  "keywords": [
+    "moocs",
+    "elo"
+  ],
   "window": {
     "toolbar": false,
-    "width": 800,
-    "height": 600
+    "resizable": false,
+    "width": 1000,
+    "height": 600,
+    "min_width": 600,
+    "min_height": 400,
+    "max_width": 1000,
+    "max_height": 600,
+    "position": "center"
+  },
+  "author": "Xaver Y.R. Chen",
+  "license": "MIT",
+  "dependencies": {
+    "diskdb": "^0.1.14",
+    "bcrypt-nodejs": "0.0.3",
+    "weather-js": "^1.0.0"
   }
 }
