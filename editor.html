@@ -3,12 +3,14 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Common Repo | Settings</title>
+    <title>Common Repo | Editor</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- bootstrap 3.0.2 -->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <!-- font Awesome -->
+    <!-- font Awesome 4.3.0-->
     <link href="assets/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <!-- Ionicons -->
+    <link href="assets/css/ionicons.min.css" rel="stylesheet" type="text/css" />
     <!-- Theme style -->
     <link href="assets/css/AdminLTE.css" rel="stylesheet" type="text/css" />
     <style type="text/css">
@@ -115,7 +117,7 @@
             <!-- Content Header (Page header) -->
             <section class="content-header">
                 <h1>
-                    Settings
+                    Edit ELO
                 </h1>
             </section>
 
@@ -123,20 +125,23 @@
             <section class="content">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="location">Path of Git Personal Keys</label>
-                        <input type="text" class="form-control" placeholder="Enter your path (ex: ~/)" id="location">
-                        <label class="control-label hide" for="location"><i class="fa fa-times-circle-o"></i> Required</label>
-                    </div>
-                    <div class="form-group">
-                        <label for="flikrTags">Path of Repo and Git commands</label>
-                        <input type="text" class="form-control" placeholder="Enter your path (ex: ~/)" id="flikrTags">
-                        <label class="control-label hide" for="flikrTags"><i class="fa fa-times-circle-o"></i> Required</label>
+                        <label for="searchTerms">Input the search term:</label>
+                        <input type="text" class="form-control" placeholder="e.g. ELO name" id="searchTerms">
+                        <label class="control-label hide" for="searchTerms"><i class="fa fa-times-circle-o"></i> Required</label>
                     </div>
                     <br/>
-                    <button type="button" id="settings" class="btn bg-olive">Save Settings</button>
+                    <input style="display:none;" id="fileDialog" type="file" />
+                    <button type="button" id="openfile" class="btn bg-olive">Open File</button>
                     <button type="button" id="skip" class="btn bg-gray">Skip</button>
                 </div>
             </section>
+            <section class="content">
+                <div id="wrapper">
+                    <div id="columns">
+                    </div>
+                </div>
+                <!-- /.box-body -->
+            </section> 
             <!-- /.content -->
         </aside>
     </div>
@@ -150,44 +155,27 @@
 
     $('.uname').text(user.name.trim());
 
-    if (settings && !settings.dummy) {
-        if (settings.location) $('#location').val(settings.location.trim());
-        if (settings.flickr) $('#flikrTags').val(settings.flickr.trim());
-    }
-
-    $('#settings').on('click', function() {
-        var $loc = $('#location').val().trim(),
-            $flickr = $('#flikrTags').val().trim();
-
-        if ($loc.length <= 0) {
-            $('#location').parents('.form-group').addClass('has-error');
-            $('#location').next().removeClass('hide');
-            return false;
-        } else {
-            $('#location').parents('.form-group').removeClass('has-error');
-            $('#location').next().addClass('hide');
-        }
-
-        if ($flickr.length <= 0) {
-            $('#flikrTags').parents('.form-group').addClass('has-error');
-            $('#flikrTags').next().removeClass('hide');
-            return false;
-        } else {
-            $('#flikrTags').parents('.form-group').removeClass('has-error');
-            $('#flikrTags').next().addClass('hide');
-        }
-
-        var resp = dash.saveSetting(user._id, {
-            'location': $loc,
-            'flickr': $flickr
+    /*function chooseFile(name) {
+        var chooser = $(name);
+        chooser.change(function(evt) {
+            console.log($(this).val());
         });
 
-        if (resp == 1) {
-            location.href = 'dashboard.html';
-        } else {
-            alert('Oops something went wrong!');
-        }
+        //chooser.trigger('click');  
+    }*/
+
+    $('#openfile').on('click', chooseFile('fileDialog'));
+
+    function chooseFile(name) {
+    var chooser = $(name);
+    chooser.change(function(evt) {
+      console.log($(this).val());
     });
+
+    chooser.trigger('click');  
+  }
+  //chooseFile('#fileDialog');
+
     $('#skip').on('click', function() {
         if (!(settings && !settings.dummy)) {
             localStorage.setItem('settings', JSON.stringify({

@@ -106,6 +106,12 @@
                             <span>SEARCH ELO</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="editor.html">
+                            <i class="fa fa-pencil"></i> 
+                            <span>EDITOR</span>
+                        </a>
+                    </li>
                 </ul>
             </section>
             <!-- /.sidebar -->
@@ -154,15 +160,15 @@
     });
 
     // load widgets async
-    $.get('widgets/flickr.html', function(data) {
-        $('body').append(data)
-    });
-    $.get('widgets/maps.html', function(data) {
-        $('body').append(data);
-    });
-    $.get('widgets/weather.html', function(data) {
-        $('body').append(data);
-    });
+    // $.get('widgets/flickr.html', function(data) {
+    //     $('body').append(data)
+    // });
+    // $.get('widgets/maps.html', function(data) {
+    //     $('body').append(data);
+    // });
+    // $.get('widgets/weather.html', function(data) {
+    //     $('body').append(data);
+    // });
 
     // update the dashboard with values from settings
     $('.maploc').text(settings.location.trim().toUpperCase());

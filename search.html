@@ -103,6 +103,12 @@
                             <span>SEARCH ELO</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="editor.html">
+                            <i class="fa fa-pencil"></i> 
+                            <span>EDITOR</span>
+                        </a>
+                    </li>
                 </ul>
             </section>
             <!-- /.sidebar -->
@@ -129,6 +135,16 @@
                     <button type="button" id="skip" class="btn bg-gray">Skip</button>
                 </div>
             </section>
+            <section class="content">
+                <div id="wrapper">
+                    <div id="columns">
+                    </div>
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer">
+                    <a href="settings.html">Change tags</a>
+                </div>
+            </section> 
             <!-- /.content -->
         </aside>
     </div>
@@ -148,27 +164,6 @@
     }
 
     $('#localSearch').on('click', function() {
-        var $loc = $('#location').val().trim(),
-            $flickr = $('#flikrTags').val().trim();
-
-        if ($loc.length <= 0) {
-            $('#location').parents('.form-group').addClass('has-error');
-            $('#location').next().removeClass('hide');
-            return false;
-        } else {
-            $('#location').parents('.form-group').removeClass('has-error');
-            $('#location').next().addClass('hide');
-        }
-
-        if ($flickr.length <= 0) {
-            $('#flikrTags').parents('.form-group').addClass('has-error');
-            $('#flikrTags').next().removeClass('hide');
-            return false;
-        } else {
-            $('#flikrTags').parents('.form-group').removeClass('has-error');
-            $('#flikrTags').next().addClass('hide');
-        }
-
         var resp = dash.saveSetting(user._id, {
             'location': $loc,
             'flickr': $flickr
@@ -182,37 +177,9 @@
     });
 
     $('#remoteSearch').on('click', function() {
-        var $loc = $('#location').val().trim(),
-            $flickr = $('#flikrTags').val().trim();
-
-        if ($loc.length <= 0) {
-            $('#location').parents('.form-group').addClass('has-error');
-            $('#location').next().removeClass('hide');
-            return false;
-        } else {
-            $('#location').parents('.form-group').removeClass('has-error');
-            $('#location').next().addClass('hide');
-        }
-
-        if ($flickr.length <= 0) {
-            $('#flikrTags').parents('.form-group').addClass('has-error');
-            $('#flikrTags').next().removeClass('hide');
-            return false;
-        } else {
-            $('#flikrTags').parents('.form-group').removeClass('has-error');
-            $('#flikrTags').next().addClass('hide');
-        }
-
-        var resp = dash.saveSetting(user._id, {
-            'location': $loc,
-            'flickr': $flickr
+        $.get('widgets/flickr.html', function(data) {
+         $('body').append(data)
         });
-
-        if (resp == 1) {
-            location.href = 'dashboard.html';
-        } else {
-            alert('Oops something went wrong!');
-        }
     });
 
     $('#skip').on('click', function() {
