@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>CommonRepo | Dashboard</title>
+    <title>Common Repo | Metadata Editor</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- bootstrap 3.0.2 -->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -18,10 +18,7 @@
         text-transform: uppercase;
     }
     </style>
-    <script type="text/javascript" src="controller/auth.js"></script>
-    <script type="text/javascript">
-    if (!JSON.parse(localStorage.getItem('settings'))) location.href = 'settings.html';
-    </script>
+    <script type="text/javascript" src="controller/settings.js"></script>
 </head>
 
 <body class="skin-blue">
@@ -122,31 +119,63 @@
             </section>
             <!-- /.sidebar -->
         </aside>
-
-        <!-- Right side column. Contains the navbar and content of the page -->
         <aside class="right-side">
             <!-- Content Header (Page header) -->
             <section class="content-header">
                 <h1>
-                    Welcome to your Common Repo Dashboard
+                    Edit Metadata
                 </h1>
             </section>
 
             <!-- Main content -->
             <section class="content">
-                <div class="box box-info">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="searchTerms">Input the search term:</label>
+                        <input type="text" class="form-control" placeholder="e.g. ELO name" id="searchTerms">
+                        <label class="control-label hide" for="searchTerms"><i class="fa fa-times-circle-o"></i> Required</label>
+                    </div>
+                    <br/>
+                    <input style="display:none;" id="fileDialog" type="file" />
+                    <button type="button" id="openfile" class="btn bg-olive">Open File</button>
+                    <button type="button" id="skip" class="btn bg-gray">Skip</button>
                 </div>
-                <div class="box box-warning">
+            </section>
+            <section class="content">
+                <div id="wrapper">
+                    <div id="columns">
+                    </div>
                 </div>
-                <div class="box box-danger">
+                <!-- /.box-body -->
+            </section>
+            <section class="content">
+                <div id="accordion" class="col-md-12">
+                  <h2>Section 1</h2>
+                  <div>
+                    <p>Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.</p>
+                  </div>
+                  <h2>Section 2</h2>
+                  <div>
+                    <p>Sed non urna. Donec et ante. Phasellus eu ligula. Vestibulum sit amet purus. Vivamus hendrerit, dolor at aliquet laoreet, mauris turpis porttitor velit, faucibus interdum tellus libero ac justo. Vivamus non quam. In suscipit faucibus urna. </p>
+                  </div>
+                  <h2>Section 3</h2>
+                  <div>
+                    <p>Nam enim risus, molestie et, porta ac, aliquam ac, risus. Quisque lobortis. Phasellus pellentesque purus in massa. Aenean in pede. Phasellus ac libero ac tellus pellentesque semper. Sed ac felis. Sed commodo, magna quis lacinia ornare, quam ante aliquam nisi, eu iaculis leo purus venenatis dui. </p>
+                    <ul>
+                      <li>List item one</li>
+                      <li>List item two</li>
+                      <li>List item three</li>
+                    </ul>
+                  </div>
+                  <h2>Section 4</h2>
+                  <div>
+                    <p>Cras dictum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean lacinia mauris vel est. </p><p>Suspendisse eu nisl. Nullam ut libero. Integer dignissim consequat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. </p>
+                  </div>
                 </div>
             </section>
             <!-- /.content -->
         </aside>
-        <!-- /.right-side -->
     </div>
-    <!-- ./wrapper -->
-
     <!-- jQuery 2.0.2 -->
     <script src="assets/js/jquery.min.js" type="text/javascript"></script>
     <!-- jQuery UI 1.11.4 -->
@@ -156,30 +185,37 @@
     <!-- AdminLTE App -->
     <script src="assets/js/app.js" type="text/javascript"></script>
     <script type="text/javascript">
-    var user = JSON.parse(localStorage.getItem('user'));
     var settings = JSON.parse(localStorage.getItem('settings'));
+    var user = JSON.parse(localStorage.getItem('user'));
+
     $('.uname').text(user.name.trim());
 
-    $('#signout').on('click', function(e) {
-        e.preventDefault();
-        if (dash.signOut()) location.href = 'index.html';
-        else alert('Oops something went wrong!');
+    function chooseFile(name) {
+        var chooser = $(name);
+        chooser.change(function(evt) {
+          console.log($(this).val());
+        });
+
+        chooser.trigger('click');  
+    }
+
+    $('#openfile').on('click', chooseFile('fileDialog'));
+    //chooseFile('#fileDialog');
+
+    $('#skip').on('click', function() {
+        if (!(settings && !settings.dummy)) {
+            localStorage.setItem('settings', JSON.stringify({
+                'dummy': 'object',
+                'location': 'new york',
+                'flickr': 'bikes'
+            }));
+        }
+        location.href = 'dashboard.html';
     });
 
-    // load widgets async
-    // $.get('widgets/flickr.html', function(data) {
-    //     $('body').append(data)
-    // });
-    // $.get('widgets/maps.html', function(data) {
-    //     $('body').append(data);
-    // });
-    // $.get('widgets/weather.html', function(data) {
-    //     $('body').append(data);
-    // });
-
-    // update the dashboard with values from settings
-    $('.maploc').text(settings.location.trim().toUpperCase());
-    $('.flickrtags').text(settings.flickr.trim().toUpperCase());
+    $('#accordion').accordion({
+      collapsible: true
+    });
     </script>
 </body>
 
