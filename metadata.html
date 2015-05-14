@@ -40,6 +40,34 @@
             <div class="navbar-right">
                 <ul class="nav navbar-nav">
                     <li class="dropdown user user-menu">
+                        <a href="search.html">
+                            <i class="fa fa-search"></i> 
+                            <span>SEARCH ELO</span>
+                        </a>
+                    </li>
+                    <li class="dropdown user user-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="glyphicon glyphicon-user"></i>
+                            <span>
+                                <span>EDITOR</span><i class="caret"></i>
+                            </span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown user user-menu">
+                                <a href="editor.html">
+                                    <i class="fa fa-pencil"></i> 
+                                    <span>ELO EDITOR</span>
+                                </a>
+                            </li>
+                            <li class="dropdown user user-menu">
+                                <a href="metadata.html">
+                                    <i class="fa fa-pencil-square-o"></i> 
+                                    <span>METADATA EDITOR</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown user user-menu">
                         <a href="settings.html">
                             <i class="fa fa-gears"></i>
                             <span>SETTINGS</span>
@@ -91,30 +119,7 @@
                 </div>
                 <!-- sidebar menu: : style can be found in sidebar.less -->
                 <ul class="sidebar-menu">
-                    <li>
-                        <a href="settings.html">
-                            <i class="fa fa-gears"></i> 
-                            <span>SETTINGS</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="search.html">
-                            <i class="fa fa-search"></i> 
-                            <span>SEARCH ELO</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="editor.html">
-                            <i class="fa fa-pencil"></i> 
-                            <span>ELO EDITOR</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="metadata.html">
-                            <i class="fa fa-pencil-square-o"></i> 
-                            <span>METADATA EDITOR</span>
-                        </a>
-                    </li>
+                    
                 </ul>
             </section>
             <!-- /.sidebar -->
@@ -141,38 +146,219 @@
                     <button type="button" id="skip" class="btn bg-gray">Skip</button>
                 </div>
             </section>
-            <section class="content">
-                <div id="wrapper">
-                    <div id="columns">
+
+            <section>
+                <div class="panel-group" id="accordion">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h2 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseGeneral">
+                                General
+                                </a>
+                            </h2>
+                        </div>
+                    
+                        <div id="collapseGeneral" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <p>The General category can be used to describe general information about the SCORM Content Model Component as a whole.</p>
+
+                                <div class="form-group">
+                                    <h3 class="panel-title">Identifier</h3>
+                                    <p>The &lt;identifier&gt; element represents a mechanism for assigning a globally unique label that identifies the SCORM Content Model Component. The notion of assigning a globally unique identifier to a component is important when dealing with multiple facets of learning content development (e.g., versioning, maintenance, etc.).</p>
+
+                                    <aside>
+                                        <label for="general-catalog" 
+                                            data-container="body" data-toggle="popover" data-placement="right"
+                                            data-content="The <catalog> element represents the name or designator of the identification or cataloging scheme for the entry. There are a variety of cataloging systems available. SCORM does not require the use of any one particular cataloging system. Organizations are free to choose any cataloging scheme that meets their organizations practices or policies. Some types of cataloging systems are: 1. Universal Resource Identifier (URI) 2. Universal Resource Name (URN) 3. Digital Object Identifier (DOI) 4. International Standard Book Numbers (ISBN) 5. International Standard Serial Numbers (ISSN)."
+                                            title="Catalog">Catalog</label>
+                                        <input type="text" class="form-control" placeholder="URI" id="general-catalog">
+                                        <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+
+                                        <label for="general-entry" 
+                                            data-container="body" data-toggle="popover" data-placement="right"
+                                            data-content="The <entry> element represents the value of the identifier within the identification or cataloging scheme (refer to the <catalog> element) that designates or identifies the learning object. Identifiers can take on various formats. The IEEE requires that the actual identifier value be represented as a CharacterString. Organizations are free to choose any mechanism to create unique identifiers that meets their organizations practices or policies."
+                                            title="Entry">Entry</label>
+                                        <input type="text" class="form-control" placeholder="http://www.adlnet.gov/content/CO_01" id="general-entry">
+                                        <label class="control-label hide" for="general-entry"><i class="fa fa-times-circle-o"></i> Required</label>
+                                    </aside>
+                                </div>
+
+                                <div class="form-group">
+                                    <h3 class="panel-title">Language</h3>
+                                    <p>The &lt;language&gt; element represents the primary human language or languages used within the SCORM Content Model Component to communicate to the intended user. The Language element can be repeated. This allows for the ability to describe components that are built to upport multiple languages.</p>
+
+                                    <p>The value held by the <language> element shall be represented according to the following: </p>
+                                    <p>Language = Langcode(“-“Subcode)*</p>
+                                    <p>Langcode – Represents a language code as defined by ISO 639:1988. This value is mandatory.</p>
+                                    <p>Subcode – Represents a country code from the code set defined by ISO 3166-1997. This value can be repeated and is optional.</p>
+                                    <p>The <language> element may also have a value of none, if the SCORM Content Model Component has no lingual content.</p>
+                                    <p>Examples:
+                                        <ul>
+                                            <li>“en”</li>
+                                            <li>“en-GB”</li>
+                                        </ul>
+                                    </p>
+
+                                    <aside>
+                                        <label for="general-title" 
+                                            data-container="body" data-toggle="popover" data-placement="right"
+                                            data-content="The <title> element represents the name given to the learning object."
+                                            title="Title">Language</label>
+                                        <input type="text" class="form-control" placeholder="en" id="general-title">
+                                        <label class="control-label hide" for="general-title"><i class="fa fa-times-circle-o"></i> Required</label>
+                                    </aside>
+                                </div>
+
+                                <div class="form-group">
+                                    <h3 class="panel-title">Title</h3>
+                                    <p>The &lt;title&gt; element represents the name given to the learning object.</p>
+
+                                    <aside>
+                                        <label for="general-title" 
+                                            data-container="body" data-toggle="popover" data-placement="right"
+                                            data-content="The <title> element represents the name given to the learning object."
+                                            title="Title">Title</label>
+                                        <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="general-title">
+                                        <label class="control-label hide" for="general-title"><i class="fa fa-times-circle-o"></i> Required</label>
+                                    </aside>
+                                </div>
+
+
+                            </div>
+                        </div>
                     </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseLifeCycle">
+                                Life Cycle
+                                </a>
+                            </h3>
+                        </div>
+                        
+                        <div id="collapseLifeCycle" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <p>The Life Cycle category can be used to describe features related to the history and current state of the SCORM Content Model Component and those who have affected the component during its evolution.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseMetametadata">
+                                Meta-metadata
+                                </a>
+                            </h3>
+                        </div>
+                        
+                        <div id="collapseMetametadata" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <p>The Meta-metadata category can be used to describe information about the metadata record itself (rather than the SCORM Content Model Component that the record describes).</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseTechnical">
+                                Technical
+                                </a>
+                            </h3>
+                        </div>
+                        
+                        <div id="collapseTechnical" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <p>The Technical category can be used to describe technical requirements and characteristics of the SCORM Content Model Components.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseEducational">
+                                Educational
+                                </a>
+                            </h4>
+                        </div>
+                        
+                        <div id="collapseEducational" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <p>The Educational category can be used to describe the educational and pedagogic characteristics of the SCORM Content Model Component.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseRights">
+                                Rights
+                                </a>
+                            </h4>
+                        </div>
+                        
+                        <div id="collapseRights" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <p>The Rights category can be used to describe the intellectual property rights and conditions of use for the SCORM Content Model Component.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseRelation">
+                                Relation
+                                </a>
+                            </h4>
+                        </div>
+                        
+                        <div id="collapseRelation" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <p>The Relation category can be used to describe features that define the relationship between this SCORM Content Model Component and other targeted components.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseAnnotation">
+                                Annotation
+                                </a>
+                            </h4>
+                        </div>
+                        
+                        <div id="collapseAnnotation" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <p>The Annotation category can be used to provide comments on the educational use of the SCORM Content Model Component and information on when and by whom the comments were created.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseClassification">
+                                Classification
+                                </a>
+                            </h4>
+                        </div>
+                        
+                        <div id="collapseClassification" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <p>The Classification category can be used to describe where the SCORM Content Model Component falls within a particular classification system.</p>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
-                <!-- /.box-body -->
             </section>
-            <section class="content">
-                <div id="accordion" class="col-md-12">
-                  <h2>Section 1</h2>
-                  <div>
-                    <p>Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.</p>
-                  </div>
-                  <h2>Section 2</h2>
-                  <div>
-                    <p>Sed non urna. Donec et ante. Phasellus eu ligula. Vestibulum sit amet purus. Vivamus hendrerit, dolor at aliquet laoreet, mauris turpis porttitor velit, faucibus interdum tellus libero ac justo. Vivamus non quam. In suscipit faucibus urna. </p>
-                  </div>
-                  <h2>Section 3</h2>
-                  <div>
-                    <p>Nam enim risus, molestie et, porta ac, aliquam ac, risus. Quisque lobortis. Phasellus pellentesque purus in massa. Aenean in pede. Phasellus ac libero ac tellus pellentesque semper. Sed ac felis. Sed commodo, magna quis lacinia ornare, quam ante aliquam nisi, eu iaculis leo purus venenatis dui. </p>
-                    <ul>
-                      <li>List item one</li>
-                      <li>List item two</li>
-                      <li>List item three</li>
-                    </ul>
-                  </div>
-                  <h2>Section 4</h2>
-                  <div>
-                    <p>Cras dictum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean lacinia mauris vel est. </p><p>Suspendisse eu nisl. Nullam ut libero. Integer dignissim consequat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. </p>
-                  </div>
-                </div>
-            </section>
+
             <!-- /.content -->
         </aside>
     </div>
@@ -213,9 +399,13 @@
         location.href = 'dashboard.html';
     });
 
-    $('#accordion').accordion({
+    $(function () {
+        $('[data-toggle="popover"]').popover()
+    })
+
+    /*$('#accordion').accordion({
       collapsible: true
-    });
+    });*/
     </script>
 </body>
 
