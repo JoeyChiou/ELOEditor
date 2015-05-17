@@ -12,7 +12,10 @@
     <!-- Ionicons -->
     <link href="assets/css/ionicons.min.css" rel="stylesheet" type="text/css" />
     <!-- Theme style -->
-    <link href="assets/css/AdminLTE.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link href="assets/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
     <style type="text/css">
     .uname,.info,.content-header {
         text-transform: uppercase;
@@ -22,29 +25,32 @@
 </head>
 
 <body class="skin-blue">
-    <!-- header logo: style can be found in header.less -->
-    <header class="header">
-        <a href="dashboard.html" class="logo">
-            <!-- Add the class icon to your logo image or logo icon to add the margining -->
-            Common Repo
-        </a>
-        <!-- Header Navbar: style can be found in header.less -->
-        <nav class="navbar navbar-static-top" role="navigation">
-            <!-- Sidebar toggle button-->
-            <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
+    <div class="wrapper">
+        <!-- header logo: style can be found in header.less -->
+        <header class="main-header">
+            <!-- Logo -->
+            <a href="dashboard.html" class="logo">
+                <!-- mini logo for sidebar mini 50x50 pixels -->
+                <span class="logo-mini"><b>CR</b></span>
+                <!-- logo for regular state and mobile devices -->
+                <span class="logo-lg"><b>C</b>ommon</b> <b>R</b>epo</span>
             </a>
-            <div class="navbar-right">
-                <div id="navigation"></div>
-            </div>
-        </nav>
-    </header>
-    <div class="wrapper row-offcanvas row-offcanvas-left">
+
+            <!-- Header Navbar: style can be found in header.less -->
+            <nav class="navbar navbar-static-top" role="navigation">
+                <!-- Sidebar toggle button-->
+                <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                  </a>
+                <!-- Navbar Right Menu -->
+                <div class="navbar-custom-menu">
+                    <div id="navigation"></div>
+                </div>
+            </nav>
+        </header>
+
         <!-- Left side column. contains the logo and sidebar -->
-        <aside class="left-side sidebar-offcanvas">
+        <aside class="main-sidebar">
             <!-- sidebar: style can be found in sidebar.less -->
             <section class="sidebar">
                 <!-- Sidebar user panel -->
@@ -53,50 +59,67 @@
                         <img src="assets/img/avatar5.png" class="img-circle" alt="User Image" />
                     </div>
                     <div class="pull-left info">
-                        <p>Hello,
+                        <p>
                             <span class='uname'></span>
                         </p>
+                        <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                     </div>
                 </div>
                 <!-- sidebar menu: : style can be found in sidebar.less -->
                 <ul class="sidebar-menu">
-                   
+                    
                 </ul>
             </section>
-            <!-- /.sidebar -->
         </aside>
-        <aside class="right-side">
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
             <!-- Content Header (Page header) -->
             <section class="content-header">
                 <h1>
                     Edit ELO
                 </h1>
+                <ol class="breadcrumb">
+                    <li><a href="#"><i class="fa fa-dashboard"></i>Main</a></li>
+                    <li class="active">Edit ELO</li>
+                </ol>
             </section>
 
             <!-- Main content -->
             <section class="content">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="searchTerms">Input the search term:</label>
-                        <input type="text" class="form-control" placeholder="e.g. ELO name" id="searchTerms">
-                        <label class="control-label hide" for="searchTerms"><i class="fa fa-times-circle-o"></i> Required</label>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="searchTerms">Input the search term:</label>
+                            <input type="text" class="form-control" placeholder="e.g. ELO name" id="searchTerms">
+                            <label class="control-label hide" for="searchTerms"><i class="fa fa-times-circle-o"></i> Required</label>
+                        </div>
+                        <br/>
+                        <input style="display:none;" id="fileDialog" type="file" />
+                        <button type="button" id="openfile" class="btn bg-olive">Open File</button>
+                        <button type="button" id="skip" class="btn bg-gray">Skip</button>
                     </div>
-                    <br/>
-                    <input style="display:none;" id="fileDialog" type="file" />
-                    <button type="button" id="openfile" class="btn bg-olive">Open File</button>
-                    <button type="button" id="skip" class="btn bg-gray">Skip</button>
                 </div>
             </section>
             <section class="content">
-                <div id="wrapper">
+                <div class="row">
                     <div id="columns">
                     </div>
                 </div>
                 <!-- /.box-body -->
             </section> 
             <!-- /.content -->
-        </aside>
+        </div>
+        <!-- ./Content Wrapper -->
+
+        <footer class="main-footer">
+            <div class="pull-right hidden-xs">
+              <b>Version</b> 0.1 Alpha
+            </div>
+            <strong>Copyright &copy; 2015 <a href="http://edxpdrlab.ncu.cc">NCU Open edX PDR Lab</a>.</strong> All rights reserved.
+        </footer>
     </div>
+
     <!-- jQuery 2.0.2 -->
     <script src="assets/js/jquery.min.js" type="text/javascript"></script>
     <!-- jQuery UI 1.11.4 -->
