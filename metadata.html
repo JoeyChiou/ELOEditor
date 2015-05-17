@@ -1028,6 +1028,93 @@
                             </form>
                         </div>
 
+                        <div class="box box-info">
+                            <div class="box-header">
+                                <h3 class="box-title">Classification</h3>
+                                <p>The Classification category describes where the SCORM Content Model Component falls within a particular classification system. Multiple Classification categories may be used to define multiple classifications. The Classification category is typically used to link to a controlled vocabulary or classification system.</p>
+                            </div><!-- /.box-header -->
+                            <!-- form start -->
+                            <form role="form">
+                                <div class="box-body">
+                                    <div class="box-header">
+                                        <h4 id="metadata-Classification-purpose" class="box-title">purpose</h4>
+                                        <p>The &lt;purpose&gt; element defines the purpose for classifying the SCORM Content Model Component.</p>
+                                    </div><!-- /.box-header -->
+                                    <div class="form-group">
+                                        <label for="general-catalog" 
+                                            data-container="body" data-toggle="popover" data-placement="right"
+                                            data-content="The <purpose> element defines the purpose for classifying the SCORM Content Model Component."
+                                            title="purpose">purpose</label>
+                                        <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="classification-purpose">
+                                        <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                    </div>
+                                </div><!-- /.box-body -->
+
+                                <div class="box-body">
+                                    <div class="box-header">
+                                        <h4 id="metadata-Classification-taxonPath" class="box-title">taxonPath</h4>
+                                        <p>The &lt;taxonPath&gt; element describes a taxonomic path in a specific classification system. Each succeeding level is a refinement in the definition of the proceeding level.</p>
+                                    </div><!-- /.box-header -->
+                                    <div class="form-group">
+                                        <label for="general-catalog" 
+                                            data-container="body" data-toggle="popover" data-placement="right"
+                                            data-content="The <source> element describes or names the classification system. This data element may use any recognized official taxonomy or any user-defined taxonomy."
+                                            title="source">source</label>
+                                        <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="classification-taxonPath-source">
+                                        <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+
+                                        <label for="general-catalog" 
+                                            data-container="body" data-toggle="popover" data-placement="right"
+                                            data-content="The <id> element describes the identifier of the taxon. For example, the element can be a number or letter combination provided by the source of the taxonomy."
+                                            title="id">id</label>
+                                        <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="classification-taxonPath-taxon-id">
+                                        <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+
+                                        <label for="general-catalog" 
+                                            data-container="body" data-toggle="popover" data-placement="right"
+                                            data-content="The <entry> element shall contain a textual label of the taxon."
+                                            title="entry">entry</label>
+                                        <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="classification-taxonPath-taxon-entry">
+                                        <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                    </div>
+                                </div><!-- /.box-body -->
+
+                                <div class="box-body">
+                                    <div class="box-header">
+                                        <h4 id="metadata-Classification-description" class="box-title">description</h4>
+                                        <p>The &lt;description&gt; element contains a description of the SCORM Content Model Component relative to the stated Purpose (&lt;purpose&gt;) of the specific classification, such as discipline, idea, skill level, educational objective, etc.</p>
+                                    </div><!-- /.box-header -->
+                                    <div class="form-group">
+                                        <label for="general-catalog" 
+                                            data-container="body" data-toggle="popover" data-placement="right"
+                                            data-content="The <description> element contains a description of the SCORM Content Model Component relative to the stated Purpose (<purpose>) of the specific classification, such as discipline, idea, skill level, educational objective, etc."
+                                            title="description">description</label>
+                                        <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="classification-description">
+                                        <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                    </div>
+                                </div><!-- /.box-body -->
+
+                                <div class="box-body">
+                                    <div class="box-header">
+                                        <h4 id="metadata-Classification-keyword" class="box-title">keyword</h4>
+                                        <p>The &lt;keyword&gt; element contains keywords and phrases descriptive of the SCORM Content Model Component relative to the stated Purpose (&lt;purpose&gt;) of the specific classification, such as discipline, idea, skill level, educational objective, etc.</p>
+                                    </div><!-- /.box-header -->
+                                    <div class="form-group">
+                                        <label for="general-catalog" 
+                                            data-container="body" data-toggle="popover" data-placement="right"
+                                            data-content="The <description> element contains keywords and phrases descriptive of the SCORM Content Model Component relative to the stated Purpose (<purpose>) of the specific classification, such as discipline, idea, skill level, educational objective, etc."
+                                            title="keyword">keyword</label>
+                                        <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="classification-keyword">
+                                        <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                    </div>
+                                </div><!-- /.box-body -->
+
+                                <div class="box-footer">
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
+                            </form>
+                        </div>
+
                     </div>
                 </div>
                 <!-- /.row -->
