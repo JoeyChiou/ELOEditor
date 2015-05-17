@@ -914,6 +914,63 @@
                             </form>
                         </div>
 
+                        <div class="box box-info">
+                            <div class="box-header">
+                                <h3 class="box-title">Relation</h3>
+                                <p>The Relation category defines the relationship between the SCORM Content Model Component and other components, if any. The Relation element is allowed to be repeated. To define multiple relationships, one could create several instances of this category. If there is more than one target component, then each target shall have a new relationship instance.</p>
+                            </div><!-- /.box-header -->
+                            <!-- form start -->
+                            <form role="form">
+                                <div class="box-body">
+                                    <div class="box-header">
+                                        <h4 id="metadata-Relation-kind" class="box-title">kind</h4>
+                                        <p>The &lt;kind&gt; element describes the nature of the relationship between the SCORM Content Model Component and the target component identified by the resource..</p>
+                                    </div><!-- /.box-header -->
+                                    <div class="form-group">
+                                        <label for="general-catalog" 
+                                            data-container="body" data-toggle="popover" data-placement="right"
+                                            data-content="The <kind> element describes the nature of the relationship between the SCORM Content Model Component and the target component identified by the resource."
+                                            title="kind">kind</label>
+                                        <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="relation-kind">
+                                        <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                    </div>
+                                </div><!-- /.box-body -->
+
+                                <div class="box-body">
+                                    <div class="box-header">
+                                        <h4 id="metadata-Relation-resource" class="box-title">resource</h4>
+                                        <p>The &lt;resource&gt; element describes the nature of the relationship between the SCORM Content Model Component and the target component identified by the resource..</p>
+                                    </div><!-- /.box-header -->
+                                    <div class="form-group">
+                                        <label for="general-catalog" 
+                                            data-container="body" data-toggle="popover" data-placement="right"
+                                            data-content="The <catalog> element represents the name or designator of the identification or cataloging scheme for the entry. There are a variety of cataloging systems available. SCORM does not require the use of any one particular cataloging system. Organizations are free to choose any cataloging scheme that meets their organizations practices or policies. Some types of cataloging systems are: 1. Universal Resource Identifier (URI) 2. Universal Resource Name (URN) 3. Digital Object Identifier (DOI) 4. International Standard Book Numbers (ISBN) 5. International Standard Serial Numbers (ISSN)."
+                                            title="Catalog">Catalog</label>
+                                        <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="relation-resource-identifier-catalog">
+                                        <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+
+                                        <label for="general-catalog" 
+                                            data-container="body" data-toggle="popover" data-placement="right"
+                                            data-content="The <entry> element represents the value of the identifier within the identification or cataloging scheme (refer to the <catalog> element) that designates or identifies the target SCORM Content Model Component. Identifiers can take on various formats. The IEEE requires that the actual identifier value be represented as a CharacterString. Organizations are free to choose any mechanism to create unique identifiers that meets their organizations practices or policies. It is recommended that a common scheme be chosen."
+                                            title="entry">entry</label>
+                                        <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="relation-resource-identifier-entry">
+                                        <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+
+                                        <label for="general-catalog" 
+                                            data-container="body" data-toggle="popover" data-placement="right"
+                                            data-content="The <description> element describes the target SCORM Content Model Component."
+                                            title="description">description</label>
+                                        <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="relation-resource-description">
+                                        <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                    </div>
+                                </div><!-- /.box-body -->
+
+                                <div class="box-footer">
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
+                            </form>
+                        </div>
+
                     </div>
                 </div>
                 <!-- /.row -->
