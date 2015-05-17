@@ -1,7 +1,7 @@
 {
   "name": "CommonRepo",
-  "version": "0.0.1",
-  "description": "CommonRepo Client Application",
+  "version": "0.1",
+  "description": "Common Repo Client Application",
   "main": "index.html",
   "private": true,
   "keywords": [
@@ -10,13 +10,13 @@
   ],
   "window": {
     "toolbar": false,
-    "resizable": false,
-    "width": 1000,
+    "resizable": true,
+    "width": 1200,
     "height": 800,
-    "min_width": 600,
-    "min_height": 400,
-    "max_width": 1000,
-    "max_height": 600,
+    "min_width": 800,
+    "min_height": 600,
+    "max_width": 2000,
+    "max_height": 1600,
     "position": "center"
   },
   "author": "Xaver Y.R. Chen",
