@@ -1,18 +1,18 @@
 <ul class="nav navbar-nav">
-    <li class="dropdown user user-menu">
+    <li class="dropdown task-menu">
         <form class="navbar-form navbar-right">
             <input class=form-control placeholder="Search...">
         </form>
     </li>
-    <li class="dropdown user user-menu">
-        <a href="search.html">
+    <li class="dropdown task-menu">
+        <a class="dropdown-toggle" href="search.html">
             <i class="fa fa-search"></i> 
             <span>SEARCH ELO</span>
         </a>
     </li>
-    <li class="dropdown user user-menu">
+    <li class="dropdown task-menu">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <i class="glyphicon glyphicon-user"></i>
+            <i class="fa fa-pencil"></i>
             <span>
                 <span>EDITOR</span><i class="caret"></i>
             </span>
@@ -32,35 +32,46 @@
             </li>
         </ul>
     </li>
-    <li class="dropdown user user-menu">
-        <a href="settings.html">
-            <i class="fa fa-gears"></i>
-            <span>SETTINGS</span>
-        </a>
-    </li>
     <!-- User Account: style can be found in dropdown.less -->
     <li class="dropdown user user-menu">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
             <i class="glyphicon glyphicon-user"></i>
-            <span>
-                <span class='uname'></span><i class="caret"></i>
-            </span>
         </a>
         <ul class="dropdown-menu">
             <!-- User image -->
-            <li class="user-header bg-light-blue">
-                <img src="assets/img/avatar5.png" class="img-circle" alt="User Image" />
+            <li class="user-header">
+                <img src="assets/img/avatar5.png" class="user-image" alt="User Image">
                 <p>
                     <span class='uname'></span>
                 </p>
             </li>
-            <!-- Menu Footer-->
-            <li class="user-footer">
+          
+            <!-- Menu Body -->
+            <li class="user-body">
+                <div class="col-xs-4 text-center">
+                    <a href="#">Followers</a>
+                </div>
+                <div class="col-xs-4 text-center">
+                    <a href="#">Sales</a>
+                </div>
+                <div class="col-xs-4 text-center">
+                    <a href="#">Friends</a>
+                </div>
+              </li>
+              <!-- Menu Footer-->
+              <li class="user-footer">
+                <div class="pull-left">
+                    <a href="#" class="btn btn-default btn-flat">Profile</a>
+                </div>
                 <div class="pull-right">
-                    <a href="#" id="signout" class="btn btn-default btn-flat">Sign out</a>
+                    <a href="#" class="btn btn-default btn-flat">Sign out</a>
                 </div>
             </li>
         </ul>
+    </li>
+    <!-- Control Sidebar Toggle Button -->
+    <li>
+        <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
     </li>
 </ul>
 
