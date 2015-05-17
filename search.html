@@ -102,11 +102,23 @@
             <section class="content">
                 <div id="wrapper">
                     <div id="columns">
+
                     </div>
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer">
                     <a href="settings.html">Change tags</a>
+                    <script>
+                    var jsdom = require("jsdom");
+ 
+                    jsdom.env("course.xml",  ["http://code.jquery.com/jquery.js"], 
+                        function (errors, window) {
+                            document.getElementById("wrapper").innerHTML += "The URL name: " + window.document.documentElement.childNodes.length + "<br />";
+                            document.getElementById("wrapper").innerHTML += "The URL name: " + window.$("course").attr("url_name").toString() + "<br />";
+                            document.getElementById("wrapper").innerHTML += "The org: " + window.$("course").attr("org").toString() + "<br />";
+                            document.getElementById("wrapper").innerHTML += "The URL name: " + window.$("course").attr("course").toString();
+                        });
+                    </script>
                 </div>
             </section> 
             <!-- /.content -->
