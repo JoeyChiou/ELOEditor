@@ -507,6 +507,176 @@
                             </form>
                         </div>
 
+                        <div class="box box-info">
+                            <div class="box-header">
+                                <h3 class="box-title">Technical</h3>
+                                <p>The Technical category describes all of the technical characteristics and requirements of the SCORM Content Model Component.</p>
+                            </div><!-- /.box-header -->
+                            <!-- form start -->
+                            <form role="form">
+                                <div class="box-body">
+                                    <div class="box-header">
+                                        <h4 id="metadata-Technical-format" class="box-title">format</h4>
+                                        <p>The &lt;format&gt; element represents the technical datatype(s) of all of the components used in the makeup of the SCORM Content Model Component. This element is used to identify any potential software needs to access and use the component.</p>
+                                    </div><!-- /.box-header -->
+                                    <div class="form-group">
+                                        <label for="general-catalog" 
+                                            data-container="body" data-toggle="popover" data-placement="right"
+                                            data-content="The <format> element represents the technical datatype(s) of all of the components used in the makeup of the SCORM Content Model Component. This element is used to identify any potential software needs to access and use the component."
+                                            title="format">format</label>
+                                        <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="technical-format">
+                                        <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                    </div>
+                                </div><!-- /.box-body -->
+
+                                <div class="box-body">
+                                    <div class="box-header">
+                                        <h4 id="metadata-Technical-size" class="box-title">size</h4>
+                                        <p>The &lt;size&gt; element represents the size of the digital SCORM Content Model Component in bytes. The size is represented as a decimal value (radix 10). Only the digits “0” through “9” should be used. This data element shall refer to the actual size of the SCORM Component. If the component is compressed, then this data element shall refer to the uncompressed size.</p>
+                                    </div><!-- /.box-header -->
+                                    <div class="form-group">
+                                        <label for="general-catalog" 
+                                            data-container="body" data-toggle="popover" data-placement="right"
+                                            data-content="The <size> element represents the size of the digital SCORM Content Model Component in bytes. The size is represented as a decimal value (radix 10). Only the digits “0” through “9” should be used. This data element shall refer to the actual size of the SCORM Component. If the component is compressed, then this data element shall refer to the uncompressed size."
+                                            title="size">size</label>
+                                        <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="technical-size">
+                                        <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                    </div>
+                                </div><!-- /.box-body -->
+
+                                <div class="box-body">
+                                    <div class="box-header">
+                                        <h4 id="metadata-Technical-location" class="box-title">location</h4>
+                                        <p>The &lt;location&gt; element is a string that specifies the location of the SCORM Content Model Component described by the metadata. This element could be used to describe one or more alternate locations where the SCORM Content Model Component can also be found, in addition to the content package itself (e.g., a known fixed location).</p>
+                                    </div><!-- /.box-header -->
+                                    <div class="form-group">
+                                        <label for="general-catalog" 
+                                            data-container="body" data-toggle="popover" data-placement="right"
+                                            data-content="The <location> element is a string that specifies the location of the SCORM Content Model Component described by the metadata. This element could be used to describe one or more alternate locations where the SCORM Content Model Component can also be found, in addition to the content package itself (e.g., a known fixed location)."
+                                            title="location">location</label>
+                                        <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="technical-location">
+                                        <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                    </div>
+                                </div><!-- /.box-body -->
+
+                                <div class="box-body">
+                                    <div class="box-header">
+                                        <h4 id="metadata-Technical-location" class="box-title">requirement</h4>
+                                        <p>The &lt;requirement&gt; element expresses the technical capabilities necessary for using the SCORM Content Model Component. The &lt;requirement&gt; element is repeatable. If multiple requirements are needed, then all of the requirements are required (logical connector is an AND).</p>
+                                    </div><!-- /.box-header -->
+                                    <div class="form-group">
+                                        <label for="general-catalog" 
+                                            data-container="body" data-toggle="popover" data-placement="right"
+                                            data-content="The <requirement> element expresses the technical capabilities necessary for using the SCORM Content Model Component. The <requirement> element is repeatable. If multiple requirements are needed, then all of the requirements are required (logical connector is an AND)."
+                                            title="requirement">requirement</label>
+                                        <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="technical-requirement">
+                                        <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                    </div>
+                                </div><!-- /.box-body -->
+
+                                <div class="box-body">
+                                    <div class="box-header">
+                                        <h4 id="metadata-Technical-orComposite" class="box-title">orComposite</h4>
+                                        <p>The &lt;orComposite&gt; element represents a single requirement. Multiple &lt;orComposite&gt; elements are connected with a logical connecter of “or”.</p>
+                                    </div><!-- /.box-header -->
+                                    <div class="form-group">
+                                        <label for="general-catalog" 
+                                            data-container="body" data-toggle="popover" data-placement="right"
+                                            data-content="The <orComposite> element represents a single requirement. Multiple <orComposite> elements are connected with a logical connecter of “or”."
+                                            title="orComposite">orComposite</label>
+                                        <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="technical-orComposite">
+                                        <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                    </div>
+                                </div><!-- /.box-body -->
+
+                                <div class="box-body">
+                                    <div class="box-header">
+                                        <h4 id="metadata-Technical-orComposite" class="box-title">orComposite</h4>
+                                        <p>The &lt;orComposite&gt; element represents a single requirement. Multiple &lt;orComposite&gt; elements are connected with a logical connecter of “or”.</p>
+                                    </div><!-- /.box-header -->
+                                    <div class="form-group">
+                                        <label for="general-catalog" 
+                                            data-container="body" data-toggle="popover" data-placement="right"
+                                            data-content="The <type> element represents the technology required to use the SCORM Content Model Component (e.g., hardware, software, network, etc.).
+                                            If the metadata instance contains a <type> element then a corresponding <name> element shall exist to describe more details about the type."
+                                            title="type">type</label>
+                                        <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="technical-orComposite-type">
+                                        <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+
+                                        <label for="general-catalog" 
+                                            data-container="body" data-toggle="popover" data-placement="right"
+                                            data-content="The <name> element represents the required technology to use the SCORM Content Model Component. The value used for the Name element depends on the value identified by the Value element. If the metadata instance contains a <name> element then a corresponding <type> element shall exist to describe more details about the required technology."
+                                            title="name">name</label>
+                                        <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="technical-orComposite-name">
+                                        <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+
+                                        <label for="general-catalog" 
+                                            data-container="body" data-toggle="popover" data-placement="right"
+                                            data-content="The <minimumVersion> element represents the lowest possible version of the required technology to use the SCORM Content Model Component"
+                                            title="minimumVersion">minimumVersion</label>
+                                        <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="technical-orComposite-minimumVersion">
+                                        <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+
+                                        <label for="general-catalog" 
+                                            data-container="body" data-toggle="popover" data-placement="right"
+                                            data-content="The <maximumVersion> element represents the lowest possible version of the required technology to use the SCORM Content Model Component"
+                                            title="maximumVersion">maximumVersion</label>
+                                        <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="technical-orComposite-maximumVersion">
+                                        <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                    </div>
+                                </div><!-- /.box-body -->
+
+                                <div class="box-body">
+                                    <div class="box-header">
+                                        <h4 id="metadata-Technical-installationRemarks" class="box-title">installationRemarks</h4>
+                                        <p>The &lt;installationRemarks&gt; element is used to represent any specific instructions on how to install the SCORM Content Model Component. This element could be used to describe to the user (e.g., LMS, Content Developer, Authoring Tool) of the component any particular instructions for use. It may be used to describe, in more detail, the technical requirements for the SCORM component.</p>
+                                    </div><!-- /.box-header -->
+                                    <div class="form-group">
+                                        <label for="general-catalog" 
+                                            data-container="body" data-toggle="popover" data-placement="right"
+                                            data-content="The <installationRemarks> element is used to represent any specific instructions on how to install the SCORM Content Model Component. This element could be used to describe to the user (e.g., LMS, Content Developer, Authoring Tool) of the component any particular instructions for use. It may be used to describe, in more detail, the technical requirements for the SCORM component."
+                                            title="installationRemarks">installationRemarks</label>
+                                        <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="technical-installationRemarks">
+                                        <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                    </div>
+                                </div><!-- /.box-body -->
+
+                                <div class="box-body">
+                                    <div class="box-header">
+                                        <h4 id="metadata-Technical-otherPlatformRequirements" class="box-title">otherPlatformRequirements</h4>
+                                        <p>The &lt;otherPlatformRequirements&gt; element is used to represent any specific instructions on how to install the SCORM Content Model Component. This element could be used to describe to the user (e.g., LMS, Content Developer, Authoring Tool) of the component any particular instructions for use. It may be used to describe, in more detail, the technical requirements for the SCORM component.</p>
+                                    </div><!-- /.box-header -->
+                                    <div class="form-group">
+                                        <label for="general-catalog" 
+                                            data-container="body" data-toggle="popover" data-placement="right"
+                                            data-content="The <otherPlatformRequirements> element is used to represent any specific instructions on how to install the SCORM Content Model Component. This element could be used to describe to the user (e.g., LMS, Content Developer, Authoring Tool) of the component any particular instructions for use. It may be used to describe, in more detail, the technical requirements for the SCORM component."
+                                            title="otherPlatformRequirements">otherPlatformRequirements</label>
+                                        <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="technical-otherPlatformRequirements">
+                                        <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                    </div>
+                                </div><!-- /.box-body -->
+
+                                <div class="box-body">
+                                    <div class="box-header">
+                                        <h4 id="metadata-Technical-duration" class="box-title">duration</h4>
+                                        <p>The &lt;duration&gt; element represents the time a continuous SCORM Content Model Component takes when played at intended speed. This element is useful for sounds, movies, simulations and the like.</p>
+                                    </div><!-- /.box-header -->
+                                    <div class="form-group">
+                                        <label for="general-catalog" 
+                                            data-container="body" data-toggle="popover" data-placement="right"
+                                            data-content="The <duration> element represents the time a continuous SCORM Content Model Component takes when played at intended speed. This element is useful for sounds, movies, simulations and the like."
+                                            title="duration">duration</label>
+                                        <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="technical-duration">
+                                        <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                    </div>
+                                </div><!-- /.box-body -->
+
+                                <div class="box-footer">
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
+                            </form>
+                        </div>
+
                     </div>
                 </div>
                 <!-- /.row -->
