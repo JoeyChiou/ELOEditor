@@ -153,7 +153,6 @@
                         <ul class="treeview-menu">
                             <li><a href="#metadata-Relation-kind"><i class="fa fa-circle-o"></i>kind</a></li>
                             <li><a href="#metadata-Relation-resource"><i class="fa fa-circle-o"></i>resource</a></li>
-                            <li><a href="#metadata-Relation-title"><i class="fa fa-circle-o"></i>Title</a></li>
                         </ul>
                     </li>
                     
@@ -961,6 +960,64 @@
                                             data-content="The <description> element describes the target SCORM Content Model Component."
                                             title="description">description</label>
                                         <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="relation-resource-description">
+                                        <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                    </div>
+                                </div><!-- /.box-body -->
+
+                                <div class="box-footer">
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="box box-info">
+                            <div class="box-header">
+                                <h3 class="box-title">Annotation</h3>
+                                <p>The Annotation category provides comments on the educational use of the SCORM Content Model Component and information on when and by whom the comments were created. This category enables educators to share their assessments of SCORM Content Model Components, suggestions for use, etc.</p>
+                            </div><!-- /.box-header -->
+                            <!-- form start -->
+                            <form role="form">
+                                <div class="box-body">
+                                    <div class="box-header">
+                                        <h4 id="metadata-Annotation-entity" class="box-title">entity</h4>
+                                        <p>The &lt;entity&gt; element describes the nature of the relationship between the SCORM Content Model Component and the target component identified by the resource.</p>
+                                    </div><!-- /.box-header -->
+                                    <div class="form-group">
+                                        <label for="general-catalog" 
+                                            data-container="body" data-toggle="popover" data-placement="right"
+                                            data-content="The <entity> element identifies the entity or entities that that have created the annotation."
+                                            title="entity">entity</label>
+                                        <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="annotation-entity">
+                                        <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                    </div>
+                                </div><!-- /.box-body -->
+
+                                <div class="box-body">
+                                    <div class="box-header">
+                                        <h4 id="metadata-Annotation-date" class="box-title">date</h4>
+                                        <p>The &lt;date&gt; element identifies the date the annotation was created.</p>
+                                    </div><!-- /.box-header -->
+                                    <div class="form-group">
+                                        <label for="general-catalog" 
+                                            data-container="body" data-toggle="popover" data-placement="right"
+                                            data-content="The <date> element identifies the date the annotation was created."
+                                            title="date">date</label>
+                                        <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="annotation-date">
+                                        <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                    </div>
+                                </div><!-- /.box-body -->
+
+                                <div class="box-body">
+                                    <div class="box-header">
+                                        <h4 id="metadata-Annotation-description" class="box-title">description</h4>
+                                        <p>The &lt;description&gt; element shall be used to represent the contents of the annotation.</p>
+                                    </div><!-- /.box-header -->
+                                    <div class="form-group">
+                                        <label for="general-catalog" 
+                                            data-container="body" data-toggle="popover" data-placement="right"
+                                            data-content="The <description> element shall be used to represent the contents of the annotation."
+                                            title="description">description</label>
+                                        <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="annotation-description">
                                         <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
                                     </div>
                                 </div><!-- /.box-body -->
