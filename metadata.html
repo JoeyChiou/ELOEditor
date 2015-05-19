@@ -314,7 +314,13 @@
                                             data-container="body" data-toggle="popover" data-placement="right"
                                             data-content="The <structure> element shall describe the underlying organizational structure of the SCORM Content Model Component."
                                             title="structure">structure</label>
-                                        <input type="text" class="form-control" placeholder="LOMv1.0" id="general-structure">
+                                        <select class="form-control" id="general-structure">
+                                            <option value="atomic">atomic: An object that is indivisible</option>
+                                            <option value="collection">collection: A set of objects with no specified relationship between them</option>
+                                            <option value="networked">networked: A set of objects with relationships that are unspecified</option>
+                                            <option value="hierarchical">hierarchical: A set of objects whose relationships can be represented by a tree structure</option>
+                                            <option value="linear">linear: A set of objects that are fully ordered. Example: A set of objects that are connected by “previous” and “next” relationships</option>
+                                        </select>
                                         <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
                                     </div>
                                 </div><!-- /.box-body -->
@@ -372,7 +378,12 @@
                                             data-container="body" data-toggle="popover" data-placement="right"
                                             data-content="The <status> element shall describe the completion status or condition of the SCORM Content Model Component. A component’s status may change during its lifetime (draft, final, etc.). The <status> element allows for the description of the status of the component."
                                             title="status">status</label>
-                                        <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="lifecycle-status">
+                                        <select class="form-control" id="lifecycle-status">
+                                            <option value="draft">draft: The component is in a draft state (as determined by the developer)</option>
+                                            <option value="final">final: The component is in a final state (as determined by the developer)</option>
+                                            <option value="revised">revised: The component has been revised since the last version</option>
+                                            <option value="unavailable">unavailable: The status information is unavailable</option>
+                                        </select>
                                         <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
                                     </div>
                                 </div><!-- /.box-body -->
@@ -387,7 +398,23 @@
                                             data-container="body" data-toggle="popover" data-placement="right"
                                             data-content="The <role> element defines the kind or type of contribution made by the contributor (identified by the Entity element). The IEEE has defined a set of typical roles that are involved with the lifecycle of the component."
                                             title="role">role</label>
-                                        <input type="text" class="form-control" placeholder="URI" id="lifecycle-contribute-role">
+                                        <select class="form-control" id="lifecycle-contribute-role">
+                                            <option value="author">author</option>
+                                            <option value="publisher">publisher</option>
+                                            <option value="unknown">unknown</option>
+                                            <option value="initiator">initiator</option>
+                                            <option value="terminator">terminator</option>
+                                            <option value="validator">validator</option>
+                                            <option value="editor">editor</option>
+                                            <option value="graphical designer">graphical designer</option>
+                                            <option value="technical implementer">technical implementer</option>
+                                            <option value="content provider">content provider</option>
+                                            <option value="technical validator">technical validator</option>
+                                            <option value="educational validator">educational validator</option>
+                                            <option value="script writer">script writer</option>
+                                            <option value="instructional designer">instructional designer</option>
+                                            <option value="subject matter expert">subject matter expert</option>
+                                        </select>
                                         <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
 
                                         <label for="general-entry" 
@@ -451,7 +478,10 @@
                                             data-container="body" data-toggle="popover" data-placement="right"
                                             data-content="The <role> element defines the kind or type of contribution made by the contributor (identified by the Entity element). The IEEE has defined a set of typical roles that are involved with the lifecycle of the component."
                                             title="role">role</label>
-                                        <input type="text" class="form-control" placeholder="URI" id="lifecycle-contribute-role">
+                                        <select class="form-control" id="lifecycle-contribute-role">
+                                            <option value="creator">creator</option>
+                                            <option value="validator">validator</option>
+                                        </select>
                                         <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
 
                                         <label for="general-entry" 
@@ -599,14 +629,32 @@
                                             data-content="The <type> element represents the technology required to use the SCORM Content Model Component (e.g., hardware, software, network, etc.).
                                             If the metadata instance contains a <type> element then a corresponding <name> element shall exist to describe more details about the type."
                                             title="type">type</label>
-                                        <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="technical-orComposite-type">
+                                        <select class="form-control" id="technical-orComposite-type">
+                                            <option value="operating system">Operating System</option>
+                                            <option value="browser">Browser</option>
+                                        </select>
                                         <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
 
                                         <label for="general-catalog" 
                                             data-container="body" data-toggle="popover" data-placement="right"
                                             data-content="The <name> element represents the required technology to use the SCORM Content Model Component. The value used for the Name element depends on the value identified by the Value element. If the metadata instance contains a <name> element then a corresponding <type> element shall exist to describe more details about the required technology."
                                             title="name">name</label>
-                                        <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="technical-orComposite-name">
+                                        <select class="form-control" id="technical-orComposite-name">
+                                            <option value="pc-dos">PC-DOS</option>
+                                            <option value="ms-windows">Microsoft Windows</option>
+                                            <option value="macos">MacOS</option>
+                                            <option value="unix">UNIX</option>
+                                            <option value="multi-os">Multi OS</option>
+                                            <option value="none">none</option>
+                                            <option value="any">any</option>
+                                            <option value="netscape communicator">Netscape Communicator</option>
+                                            <option value="ms-internet explorer">Microsoft Internet Explorer</option>
+                                            <option value="mozilla firefox">Mozilla Firefox</option>
+                                            <option value="google chrome">Google Chrome</option>
+                                            <option value="apple safari">Apple Safari</option>
+                                            <option value="opera">Opera</option>
+                                            <option value="amaya">Amaya</option>
+                                        </select>
                                         <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
 
                                         <label for="general-catalog" 
@@ -694,7 +742,11 @@
                                             data-container="body" data-toggle="popover" data-placement="right"
                                             data-content="The <interactivityType> element represents the dominant mode of learning supported by the SCORM Content Model Component."
                                             title="interactivityType">interactivityType</label>
-                                        <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="educational-interactivityType">
+                                        <select class="form-control" id="educational-interactivityType">
+                                            <option value="active">active: Active learning (e.g., learning by doing) is supported by content that directly induces productive action by the learner</option>
+                                            <option value="expositive">expositive: Expositive learning (e.g., passive learning) occurs when the learner’s job mainly consists of absorbing the content exposed to them</option>
+                                            <option value="mixed">mixed: A blend of active and expositive interactivity types</option>
+                                        </select>
                                         <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
                                     </div>
                                 </div><!-- /.box-body -->
@@ -709,7 +761,23 @@
                                             data-container="body" data-toggle="popover" data-placement="right"
                                             data-content="The <learningResourceType> element represents the specific kind of the SCORM Content Model Component. This element is repeatable in order to fully describe the types of resources used in the component."
                                             title="learningResourceType">learningResourceType</label>
-                                        <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="educational-learningResourceType">
+                                        <select class="form-control" id="educational-learningResourceType">
+                                            <option value="exercise">exercise</option>
+                                            <option value="simulation">simulation</option>
+                                            <option value="questionnaire">questionnaire</option>
+                                            <option value="diagram">diagram</option>
+                                            <option value="figure">figure</option>
+                                            <option value="graph">graph</option>
+                                            <option value="index">index</option>
+                                            <option value="slide">slide</option>
+                                            <option value="table">table</option>
+                                            <option value="narrative text">narrative text</option>
+                                            <option value="exam">exam</option>
+                                            <option value="experiment">experiment</option>
+                                            <option value="problem statement">problem statement</option>
+                                            <option value="self assessment">self assessment</option>
+                                            <option value="lecture">lecture</option>
+                                        </select>
                                         <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
                                     </div>
                                 </div><!-- /.box-body -->
@@ -724,7 +792,13 @@
                                             data-container="body" data-toggle="popover" data-placement="right"
                                             data-content="The <interactivityLevel> represents the degree of interactivity characterizing the SCORM Content Model Component. Interactivity in this context refers to the degree to which the learner can influence the aspect or behavior of the component."
                                             title="interactivityLevel">interactivityLevel</label>
-                                        <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="educational-interactivityLevel">
+                                        <select class="form-control" id="educational-interactivityLevel">
+                                            <option value="very low">very low</option>
+                                            <option value="low">low</option>
+                                            <option value="medium">medium</option>
+                                            <option value="high">high</option>
+                                            <option value="very high">very high</option>
+                                        </select>
                                         <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
                                     </div>
                                 </div><!-- /.box-body -->
@@ -739,7 +813,13 @@
                                             data-container="body" data-toggle="popover" data-placement="right"
                                             data-content="The <semanticDensity> represents the degree of conciseness of the SCORM Content Model Component. The semantic density of a SCORM component may be estimated in terms of its size, span or, in the case of self-timed resources such as audio or video, duration."
                                             title="semanticDensity">semanticDensity</label>
-                                        <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="educational-semanticDensity">
+                                        <select class="form-control" id="educational-semanticDensity">
+                                            <option value="very low">very low</option>
+                                            <option value="low">low</option>
+                                            <option value="medium">medium</option>
+                                            <option value="high">high</option>
+                                            <option value="very high">very high</option>
+                                        </select>
                                         <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
                                     </div>
                                 </div><!-- /.box-body -->
@@ -754,7 +834,12 @@
                                             data-container="body" data-toggle="popover" data-placement="right"
                                             data-content="The <intendedEndUserRole> element represents the principal user(s) for which the SCORM Content Model Component was designed. If multiple elements are used, the most dominant role should be first."
                                             title="intendedEndUserRole">intendedEndUserRole</label>
-                                        <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="educational-intendedEndUserRole">
+                                        <select class="form-control" id="educational-intendedEndUserRole">
+                                            <option value="teacher">teacher</option>
+                                            <option value="author">author</option>
+                                            <option value="learner">learner</option>
+                                            <option value="manager">manager</option>
+                                        </select>
                                         <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
                                     </div>
                                 </div><!-- /.box-body -->
@@ -769,7 +854,12 @@
                                             data-container="body" data-toggle="popover" data-placement="right"
                                             data-content="The <context> element represents the principal environment within which the learning and use of the SCORM Content Model Component is intended to take plac."
                                             title="context">context</label>
-                                        <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="educational-context">
+                                        <select class="form-control" id="educational-context">
+                                            <option value="school">school</option>
+                                            <option value="higher education">higher education</option>
+                                            <option value="training">training</option>
+                                            <option value="other">other</option>
+                                        </select>
                                         <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
                                     </div>
                                 </div><!-- /.box-body -->
@@ -799,7 +889,13 @@
                                             data-container="body" data-toggle="popover" data-placement="right"
                                             data-content="The <difficulty> element represents how hard it is to work with or through the SCORM Content Model Component for the typical intended target audience. The typical target audience can be characterized by the <context> and <typicalAgeRange> elements."
                                             title="difficulty">difficulty</label>
-                                        <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="educational-difficulty">
+                                        <select class="form-control" id="educational-difficulty">
+                                            <option value="very easy">very easy</option>
+                                            <option value="easy">easy</option>
+                                            <option value="medium">medium</option>
+                                            <option value="difficult">difficult</option>
+                                            <option value="very difficult">very difficult</option>
+                                        </select>
                                         <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
                                     </div>
                                 </div><!-- /.box-body -->
@@ -872,7 +968,10 @@
                                             data-container="body" data-toggle="popover" data-placement="right"
                                             data-content="The <cost> element represents whether the SCORM Content Model Component requires some sort of payment."
                                             title="cost">cost</label>
-                                        <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="rights-cost">
+                                        <select class="form-control" id="rights-cost">
+                                            <option value="yes">yes</option>
+                                            <option value="no">no</option>
+                                        </select>
                                         <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
                                     </div>
                                 </div><!-- /.box-body -->
@@ -887,7 +986,10 @@
                                             data-container="body" data-toggle="popover" data-placement="right"
                                             data-content="The <copyrightAndOtherRestrictions> element describes whether copyright or other restrictions apply to the use of the SCORM Content Model Component."
                                             title="copyrightAndOtherRestrictions">copyrightAndOtherRestrictions</label>
-                                        <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="rights-copyrightAndOtherRestrictions">
+                                        <select class="form-control" id="rights-copyrightAndOtherRestrictions">
+                                            <option value="yes">yes</option>
+                                            <option value="no">no</option>
+                                        </select>
                                         <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
                                     </div>
                                 </div><!-- /.box-body -->
@@ -930,7 +1032,20 @@
                                             data-container="body" data-toggle="popover" data-placement="right"
                                             data-content="The <kind> element describes the nature of the relationship between the SCORM Content Model Component and the target component identified by the resource."
                                             title="kind">kind</label>
-                                        <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="relation-kind">
+                                        <select class="form-control" id="relation-kind">
+                                            <option value="ispartof">ispartof</option>
+                                            <option value="haspart">haspart</option>
+                                            <option value="isversionof">isversionof</option>
+                                            <option value="hasversion">hasversion</option>
+                                            <option value="isformatof">isformatof</option>
+                                            <option value="hasformat">hasformat</option>
+                                            <option value="references">references</option>
+                                            <option value="isreferencedby">isreferencedby</option>
+                                            <option value="isbasedon">isbasedon</option>
+                                            <option value="isbasisfor">isbasisfor</option>
+                                            <option value="requires">requires</option>
+                                            <option value="isrequiredby">isrequiredby</option>
+                                        </select>
                                         <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
                                     </div>
                                 </div><!-- /.box-body -->
