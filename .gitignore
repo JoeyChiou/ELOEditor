@@ -1,2 +1,3 @@
 # NPM modules
+collections/*.json
 node_modules/*
