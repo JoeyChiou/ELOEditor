@@ -19,7 +19,17 @@
     "max_height": 1600,
     "position": "center"
   },
-  "author": "Xaver Y.R. Chen",
+  "author": {
+    "name": "Xaver Y.R. Chen",
+    "email": "yrchen@ATCity.org",
+    "url": "http://about.me/yrchen"
+  },
+  "contributors": [
+    {
+        "name": "Joey Chiou",
+        "email": "joeyc0916@gmail.com"
+    }
+  ],
   "license": "MIT",
   "dependencies": {
     "diskdb": "^0.1.14",
