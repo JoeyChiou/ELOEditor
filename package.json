@@ -1,6 +1,6 @@
 {
   "name": "CommonRepo",
-  "version": "0.1",
+  "version": "0.1.0",
   "description": "Common Repo Client Application",
   "main": "index.html",
   "private": true,
@@ -9,7 +9,7 @@
     "elo"
   ],
   "window": {
-    "toolbar": false,
+    "toolbar": true,
     "resizable": true,
     "width": 1200,
     "height": 800,
@@ -19,11 +19,22 @@
     "max_height": 1600,
     "position": "center"
   },
-  "author": "Xaver Y.R. Chen",
+  "author": {
+    "name": "Xaver Y.R. Chen",
+    "email": "yrchen@ATCity.org",
+    "url": "http://about.me/yrchen"
+  },
+  "contributors": [
+    {
+        "name": "Joey Chiou",
+        "email": "joeyc0916@gmail.com"
+    }
+  ],
   "license": "MIT",
   "dependencies": {
     "diskdb": "^0.1.14",
     "bcrypt-nodejs": "0.0.3",
-    "weather-js": "^1.0.0"
+    "weather-js": "^1.0.0",
+    "jsdom": "^5.4.2"
   }
 }
