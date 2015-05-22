@@ -1,17 +1,26 @@
 <ul class="nav navbar-nav navbar-right">
     <li class="dropdown task-menu">
-        <form class="navbar-form navbar-left" role="search">
-            <div class="form-group">
-                <input type="text" class="form-control" id="navbar-search-input" placeholder="Search">
-            </div>
-      </form>
-    </li>
-
-    <li class="dropdown task-menu">
-        <a class="dropdown-toggle" href="search-all.html">
-            <i class="fa fa-search"></i> 
-            <span>SEARCH</span>
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="fa fa-search"></i>
+            <span>
+                <span>SEARCH</span><i class="caret"></i>
+            </span>
         </a>
+        <ul class="dropdown-menu" role="menu">
+            <li class="dropdown task-menu">
+                <a class="dropdown-toggle" href="search-all.html">
+                    <i class="fa fa-search"></i> 
+                    <span>KEYWORD SEARCH</span>
+                </a>
+            </li>
+
+            <li class="dropdown task-menu">
+                <a class="dropdown-toggle" href="search-metadata.html">
+                    <i class="fa fa-search"></i> 
+                    <span>METADATA SEARCH</span>
+                </a>
+            </li>
+        </ul>
     </li>
 
     <li class="dropdown task-menu">
