@@ -17,6 +17,7 @@
          folder instead of downloading all of them to reduce the load. -->
     <link href="assets/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="controller/settings.js"></script>
+    <script type="text/javascript" src="controller/tree.js"></script>
 </head>
 
 <body class="skin-blue sidebar-mini">
@@ -62,9 +63,13 @@
                 </div>
                 <!-- sidebar menu: : style can be found in sidebar.less -->
                 <ul class="sidebar-menu">
-                    
                 </ul>
             </section>
+            <div id="search_result">
+            </div>
+            <div id="treeview">
+                                
+            </div>
         </aside>
 
         <!-- Content Wrapper. Contains page content -->
@@ -89,13 +94,15 @@
                         <label class="control-label hide" for="searchTerms"><i class="fa fa-times-circle-o"></i> Required</label>
                     </div>
                     <br/>
-                    <button type="button" id="localSearch" class="btn bg-olive">ELO Search</button>
+                    <button type="button" id="TestSearch" class="btn bg-olive">Test Results</button>
+                    <button type="button" id="localSearch" class="btn bg-olive">Keyword Search</button>
                     <button type="button" id="remoteSearch" class="btn bg-olive">Metadata Search</button>
                     <button type="button" id="skip" class="btn bg-gray">Cancel</button>
                 </div>
             </section>
             <section class="content">
                 <div id="wrapper">
+                    <iframe name="iframe01" width="640" height="480" frameborder="0"></iframe>
                     <div id="columns">
 
                     </div>
@@ -103,17 +110,6 @@
                 <!-- /.box-body -->
                 <div class="box-footer">
                     <a href="settings.html">Change tags</a>
-                    <script>
-                    var jsdom = require("jsdom");
- 
-                    jsdom.env("course.xml",  ["http://code.jquery.com/jquery.js"], 
-                        function (errors, window) {
-                            document.getElementById("wrapper").innerHTML += "The URL name: " + window.document.documentElement.childNodes.length + "<br />";
-                            document.getElementById("wrapper").innerHTML += "The URL name: " + window.$("course").attr("url_name").toString() + "<br />";
-                            document.getElementById("wrapper").innerHTML += "The org: " + window.$("course").attr("org").toString() + "<br />";
-                            document.getElementById("wrapper").innerHTML += "The URL name: " + window.$("course").attr("course").toString();
-                        });
-                    </script>
                 </div>
             </section> 
             <!-- /.content -->
@@ -140,8 +136,54 @@
     <script src="plugins/fastclick/fastclick.min.js"></script>
     <!-- AdminLTE App -->
     <script src="assets/js/app.js" type="text/javascript"></script>
+    <script language="JavaScript">
+    function myFunction(){
+        document.getElementById("treeview").innerHTML = "<br/><br/><br/>";
+
+        var jsdom = require("jsdom");
+ 
+        jsdom.env("ELOs/SCORM/BKME/elo_aggregation.xml",  ["http://code.jquery.com/jquery.js"], 
+        function (errors, window) {
+            for(var i=0;i<window.$("container").length;i++){
+                document.getElementById("treeview").innerHTML += "<font color='white'>+" + window.$("container").attr("display_name").toString() + "<br />";
+                for(var j=0;j<window.$("content").length;j++){
+                    document.getElementById("treeview").innerHTML += "<a href='ELOs/SCORM/BKME/cn0001/html_bkmg_over.html' target='iframe01'>&nbsp;&nbsp;-" + window.$("content").attr("url_name").toString() + "<br />";
+                }
+            }
+            document.getElementById("treeview").innerHTML += "<font color='white'>-<u/>elo_manifest.xml<br />";
+            document.getElementById("treeview").innerHTML += "<font color='white'>-<u/>elo_metadata.xml<br />";
+            document.getElementById("treeview").innerHTML += "<font color='white'>-<u/>elo_aggregation.xml<br />";
+        });
+
+        
+        /*document.getElementById("treeview").innerHTML += "<script language='JavaScript'>";
+        document.getElementById("treeview").innerHTML += 
+            foldersTree = gFld("ELO_BKME","http://www.google.com")
+            manifest = insDoc(foldersTree, gLnk(0, "manifest", ""))
+            metadata = insDoc(foldersTree, gLnk(0, "metadata", ""))
+            aggregation = insDoc(foldersTree, gLnk(0, "aggregation", ""))
+            aux1 = insFld(foldersTree, gFld("CN_ID","http://www.facebook.com"))
+            TN = insFld(aux1, gFld("TN","index.html"))
+            insDoc(TN, gLnk(0, "TN.xml", ""))
+            insDoc(TN, gLnk(0, "TN.css", ""))
+            insDoc(TN, gLnk(0, "TN.js", ""))
+            insDoc(TN, gLnk(0, "TN.video", ""))
+            insDoc(TN, gLnk(0, "TN.image", "18a.htm"))
+            aux1 = insFld(foldersTree, gFld("static","calender.html"))
+            initializeDocument()*/
+        //document.getElementById("treeview").innerHTML += 
+    }
+    </script>
+
     <script type="text/javascript">
     $('#navigation').load('widgets/navigation.html');
+
+    $('#TestSearch').on('click', function() {
+        document.getElementById("search_result").innerHTML = "";
+        document.getElementById("search_result").innerHTML += "<a href='javascript:myFunction();'>BKME</a><br />";
+        document.getElementById("search_result").innerHTML += "<a href=''>BKME</a><br />";
+        document.getElementById("search_result").innerHTML += "<a href=''>BKME</a><br />";
+    });
 
     $('#localSearch').on('click', function() {
         var resp = dash.saveSetting(user._id, {

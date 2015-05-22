@@ -1,0 +1,13 @@
+<manifest>
+	<containers>
+		<container id="container0001" type="tn" display_name="Bookmarking_Overview" url_name="cn0001"/>
+		<container id="container0002" type="tn" display_name="Bookmarking_Example" url_name="cn0002"/>
+		<container id="container0003" type="tn" display_name="Bookmarking_Analysis" url_name="cn0003"/>
+	</containers>
+
+	<contents>
+		<content id="cn0001" tid="container0001" type="cn" url_name="html_bkmg_over"/>
+		<content id="cn0002" tid="container0002" type="cn" url_name="html_bkmg_example"/>
+		<content id="cn0003" tid="container0003" type="cn" url_name="html_bkmg_analysis"/>	
+	</contents>
+</manifest>
