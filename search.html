@@ -64,8 +64,9 @@
 
                 <!-- sidebar menu: : style can be found in sidebar.less -->
                 <ul class="sidebar-menu">
+                    <li class="header">ELO Search Result</li>
                     <li id="search-result" class="active treeview"></li>
-                    <hr>
+                    <li class="header">ELO Preview</li>
                     <li id="search-result-treeview" class="active treeview"></li>
                 </ul>
             </section>
@@ -103,9 +104,8 @@
                                     </div>
                                 </div>
                                 <div class="box-footer">
-                                    <button type="button" id="TestSearch" class="btn bg-olive">Test Keyword Local Search</button>
-                                    <button type="submit" id="keyword-search-local" class="btn btn-primary btn-flat">Keyword Local Search</button>
-                                    <button type="submit" id="keyword-search-remote" class="btn btn-success btn-flat">Keyword Remote Search</button>
+                                    <button type="button" id="TestSearch" class="btn btn-primary btn-flat">Keyword Local Search</button>
+                                    <button type="button" id="keyword-search-remote" class="btn btn-success btn-flat">Keyword Remote Search</button>
                                 </div>
                             </form>
                         </div>
@@ -217,11 +217,11 @@
     $('#TestSearch').on('click', function() {
         var result = "";
         result += "<a href='#'><i class='fa fa-dashboard'></i><span>Search Result</span></a>";
-        result += "<ul class='treeview-menu'>";
+        result += "<ol class='treeview-menu'>";
         result += "<li><a href='javascript:viewELO();'><i class='fa fa-circle-o'></i>BKME</a></li>";
         result += "<li><a href='#''><i class='fa fa-circle-o'></i>BKME</a></li>";
         result += "<li><a href='#''><i class='fa fa-circle-o'></i>BKME</a></li>";
-        result += "</ul>";
+        result += "</ol>";
         document.getElementById("search-result").innerHTML = result;
     });
 
