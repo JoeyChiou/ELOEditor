@@ -127,8 +127,47 @@
                 </div><!-- /.row -->
 
                 <div class="row">
-                    <div id="localELO"></div>
-                    <div id="remoteELO"></div>
+                    <div class="col-md-6">
+                      <!-- LOCAL ELO LIST -->
+                      <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Local ELOs</h3>
+                            <div class="box-tools pull-right">
+                                <span class="label label-info">8 ELOs</span>
+                                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div><!-- /.box-header -->
+                        <div class="box-body no-padding">
+                            <div id="localELO"></div>
+                        </div><!-- /.box-body -->
+                        <div class="box-footer text-center">
+                          <a href="javascript::" class="uppercase">View All Local ELOs</a>
+                        </div><!-- /.box-footer -->
+                      </div><!--/.box -->
+                    </div><!-- /.col -->
+                    <!-- local ELOs -->
+                    
+                    <div class="col-md-6">
+                      <!-- LOCAL ELO LIST -->
+                      <div class="box box-danger">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Remote ELOs</h3>
+                            <div class="box-tools pull-right">
+                                <span class="label label-danger">8 ELOs</span>
+                                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div><!-- /.box-header -->
+                        <div class="box-body no-padding">
+                            <div id="remoteELO"></div>
+                        </div><!-- /.box-body -->
+                        <div class="box-footer text-center">
+                          <a href="javascript::" class="uppercase">View All Local ELOs</a>
+                        </div><!-- /.box-footer -->
+                      </div><!--/.box -->
+                    </div><!-- /.col -->
+                    <!-- remote ELOs -->
                 </div><!-- /.row -->
             </section>
         </div>
@@ -159,11 +198,11 @@
 
     // load widgets async
 
-     $.get('widgets/local-ELO-lists.html', function(data) {
+     $.get('widgets/ELO-local-lists.html', function(data) {
         $('body').append(data);
     });
 
-     $.get('widgets/remote-ELO-lists.html', function(data) {
+     $.get('widgets/ELO-remote-lists.html', function(data) {
         $('body').append(data);
     });
     </script>
