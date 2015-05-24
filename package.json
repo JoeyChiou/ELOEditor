@@ -32,6 +32,7 @@
   ],
   "license": "MIT",
   "dependencies": {
+    "nw": "^0.12.2",
     "diskdb": "^0.1.14",
     "bcrypt-nodejs": "0.0.3",
     "weather-js": "^1.0.0",
