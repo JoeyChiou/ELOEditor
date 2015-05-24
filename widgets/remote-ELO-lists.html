@@ -3,11 +3,11 @@ $(function(load) {
     var html = '';
     html += '<div class="col-md-6">';
       	html += '<!-- LOCAL ELO LIST -->';
-      	html += '<div class="box box-danger">';
+      	html += '<div class="box">';
             html += '<div class="box-header with-border">';
-                html += '<h3 class="box-title">Local ELOs</h3>';
+                html += '<h3 class="box-title">Remote ELOs</h3>';
                 html += '<div class="box-tools pull-right">';
-                    html += '<span class="label label-danger">8 ELOs</span>';
+                    html += '<span class="label label-info">8 ELOs</span>';
                     html += '<button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>';
                     html += '<button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>';
                 html += '</div>';
@@ -62,6 +62,6 @@ $(function(load) {
       	html += '</div><!--/.box -->';
     html += '</div><!-- /.col -->';
 
-    $('#localELO').html(html);
+    $('#remoteELO').html(html);
 });
 </script>

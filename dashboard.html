@@ -128,67 +128,7 @@
 
                 <div class="row">
                     <div id="localELO"></div>
-
-                    <div class="col-md-6">
-                      <!-- REMOTE ELO LIST -->
-                      <div class="box box-danger">
-                        <div class="box-header with-border">
-                          <h3 class="box-title">Latest Online ELOs</h3>
-                          <div class="box-tools pull-right">
-                            <span class="label label-danger">8 New ELOs</span>
-                            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                          </div>
-                        </div><!-- /.box-header -->
-                        <div class="box-body no-padding">
-                          <ul class="users-list clearfix">
-                            <li>
-                              <img src="assets/img/book-64.png" alt="User Image"/>
-                              <a class="users-list-name" href="#">Xaver Y.R. Chen</a>
-                              <span class="users-list-date">Today</span>
-                            </li>
-                            <li>
-                              <img src="assets/img/book-64.png" alt="User Image"/>
-                              <a class="users-list-name" href="#">Timothy K. Shih</a>
-                              <span class="users-list-date">Yesterday</span>
-                            </li>
-                            <li>
-                              <img src="assets/img/book-64.png" alt="User Image"/>
-                              <a class="users-list-name" href="#">Joey Chiou</a>
-                              <span class="users-list-date">20 May</span>
-                            </li>
-                            <li>
-                              <img src="assets/img/book-64.png" alt="User Image"/>
-                              <a class="users-list-name" href="#">Hannibal J.H. Hsieh</a>
-                              <span class="users-list-date">20 May</span>
-                            </li>
-                            <li>
-                              <img src="assets/img/book-64.png" alt="User Image"/>
-                              <a class="users-list-name" href="#">Xaver Y.R. Chen</a>
-                              <span class="users-list-date">19 May</span>
-                            </li>
-                            <li>
-                              <img src="assets/img/book-64.png" alt="User Image"/>
-                              <a class="users-list-name" href="#">Timothy K. Shih</a>
-                              <span class="users-list-date">19 May</span>
-                            </li>
-                            <li>
-                              <img src="assets/img/book-64.png" alt="User Image"/>
-                              <a class="users-list-name" href="#">Joey Chiou</a>
-                              <span class="users-list-date">18 May</span>
-                            </li>
-                            <li>
-                              <img src="assets/img/book-64.png" alt="User Image"/>
-                              <a class="users-list-name" href="#">Hannibal J.H. Hsieh</a>
-                              <span class="users-list-date">18 May</span>
-                            </li>
-                          </ul><!-- /.users-list -->
-                        </div><!-- /.box-body -->
-                        <div class="box-footer text-center">
-                          <a href="javascript::" class="uppercase">View All Online ELOs</a>
-                        </div><!-- /.box-footer -->
-                      </div><!--/.box -->
-                    </div><!-- /.col -->
+                    <div id="remoteELO"></div>
                 </div><!-- /.row -->
             </section>
         </div>
@@ -220,6 +160,10 @@
     // load widgets async
 
      $.get('widgets/local-ELO-lists.html', function(data) {
+        $('body').append(data);
+    });
+
+     $.get('widgets/remote-ELO-lists.html', function(data) {
         $('body').append(data);
     });
     </script>
