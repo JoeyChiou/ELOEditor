@@ -36,6 +36,7 @@
     "diskdb": "^0.1.14",
     "bcrypt-nodejs": "0.0.3",
     "weather-js": "^1.0.0",
-    "jsdom": "^5.4.2"
+    "jsdom": "^5.4.2",
+    "sqlite3": "^3.0.8"
   }
 }
