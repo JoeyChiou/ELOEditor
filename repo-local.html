@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Common Repo | Dashboard</title>
+    <title>Common Repo | Local Repositories</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- bootstrap 3.3.4 -->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -75,64 +75,27 @@
             <!-- Content Header (Page header) -->
             <section class="content-header">
                 <h1>
-                    Welcome to your Common Repo Dashboard
+                    Local Repositories
                 </h1>
                 <ol class="breadcrumb">
-                    <li class="active"><a href="#"><i class="fa fa-dashboard"></i>Main</a></li>
+                    <li><a href="dashboard.html"><i class="fa fa-dashboard"></i>Main</a></li>
+                    <li class="active">Local Repositories</li>
                 </ol>
             </section>
 
             <!-- Main content -->
             <section class="content">
                 <div class="row">
-                    <div class="col-md-3 col-sm-6 col-xs-12">
-                        <div class="info-box">
-                            <span class="info-box-icon bg-aqua"><i class="ion ion-document-text"></i></span>
-                            <div class="info-box-content">
-                                <span class="info-box-text">Local ELOs</span>
-                                <span class="info-box-number">8</span>
-                            </div><!-- /.info-box-content -->
-                        </div><!-- /.info-box -->
-                    </div><!-- /.col -->
-
-                    <div class="col-md-3 col-sm-6 col-xs-12">
-                        <div class="info-box">
-                            <span class="info-box-icon bg-green"><i class="ion ion-cloud"></i></span>
-                            <div class="info-box-content">
-                                <span class="info-box-text">Remote ELOs</span>
-                                <span class="info-box-number">50</span>
-                            </div><!-- /.info-box-content -->
-                        </div><!-- /.info-box -->
-                    </div><!-- /.col -->
-                    
-                    <div class="col-md-3 col-sm-6 col-xs-12">
-                        <div class="info-box">
-                            <span class="info-box-icon bg-red"><i class="fa fa-google-plus"></i></span>
-                            <div class="info-box-content">
-                                <span class="info-box-text">Likes</span>
-                                <span class="info-box-number">100</span>
-                            </div><!-- /.info-box-content -->
-                        </div><!-- /.info-box -->
-                    </div><!-- /.col -->
-
-                    <div class="col-md-3 col-sm-6 col-xs-12">
-                        <div class="info-box">
-                            <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
-                            <div class="info-box-content">
-                                <span class="info-box-text">Members</span>
-                                <span class="info-box-number">20</span>
-                            </div><!-- /.info-box-content -->
-                        </div><!-- /.info-box -->
-                    </div><!-- /.col -->
-                </div><!-- /.row -->
-
-                <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                       <!-- LOCAL ELO LIST -->
                       <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">Local ELOs</h3>
                             <div class="box-tools pull-right">
+                                <button id="buttonAdd" class="btn btn-primary" onclick="chooseFile('#fileAddDialog')">Add</button>
+                                <input style="display:none;" id="fileAddDialog" type="file" nwdirectory/>
+                                <button id="buttonImport" class="btn btn-primary" onclick="chooseFile('#fileImportDialog')">Import</button>
+                                <input style="display:none;" id="fileImportDialog" type="file" nwdirectory/>
                                 <span class="label label-info">8 ELOs</span>
                                 <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                                 <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -142,32 +105,11 @@
                             <div id="localELO"></div>
                         </div><!-- /.box-body -->
                         <div class="box-footer text-center">
-                          <a href="repo-local.html" class="uppercase">View All Local ELOs</a>
+                          <a href="javascript::" class="uppercase">Reload</a>
                         </div><!-- /.box-footer -->
                       </div><!--/.box -->
                     </div><!-- /.col -->
                     <!-- local ELOs -->
-                    
-                    <div class="col-md-6">
-                      <!-- LOCAL ELO LIST -->
-                      <div class="box box-danger">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Remote ELOs</h3>
-                            <div class="box-tools pull-right">
-                                <span class="label label-danger">8 ELOs</span>
-                                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                                <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                            </div>
-                        </div><!-- /.box-header -->
-                        <div class="box-body no-padding">
-                            <div id="remoteELO"></div>
-                        </div><!-- /.box-body -->
-                        <div class="box-footer text-center">
-                          <a href="javascript::" class="uppercase">View All Local ELOs</a>
-                        </div><!-- /.box-footer -->
-                      </div><!--/.box -->
-                    </div><!-- /.col -->
-                    <!-- remote ELOs -->
                 </div><!-- /.row -->
             </section>
         </div>
@@ -202,9 +144,14 @@
         $('body').append(data);
     });
 
-    $.get('widgets/ELO-remote-lists.html', function(data) {
-        $('body').append(data);
-    });
+    function chooseFile(name) {
+        var chooser = $(name);
+        chooser.change(function(evt) {
+          console.log($(this).val());
+        });
+
+        chooser.trigger('click');  
+    }
     </script>
 </body>
 
