@@ -32,10 +32,12 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "nw": "^0.12.2",
-    "diskdb": "^0.1.14",
     "bcrypt-nodejs": "0.0.3",
-    "weather-js": "^1.0.0",
-    "jsdom": "^5.4.2"
+    "diskdb": "^0.1.14",
+    "git-utils": "3.0.x",
+    "jsdom": "^5.4.2",
+    "nw": "^0.12.2",
+    "sqlite3": "^3.0.8",
+    "weather-js": "^1.0.0"
   }
 }
