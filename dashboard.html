@@ -17,6 +17,8 @@
          folder instead of downloading all of them to reduce the load. -->
     <link href="assets/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="controller/auth.js"></script>
+    <script type="text/javascript" src="controller/dbfunc.js"></script>
+    <script type="text/javascript" src="controller/ELO-lists.js"></script>
     <script type="text/javascript">
     if (!JSON.parse(localStorage.getItem('settings'))) location.href = 'settings.html';
     </script>
@@ -85,12 +87,15 @@
             <!-- Main content -->
             <section class="content">
                 <div class="row">
+                    <!-- Get counts of all objects. -->
+                    <script>getCount();</script>
+
                     <div class="col-md-3 col-sm-6 col-xs-12">
                         <div class="info-box">
                             <span class="info-box-icon bg-aqua"><i class="ion ion-document-text"></i></span>
                             <div class="info-box-content">
                                 <span class="info-box-text">Local ELOs</span>
-                                <span class="info-box-number">8</span>
+                                <span class="info-box-number"></span>
                             </div><!-- /.info-box-content -->
                         </div><!-- /.info-box -->
                     </div><!-- /.col -->
@@ -100,7 +105,7 @@
                             <span class="info-box-icon bg-green"><i class="ion ion-cloud"></i></span>
                             <div class="info-box-content">
                                 <span class="info-box-text">Remote ELOs</span>
-                                <span class="info-box-number">50</span>
+                                <span class="info-box-number"></span>
                             </div><!-- /.info-box-content -->
                         </div><!-- /.info-box -->
                     </div><!-- /.col -->
@@ -110,7 +115,7 @@
                             <span class="info-box-icon bg-red"><i class="fa fa-google-plus"></i></span>
                             <div class="info-box-content">
                                 <span class="info-box-text">Likes</span>
-                                <span class="info-box-number">100</span>
+                                <span class="info-box-number"></span>
                             </div><!-- /.info-box-content -->
                         </div><!-- /.info-box -->
                     </div><!-- /.col -->
@@ -120,7 +125,7 @@
                             <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
                             <div class="info-box-content">
                                 <span class="info-box-text">Members</span>
-                                <span class="info-box-number">20</span>
+                                <span class="info-box-number"></span>
                             </div><!-- /.info-box-content -->
                         </div><!-- /.info-box -->
                     </div><!-- /.col -->
@@ -139,7 +144,9 @@
                             </div>
                         </div><!-- /.box-header -->
                         <div class="box-body no-padding">
-                            <div id="localELO"></div>
+                            <div id="localELO">
+                                <script>ELO_List("localELO");</script>
+                            </div>
                         </div><!-- /.box-body -->
                         <div class="box-footer text-center">
                           <a href="repo-local.html" class="uppercase">View All Local ELOs</a>
@@ -160,7 +167,9 @@
                             </div>
                         </div><!-- /.box-header -->
                         <div class="box-body no-padding">
-                            <div id="remoteELO"></div>
+                            <div id="remoteELO">
+                                <script>ELO_List("remoteELO");</script>
+                            </div>
                         </div><!-- /.box-body -->
                         <div class="box-footer text-center">
                           <a href="javascript::" class="uppercase">View All Local ELOs</a>
@@ -196,15 +205,16 @@
     <script type="text/javascript">
     $('#navigation').load('widgets/navigation.html');
 
+    
     // load widgets async
-
+/*
     $.get('widgets/ELO-local-lists.html', function(data) {
         $('body').append(data);
     });
 
     $.get('widgets/ELO-remote-lists.html', function(data) {
         $('body').append(data);
-    });
+    });*/
     </script>
 </body>
 
