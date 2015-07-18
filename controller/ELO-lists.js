@@ -1,33 +1,40 @@
-function ELO_List(divID){
-    var div = document.getElementById(divID);
-    var ul = document.createElement("ul");
-    ul.setAttribute("class", "users-list clearfix");
-    var li;
-    var img;
-    var a;
-    var span;
+function ELO_List(divID) {
+    db.count({}, function(err, count) {
+        //db.find({}, function(err, docs) {
+        db.find({}).sort({ _id: 1 }).exec(function (err, docs) {
+            var div = document.getElementById(divID);
+            var ul = document.createElement("ul");
+            ul.setAttribute("class", "users-list clearfix");
+            var li;
+            var img;
+            var a;
+            var span;
+            var title;
+            var name;
 
-    for(var i=1;i<9;i++){    
-        li = document.createElement("li");
-        li.onclick = ELO_Viewer;
-        img = document.createElement("img");
-        img.setAttribute("src", "assets/img/book-64.png");
-        img.setAttribute("alt", "User Image");
-        a = document.createElement("a");
-        a.setAttribute("class", "users-list-date");
-        a.innerHTML = "ELO Test " + i;
-        span= document.createElement("span");
-        span.setAttribute("class", "users-list-date");
-        span.innerHTML = "TestMan" + i;
-        
-        li.appendChild(img);
-        li.appendChild(a);
-        li.appendChild(span);
-        ul.appendChild(li);
-    }
-    div.appendChild(ul);
-}
+            for (var i = 0; i < count; i++) {
+                title = docs[i].title;
+                name = docs[i].name;
+                li = document.createElement("li");
+                li.onclick = function() {
+                    location.href = "eloviewer.html?title=" + encodeURI(title);
+                };
+                img = document.createElement("img");
+                img.setAttribute("src", "assets/img/book-64.png");
+                img.setAttribute("alt", "User Image");
+                a = document.createElement("a");
+                a.setAttribute("class", "users-list-date");
+                a.innerHTML = title;
+                span = document.createElement("span");
+                span.setAttribute("class", "users-list-date");
+                span.innerHTML = name;
 
-function ELO_Viewer(){
-    location.href = "eloviewer.html";
+                li.appendChild(img);
+                li.appendChild(a);
+                li.appendChild(span);
+                ul.appendChild(li);
+            }
+            div.appendChild(ul);
+        });
+    });
 }
