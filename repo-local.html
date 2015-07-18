@@ -150,10 +150,11 @@
     });*/
 
     $("#fileImportDialog").change(function(evt) {
-        var strPath = $(this).val().split("/");
+        var str = $(this).val();
+        var strPath = str.split("/");
         var li = document.createElement("li");
         li.onclick = function() {
-            location.href = "eloviewer.html";
+            location.href = "eloviewer.html?=elopath="+str;
         };
 
         var img = document.createElement("img");
@@ -173,7 +174,7 @@
         li.appendChild(span);
         $("#localELO ul").append(li);
 
-        importELO(strPath[strPath.length-1], "TestMan");
+        importELO(str, strPath[strPath.length-1], "TestMan");
     });
     
     </script>

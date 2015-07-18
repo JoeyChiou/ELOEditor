@@ -28,6 +28,6 @@ function getCount(){
 	});
 }
 
-function importELO(title, name){
-	db.insert({ title: title, name: name });
+function importELO(elopath, title, name){
+	db.insert({ elopath: elopath, title: title, name: name });
 }
