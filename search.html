@@ -18,6 +18,8 @@
     <link href="assets/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="controller/settings.js"></script>
     <script type="text/javascript" src="controller/tree.js"></script>
+    <script type="text/javascript" src="controller/dbfunc.js"></script>
+    <script type="text/javascript" src="controller/ELO_Functions.js"></script>
 </head>
 
 <body class="skin-blue sidebar-mini fixed">
@@ -152,77 +154,15 @@
     <script src="plugins/fastclick/fastclick.min.js"></script>
     <!-- AdminLTE App -->
     <script src="assets/js/app.js" type="text/javascript"></script>
-    <script language="JavaScript">
-    function viewELO(){
-        var result = "";
-        result += "<a href='#'><i class='fa fa-dashboard'></i><span>BKME</span></a>";
-        result += "<ul class='treeview-menu'>";
-        result += "<li><a href='#''><i class='fa fa-circle-o'></i>elo_manifest.xml</a></li>";
-        result += "<li><a href='#''><i class='fa fa-circle-o'></i>elo_metadata.xml</a></li>";
-        result += "<li><a href='#''><i class='fa fa-circle-o'></i>elo_aggregation.xml</a></li>";
-        result += "</ul>";
-        document.getElementById("search-result-treeview").innerHTML = result;
-
-        var path = "ELOs/SCORM/BKME/";
-        var jsdom = require("jsdom");
- 
-        jsdom.env({
-            file: path + "elo_aggregation.xml",
-            scripts: ["http://code.jquery.com/jquery.js"],
-            done: function(errors, window) {
-                var tnID;
-                
-                for(var i=0;i<window.$("container").length;i++){
-                    tnID = window.$("container")[i].getAttribute("id");
-                    var treeL1 = "<ul class='treeview-menu'>";
-                    treeL1 += "<li>";
-                    treeL1 += "<a href='#'>";
-                    treeL1 += "<i class='fa fa-plus'></i>";
-                    treeL1 += window.$("container")[i].getAttribute("display_name");
-                    //treeL1 += "<i class='fa fa-angle-left pull-right'></i>";
-                    //treeL1 += "</a>";
-                    
-                    var treeL2 = "";
-                    //treeL2 = "<ul class='treeview-menu'>";
-                    for(var j=0;j<window.$("content").length;j++){
-                        if(window.$("content")[j].getAttribute("tid") == tnID){
-                            // treeL2 += "<li>";
-                            // treeL2 += "<a href=" + path + window.$("content")[j].getAttribute("id") + "/" + window.$("content")[j].getAttribute("url_name") + ".html target='iframe01'>";
-                            treeL2 += "<a href=" + path + window.$("content")[j].getAttribute("id") + "/" + window.$("content")[j].getAttribute("url_name") + ".html target='iframe01'>";
-                            // treeL2 += "<i class='fa fa-circle-o'></i>";
-                            treeL2 += "<font color='yellow'>"
-                            treeL2 += window.$("content")[j].getAttribute("url_name").toString();
-                            treeL2 += "</font>"
-                            treeL2 += "</a>";
-                            // treeL2 += "</li>";
-                        }
-                    }
-                    //treeL2 += "</ul>";
-                    treeL1 += treeL2;
-
-                    treeL1 += "</a>";
-                    treeL1 += "</li>";
-                    treeL1 += "</ul>";
-                    document.getElementById("search-result-treeview").innerHTML += treeL1;
-                    //document.getElementById("search-result-treeview").innerHTML += treeDebug;
-                }
-            }
-        });
-    }
-    </script>
 
     <script type="text/javascript">
     $('#navigation').load('widgets/navigation.html');
 
     $('#TestSearch').on('click', function() {
-        var result = "";
-        result += "<a href='#'><i class='fa fa-dashboard'></i><span>Search Result</span></a>";
-        result += "<ol class='treeview-menu'>";
-        result += "<li><a href='javascript:viewELO();'><i class='fa fa-circle-o'></i>BKME</a></li>";
-        result += "<li><a href='#''><i class='fa fa-circle-o'></i>BKME</a></li>";
-        result += "<li><a href='#''><i class='fa fa-circle-o'></i>BKME</a></li>";
-        result += "</ol>";
-        document.getElementById("search-result").innerHTML = result;
+        $("#search-result > a").remove();
+        $("#search-result > ol").remove();
+        $("#search-result").append("<a><i class='fa fa-dashboard'></i><span>Search Result</span></a>");
+        ELO_ListBySearch($("#searchTerms").val());
     });
 
     $('#localSearch').on('click', function() {

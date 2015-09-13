@@ -18,7 +18,7 @@
     <link href="assets/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="controller/auth.js"></script>
     <script type="text/javascript" src="controller/dbfunc.js"></script>
-    <script type="text/javascript" src="controller/ELO-lists.js"></script>
+    <script type="text/javascript" src="controller/ELO_Functions.js"></script>
     <script type="text/javascript">
     if (!JSON.parse(localStorage.getItem('settings'))) location.href = 'settings.html';
     </script>
@@ -89,9 +89,11 @@
                             <div class="box-header with-border">
                                 <h3 class="box-title">Local ELOs</h3>
                                 <div class="box-tools pull-right">
-                                    <button id="buttonAdd" class="btn btn-primary" onclick="chooseFile('#fileAddDialog')">Add</button>
+                                    <!--<button id="buttonAdd" class="btn btn-primary" onclick="chooseFile('#fileAddDialog')">Add</button>-->
                                     <input style="display:none;" id="fileAddDialog" type="file" nwdirectory/>
                                     <button id="buttonImport" class="btn btn-primary" onclick="$('#fileImportDialog').click();">Import</button>
+                                    <button id="buttonImport" class="btn btn-primary" onclick="$('#fileImportDialog').click();">Purge</button>
+                                    <button id="buttonImport" class="btn btn-primary" onclick="$('#fileImportDialog').click();">Publish</button>
                                     <input style="display:none;" id="fileImportDialog" type="file" nwdirectory/>
                                     <span class="label label-info">8 ELOs</span>
                                     <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
@@ -150,11 +152,12 @@
     });*/
 
     $("#fileImportDialog").change(function(evt) {
-        var str = $(this).val();
-        var strPath = str.split("/");
+        var elopath = $(this).val();
+        var elotitle = elopath.split("/");
+
         var li = document.createElement("li");
         li.onclick = function() {
-            location.href = "eloviewer.html?=elopath="+str;
+            location.href = "eloviewer.html?elopath=" + elopath;
         };
 
         var img = document.createElement("img");
@@ -163,7 +166,7 @@
 
         var a = document.createElement("a");
         a.setAttribute("class", "users-list-date");
-        a.innerHTML = strPath[strPath.length - 1];
+        a.innerHTML = elotitle[elotitle.length - 1];
 
         var span = document.createElement("span");
         span.setAttribute("class", "users-list-date");
@@ -174,9 +177,39 @@
         li.appendChild(span);
         $("#localELO ul").append(li);
 
-        importELO(str, strPath[strPath.length-1], "TestMan");
+        importELO(elopath, elotitle[elotitle.length - 1], "TestMan");
+
+        // Get the info from metadata file
+        var jsdom = require("jsdom");
+
+        jsdom.env({
+            file: elopath + "/elo_metadata.xml",
+            scripts: ["http://code.jquery.com/jquery.js"],
+            done: function(errors, window) {
+                var node;
+                var root = window.$("ELOMetadata")[0];
+                var subroot;
+                for (var count = 0; count < root.childNodes.length; count++) {
+                    subroot = root.childNodes[count]; //general
+                    if (subroot.nodeType == 1) {
+                        for (var i = 0; i < subroot.childNodes.length; i++) {
+                            node = subroot.childNodes[i];
+                            if (node.nodeType == 1) {
+                                if (node.childNodes.length > 1) {
+                                    for (var j = 0; j < node.childNodes.length; j++) {
+                                        if (node.childNodes[j].nodeType == 1)
+                                            importMetadata(elopath, subroot.nodeName, node.nodeName, node.childNodes[j].innerHTML);
+                                    }
+                                } else {
+                                    importMetadata(elopath, subroot.nodeName, node.nodeName, node.innerHTML);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        });
     });
-    
     </script>
     <script src="controller/command.js" type="text/javascript"></script>
     <script type="text/javascript">

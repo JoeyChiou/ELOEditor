@@ -1,0 +1,40 @@
+body {
+		background-attachment: fixed;
+		background-image: url(../images/background.gif);
+		background-repeat: no-repeat;
+		background-position: 10px 15px;
+}
+
+.page {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	height:600px;
+}
+
+.content {
+	height: 270px;
+	margin-top: 50px;
+	margin-left: 250px;
+	width: 500px;
+}
+
+.navigation {
+	position:absolute;
+	width: 500px;
+	top: 590px;
+	left: 250px;
+}
+
+#prevBtn {
+	background: transparent;
+	position: relative;
+	left: 10px;
+	z-index: 10;
+}
+
+#nextBtn {
+	background: transparent;
+	position: relative;
+	left: 350px;
+	z-index: 11;
+}
