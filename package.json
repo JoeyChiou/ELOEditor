@@ -9,7 +9,7 @@
     "elo"
   ],
   "window": {
-    "toolbar": false,
+    "toolbar": true,
     "resizable": true,
     "width": 1200,
     "height": 800,
