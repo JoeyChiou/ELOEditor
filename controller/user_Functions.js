@@ -163,10 +163,11 @@ function ELO_remotelist() {
             var div = document.getElementById("remoteELO");
             var ul = document.createElement("ul");
             ul.setAttribute("class", "users-list clearfix");
-
-            for (var i = 0; i < data.elos.length; i++) {
-                var url = data.elos[i].split("/");
-                $.get("http://www.commonrepo.com/api/v1/elos/" + url[4] + "/", function(data) {
+            alert(content.userID);
+            for (var i = 0; i < 7; i++) {
+                alert(data.elos[i]);
+                $.get(data.elos[i], function(data) {
+                    alert(data.name);
                     var title = data.name;
                     var name = content.userName;
                     var li = document.createElement("li");
@@ -323,7 +324,6 @@ function remoteContextMenu(divobj, eloURL, title) {
                     importELO("", title, content.userName);
                 });
             });
-            location.href = "dashboard.html";
         }
     }));
     remotemenu.append(new gui.MenuItem({
