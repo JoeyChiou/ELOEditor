@@ -163,7 +163,6 @@ function ELO_remotelist() {
             var div = document.getElementById("remoteELO");
             var ul = document.createElement("ul");
             ul.setAttribute("class", "users-list clearfix");
-
             for (var i = 0; i < data.elos.length; i++) {
                 var url = data.elos[i].split("/");
                 $.get("http://www.commonrepo.com/api/v1/elos/" + url[4] + "/", function(data) {
