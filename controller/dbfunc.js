@@ -13,10 +13,10 @@ var Datastore2 = require('nedb'),
 db.loadDatabase(function(err) { // Callback is optional
     // Now commands will be executed
     /*db.count({}, function (err, count){
-        db.insert({ title: "ELO Test "+count, name: "Timothy K. Shih" });
-        db.insert({ title: "ELO Test "+(count+1), name: "Xaver Y.R. Chen" });
-        db.insert({ title: "ELO Test "+(count+2), name: "Joey Chiou" });
-        db.insert({ title: "ELO Test "+(count+3), name: "Hannibal J.H. Hsieh" });
+    	db.insert({ title: "ELO Test "+count, name: "Timothy K. Shih" });
+    	db.insert({ title: "ELO Test "+(count+1), name: "Xaver Y.R. Chen" });
+    	db.insert({ title: "ELO Test "+(count+2), name: "Joey Chiou" });
+    	db.insert({ title: "ELO Test "+(count+3), name: "Hannibal J.H. Hsieh" });
     });*/
 });
 
@@ -39,19 +39,11 @@ function importELO(elopath, title, name) {
 }
 
 function importMetadata(elopath, group, node, value) {
-    group = group.toUpperCase();
     metadata.insert({
         elopath: elopath,
         group: group,
         node: node,
         value,
         value
-    });
-}
-
-function deleteELO(title) {
-    db.remove({
-        title: title
-    }, {}, function(err, numRemoved) {
     });
 }

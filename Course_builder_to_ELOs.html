@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Common Repo | Course builder to ELOs</title>
+	<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <!-- bootstrap 3.3.4 -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- font Awesome 4.3.0 -->
+    <link href="assets/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <!-- Ionicons 2.0.1 -->
+    <link href="assets/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+    <!-- Theme style -->
+    <link href="assets/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link href="assets/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="controller/settings.js"></script>
+</head>
+
+<body class="skin-blue sidebar-mini fixed">
+    <div class="wrapper">
+        <!-- header logo: style can be found in header.less -->
+        <header class="main-header">
+            <!-- Logo -->
+            <a href="dashboard.html" class="logo">
+                <!-- mini logo for sidebar mini 50x50 pixels -->
+                <span class="logo-mini"><b>CR</b></span>
+                <!-- logo for regular state and mobile devices -->
+                <span class="logo-lg"><b>C</b>ommon</b> <b>R</b>epo</span>
+            </a>
+
+            <!-- Header Navbar: style can be found in header.less -->
+            <nav class="navbar navbar-static-top" role="navigation">
+                <!-- Sidebar toggle button-->
+                <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                  </a>
+                <!-- Navbar Right Menu -->
+                <div class="navbar-custom-menu">
+                    <div id="navigation"></div>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Left side column. contains the logo and sidebar -->
+        <aside class="main-sidebar">
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar">
+                <!-- Sidebar user panel -->
+                <div class="user-panel">
+                    <div class="pull-left image">
+                        <img src="assets/img/avatar5.png" class="img-circle" alt="User Image" />
+                    </div>
+                    <div class="pull-left info">
+                        <p>
+                            <span class='uname'></span>
+                        </p>
+                        <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                    </div>
+                </div>
+                <!-- sidebar menu: : style can be found in sidebar.less -->
+                <ul class="sidebar-menu">
+                    
+                </ul>
+            </section>
+        </aside>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1>
+                    Convert course of Course Builder to ELOs
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="dashboard.html"><i class="fa fa-dashboard"></i>Main</a></li>
+                    <li class="active">Convert course of Course Builder to ELOs</li>
+                </ol>
+            </section>
+
+            <!-- Main content -->
+            <section class="content">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="importTerms">Import your course of Course Builder:</label>
+                            <br>
+                            <button id="buttonImport" class="btn btn-primary" onclick="$('#fileImportDialog').click();">Import course of GCB</button>
+                            <input style="display:none;" id="fileImportDialog" type="file" nwdirectory />
+                            <!--nwdirectory will return the path of directory -->
+                            
+                            <div id="path">
+                            </div>
+
+                            <label class="control-label hide" for="importTerms1"><i class="fa fa-times-circle-o"></i> Required</label>
+                        </div>
+                        <div class="box-body no-padding">
+                                <div id="localGCB">
+                                </div>
+                        </div>
+                        <br/>
+                        <button type="button" id="convert" class="btn bg-olive">Convert</button>
+                        <button type="button" id="skip" class="btn bg-gray">Skip</button>
+                        <br>
+                        <!-- test to read file -->
+                        <br>
+                        <p id ="demo"></p>
+                        <p id = "demo1"></p>
+                        <br>
+                        <textarea id="fileContent" cols="100" rows="10"></textarea>
+                    </div>
+                </div>
+            </section>
+            <section class="content">
+                <div class="row">
+                    <div id="columns">
+                    </div>
+                </div>
+                <!-- /.box-body -->
+            </section> 
+            <!-- /.content -->
+        </div>
+        <!-- ./Content Wrapper -->
+
+        <footer class="main-footer">
+            <div class="pull-right hidden-xs">
+              <b>Version</b> 0.1.0
+            </div>
+            <strong>Copyright &copy; 2015 <a href="http://edxpdrlab.ncu.cc">NCU Open edX PDR Lab</a>.</strong> All rights reserved.
+        </footer>
+    </div>
+
+    <!-- jQuery 2.1.4 -->
+    <script src="assets/js/jquery.min.js" type="text/javascript"></script>
+    <!-- jQuery UI 1.11.4 -->
+    <script src="assets/js/jquery-ui.min.js" type="text/javascript"></script>
+    <!-- Bootstrap 3.3.4 -->
+    <script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
+    <!-- SlimScroll -->
+    <script src="plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <!-- FastClick -->
+    <script src="plugins/fastclick/fastclick.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="assets/js/app.js" type="text/javascript"></script>
+    <script type="text/javascript" src="controller/GCB_Function.js"></script>
+    <script type="text/javascript" src="controller/copyfile.js"></script>
+    <script type="text/javascript" src="controller/modify_GCB_html.js"></script>
+    <script type="text/javascript">
+    $('#navigation').load('widgets/navigation.html');
+
+    /*function chooseFile(name) {
+        var chooser = $(name);
+        chooser.change(function(evt) {
+            console.log($(this).val());
+        });
+
+        //chooser.trigger('click');  
+    }*/
+    $("#fileImportDialog").change(function(evt){
+        var gcbpath = $(this).val();
+
+        var ul = document.createElement("ul");
+        ul.setAttribute("id", "gcblist");       /* set id=gcblist for ul*/
+        var li = document.createElement("li");
+
+        var img = document.createElement("img");
+        img.setAttribute("src", "assets/img/book-64.png");
+        img.setAttribute("alt", "User Image");
+
+        ul.appendChild(img);
+        ul.appendChild(li);
+        li.innerHTML = gcbpath;
+        $(path).append(ul);
+
+    });
+
+
+    $("#convert").on('click', function() {
+        mkdirectory();
+        open_aggregation_file();
+        open_manifest_file();
+        create_static_file();
+        mycopyfile(modify_html);
+    });
+
+
+  //chooseFile('#fileDialog');
+
+    $('#skip').on('click', function() {
+        if (!(settings && !settings.dummy)) {
+            localStorage.setItem('settings', JSON.stringify({
+                'dummy': 'object',
+                'location': 'new york',
+                'flickr': 'bikes'
+            }));
+        }
+        location.href = 'dashboard.html';
+    });
+    </script>
+</body>
+
+</html>

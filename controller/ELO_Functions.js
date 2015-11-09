@@ -1,46 +1,27 @@
-var gui = require("nw.gui");
-
 // Count all documents in the datastore
 function getCount() {
     db.count({}, function(err, count) {
         $("span:contains(Local ELOs) ~ span").text(count);
         $("span:contains(Remote ELOs) ~ span").text(count + 20);
-        $("span:contains(Likes) ~ span").text(count + 34);
-        $("span:contains(Members) ~ span").text(count + 73);
+        $("span:contains(Likes) ~ span").text(count + 10000);
+        $("span:contains(Members) ~ span").text(count + 10908);
     });
 }
 
 function MT_Search(str) {
     var query = str.split(",");
-    // alert(str);
+
     metadata.find({
-        group: new RegExp(query[0].toUpperCase()),
+        group: new RegExp(query[0]),
         node: new RegExp(query[1]),
         value: new RegExp(query[2])
     }, function(err, docs) {
-        var temp;
-        var ELOname;
-
         if (docs.length > 0) {
-            hideDiv();
-
-            $("#searchresults").append("<div id='MTdiv' class='box box-info'>");
-            $("#MTdiv").append("<div id='MTresults' class='box-header with-border'>");
-            $("#MTresults").append("<h3 class='box-title'>Results</h3>");
-            $("#MTresults").append("<p>");
-
             for (var i = 0; i < docs.length; i++) {
-                //alert(docs[i].elopath);
-                temp = docs[i].elopath.split("/");
-                ELOname = temp[temp.length - 1]
-                $("#MTresults").append("<a href='eloviewer.html?elopath=" + docs[i].elopath + "'>" + ELOname + "</a><br>");
+                alert(docs[i].elopath);
             }
-
-            $("#MTresults").append("</p>");
-            $("#MTdiv").append("</div>");
-            $("searchresults").append("</div>");
-        } else {
-            alert("no results!");
+        }else{
+            alert("none");
         }
     });
 }
@@ -132,8 +113,6 @@ function ELO_List(divID) {
                 elopath = docs[i].elopath;
                 li = document.createElement("li");
                 li.setAttribute("onclick", "intentView('" + elopath + "')");
-                localContextMenu(li, title, name);
-
                 img = document.createElement("img");
                 img.setAttribute("src", "assets/img/book-64.png");
                 img.setAttribute("alt", "User Image");
@@ -154,212 +133,6 @@ function ELO_List(divID) {
     });
 }
 
-function ELO_remotelist() {
-    var fs = require('fs');
-    fs.readFile('collections/users.json', function(err, filedata) {
-        var content = JSON.parse(filedata);
-
-        $.get("http://www.commonrepo.com/api/v1/users/" + content.userID + "/", function(data) {
-            var div = document.getElementById("remoteELO");
-            var ul = document.createElement("ul");
-            ul.setAttribute("class", "users-list clearfix");
-            for (var i = 0; i < data.elos.length; i++) {
-                var url = data.elos[i].split("/");
-                $.get("http://www.commonrepo.com/api/v1/elos/" + url[4] + "/", function(data) {
-                    var title = data.name;
-                    var name = content.userName;
-                    var li = document.createElement("li");
-                    remoteContextMenu(li, data.url, title);
-
-                    var img = document.createElement("img");
-                    img.setAttribute("src", "assets/img/book-64.png");
-                    img.setAttribute("alt", "User Image");
-
-                    var a = document.createElement("a");
-                    a.setAttribute("class", "users-list-date");
-                    a.innerHTML = title;
-
-                    var span = document.createElement("span");
-                    span.setAttribute("class", "users-list-date");
-                    span.innerHTML = name;
-
-                    li.appendChild(img);
-                    li.appendChild(a);
-                    li.appendChild(span);
-                    ul.appendChild(li);
-                });
-            }
-            div.appendChild(ul);
-        });
-
-        /*var request = require('request');
-        request({
-            headers: {
-                'Authorization': 'Token ' + content.AUTHKEY
-            },
-            url: "http://commonrepo.herokuapp.com/api/v1/elos/"
-        }, function(error, response, body) {
-            if (!error && response.statusCode == 200) {
-                var elos = JSON.parse(body);
-                var div = document.getElementById("remoteELO");
-                var ul = document.createElement("ul");
-                ul.setAttribute("class", "users-list clearfix");
-                for (var i = 0; i < elos.length; i++) {
-                    // if (elos[i].url == "http://commonrepo.herokuapp.com/api/v1/elos/" + content.userID + "/") {
-                    if (elos[i].author == "http://commonrepo.herokuapp.com/api/v1/users/" + content.userID + "/") {
-                        // $("#remoteELO").append("<ul class='users-list clearfix'>");
-
-                        var title = elos[i].name;
-                        var name = content.userName;
-                        // var elopath = docs[i].elopath;
-                        var li = document.createElement("li");
-                        // li.setAttribute("onclick", "intentView('" + elopath + "')");
-                        remoteContextMenu(li, elos[i].url, title);
-
-                        var img = document.createElement("img");
-                        img.setAttribute("src", "assets/img/book-64.png");
-                        img.setAttribute("alt", "User Image");
-
-                        var a = document.createElement("a");
-                        a.setAttribute("class", "users-list-date");
-                        a.innerHTML = title;
-
-                        var span = document.createElement("span");
-                        span.setAttribute("class", "users-list-date");
-                        span.innerHTML = name;
-
-                        li.appendChild(img);
-                        li.appendChild(a);
-                        li.appendChild(span);
-                        ul.appendChild(li);
-                    }
-                }
-                div.appendChild(ul);
-            }
-        });*/
-    });
-
-}
-
 function intentView(elopath) {
     location.href = "eloviewer.html?elopath=" + elopath;
-}
-
-// context for local
-function localContextMenu(divobj, elotitle, eloname) {
-    localmenu = new gui.Menu();
-    localmenu.append(new gui.MenuItem({
-        label: 'Import',
-        click: function() {
-            $('#fileImportDialog').click();
-        }
-    }));
-    localmenu.append(new gui.MenuItem({
-        label: 'Upload',
-        click: function() {
-            var fs = require('fs');
-            fs.readFile('collections/users.json', function(err, filedata) {
-                var content = JSON.parse(filedata);
-                var querystring = require('querystring');
-                var request = require('request');
-
-                var form = {
-                    name: elotitle,
-                    author: 'http://commonrepo.herokuapp.com/api/v1/users/' + content.userID + '/',
-                    original_type: '1'
-                };
-
-                var formData = querystring.stringify(form);
-
-                request({
-                    url: 'http://commonrepo.herokuapp.com/api/v1/elos/',
-                    method: 'POST',
-                    headers: {
-                        'Authorization': 'Token ' + content.AUTHKEY,
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    },
-                    body: formData
-                }, function(error, response, body) {
-                    if (!error) {
-                        var info = JSON.parse(body);
-                        for (var i = 0; i < info.length; i++) {
-                            alert(info[i].url);
-                        }
-                    }
-                });
-            });
-            location.href = "dashboard.html";
-        }
-    }));
-    localmenu.append(new gui.MenuItem({
-        label: 'Delete',
-        click: function() {
-            $.getScript("controller/dbfunc.js", function(data, textStatus, jqxhr) {
-                deleteELO(elotitle);
-            });
-            divobj.remove();
-        }
-    }));
-
-    divobj.addEventListener('contextmenu', function(ev) {
-        ev.preventDefault();
-        localmenu.popup(ev.x, ev.y);
-        return false;
-    });
-}
-
-// context for remote
-function remoteContextMenu(divobj, eloURL, title) {
-    remotemenu = new gui.Menu();
-    remotemenu.append(new gui.MenuItem({
-        label: 'Download',
-        click: function() {
-            var fs = require('fs');
-            fs.readFile('collections/users.json', function(err, filedata) {
-                var content = JSON.parse(filedata);
-
-                $.getScript("controller/dbfunc.js", function(data, textStatus, jqxhr) {
-                    importELO("", title, content.userName);
-                });
-            });
-            location.href = "dashboard.html";
-        }
-    }));
-    remotemenu.append(new gui.MenuItem({
-        label: 'Purge',
-        click: function() {
-            var _elourl = eloURL.split("/");
-            var eloID = _elourl[_elourl.length - 2];
-
-            var fs = require('fs');
-            fs.readFile('collections/users.json', function(err, filedata) {
-                var content = JSON.parse(filedata);
-                var request = require('request');
-
-                request({
-                    url: 'http://commonrepo.herokuapp.com/api/v1/elos/' + eloID + '/',
-                    method: 'DELETE',
-                    headers: {
-                        'Authorization': 'Token ' + content.AUTHKEY,
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    }
-                }, function(error, response, body) {
-                    alert("Purge Successful....");
-                    location.href = "dashboard.html";
-                });
-            });
-        }
-    }));
-    remotemenu.append(new gui.MenuItem({
-        label: 'Publish',
-        click: function() {
-
-        }
-    }));
-
-    divobj.addEventListener('contextmenu', function(ev) {
-        ev.preventDefault();
-        remotemenu.popup(ev.x, ev.y);
-        return false;
-    });
 }
