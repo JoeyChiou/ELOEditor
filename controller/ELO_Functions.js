@@ -116,40 +116,37 @@ function ELO_List(divID) {
             //     _id: 1
             // }).exec(function(err, docs) {
             var div = document.getElementById(divID);
-            var ul = document.createElement("ul");
-            ul.setAttribute("class", "users-list clearfix");
-            var li;
-            var img;
-            var a;
-            var span;
-            var title;
-            var name;
-            var elopath;
+            $("#" + divID).append("<ul class='users-list clearfix'></ul>");
+            // var ul = document.createElement("ul");
+            // ul.setAttribute("class", "users-list clearfix");
+            // div.appendChild(ul);
 
             for (var i = 0; i < count; i++) {
-                title = docs[i].title;
-                name = docs[i].name;
-                elopath = docs[i].elopath;
-                li = document.createElement("li");
+                var title = docs[i].title;
+                var name = docs[i].name;
+                var elopath = docs[i].elopath;
+                var li = document.createElement("li");
                 li.setAttribute("onclick", "intentView('" + elopath + "')");
-                localContextMenu(li, title, name);
+                localContextMenu(li, title, name, elopath);
 
-                img = document.createElement("img");
+                var img = document.createElement("img");
                 img.setAttribute("src", "assets/img/book-64.png");
                 img.setAttribute("alt", "User Image");
-                a = document.createElement("a");
+
+                var a = document.createElement("a");
                 a.setAttribute("class", "users-list-date");
                 a.innerHTML = title;
-                span = document.createElement("span");
+
+                var span = document.createElement("span");
                 span.setAttribute("class", "users-list-date");
                 span.innerHTML = name;
 
                 li.appendChild(img);
                 li.appendChild(a);
                 li.appendChild(span);
-                ul.appendChild(li);
+                //ul.appendChild(li);
+                $("#" + divID + " ul").append(li);
             }
-            div.appendChild(ul);
         });
     });
 }
@@ -159,17 +156,17 @@ function ELO_remotelist() {
     fs.readFile('collections/users.json', function(err, filedata) {
         var content = JSON.parse(filedata);
 
-        $.get("http://www.commonrepo.com/api/v1/users/" + content.userID + "/", function(data) {
+        $.get("http://www.commonrepo.com/api/v2/users/" + content.userID + "/", function(data) {
             var div = document.getElementById("remoteELO");
             var ul = document.createElement("ul");
             ul.setAttribute("class", "users-list clearfix");
             for (var i = 0; i < data.elos.length; i++) {
-                var url = data.elos[i].split("/");
-                $.get("http://www.commonrepo.com/api/v1/elos/" + url[4] + "/", function(data) {
+                $.get("http://www.commonrepo.com/api/v2/elos/" + data.elos[i] + "/", function(data) {
                     var title = data.name;
                     var name = content.userName;
                     var li = document.createElement("li");
-                    remoteContextMenu(li, data.url, title);
+                    li.setAttribute("onclick", "intentViewRemoteELO('" + data.id + "')");
+                    remoteContextMenu(li, data.url, title, data.init_file);
 
                     var img = document.createElement("img");
                     img.setAttribute("src", "assets/img/book-64.png");
@@ -245,8 +242,12 @@ function intentView(elopath) {
     location.href = "eloviewer.html?elopath=" + elopath;
 }
 
+function intentViewRemoteELO(eloID) {
+    location.href = "eloviewerRemote.html?eloID=" + eloID;
+}
+
 // context for local
-function localContextMenu(divobj, elotitle, eloname) {
+function localContextMenu(divobj, elotitle, eloname, elopath) {
     localmenu = new gui.Menu();
     localmenu.append(new gui.MenuItem({
         label: 'Import',
@@ -257,6 +258,11 @@ function localContextMenu(divobj, elotitle, eloname) {
     localmenu.append(new gui.MenuItem({
         label: 'Upload',
         click: function() {
+            var AdmZip = require('adm-zip');
+            var zip = new AdmZip();
+            zip.addLocalFolder(elopath);
+            zip.writeZip(elopath + elotitle + ".zip");
+
             var fs = require('fs');
             fs.readFile('collections/users.json', function(err, filedata) {
                 var content = JSON.parse(filedata);
@@ -265,26 +271,30 @@ function localContextMenu(divobj, elotitle, eloname) {
 
                 var form = {
                     name: elotitle,
-                    author: 'http://commonrepo.herokuapp.com/api/v1/users/' + content.userID + '/',
-                    original_type: '1'
+                    author: content.userID,
+                    original_type: '1',
+                    file: fs.createReadStream(elopath + elotitle + ".zip")
+                        // verion 1
+                        //author: 'http://commonrepo.herokuapp.com/api/v1/users/' + content.userID + '/',
+                        //original_type: 'http://wwww.commonrepo.com/api/v1/elotypes/1/'
                 };
 
                 var formData = querystring.stringify(form);
 
                 request({
-                    url: 'http://commonrepo.herokuapp.com/api/v1/elos/',
+                    url: 'http://commonrepo.herokuapp.com/api/v2/elos/',
                     method: 'POST',
                     headers: {
                         'Authorization': 'Token ' + content.AUTHKEY,
                         'Content-Type': 'application/x-www-form-urlencoded'
                     },
-                    body: formData
+                    formData: form
                 }, function(error, response, body) {
-                    if (!error) {
-                        var info = JSON.parse(body);
+                    if (!error && response.statusCode == 200) {
+                        /*var info = JSON.parse(body);
                         for (var i = 0; i < info.length; i++) {
                             alert(info[i].url);
-                        }
+                        }*/
                     }
                 });
             });
@@ -309,20 +319,43 @@ function localContextMenu(divobj, elotitle, eloname) {
 }
 
 // context for remote
-function remoteContextMenu(divobj, eloURL, title) {
+function remoteContextMenu(divobj, eloURL, title, filepath) {
     remotemenu = new gui.Menu();
     remotemenu.append(new gui.MenuItem({
         label: 'Download',
         click: function() {
+            //document.getElementById("iframe_dl").src = filepath;
+            /*var https = require('https');
             var fs = require('fs');
-            fs.readFile('collections/users.json', function(err, filedata) {
-                var content = JSON.parse(filedata);
+
+            var zipfile = "/Users/JoeyChiou/Downloads/ELOs/" + title + ".zip";
+            var file = fs.createWriteStream(zipfile);
+            var request = https.get(filepath, function(response) {
+                response.pipe(file);
+            });
+
+            file.on('close', function() {
+                var AdmZip = require('adm-zip');
+                var zip = new AdmZip("/Users/JoeyChiou/Downloads/ELOs/" + title + ".zip");
+                zip.extractAllTo("/Users/JoeyChiou/Downloads/ELOs/" + title, true);
 
                 $.getScript("controller/dbfunc.js", function(data, textStatus, jqxhr) {
-                    importELO("", title, content.userName);
+                    importELO("/Users/JoeyChiou/Downloads/ELOs/" + title, title, "TestMan");
                 });
-            });
-            location.href = "dashboard.html";
+
+                $("#dashboardModal1").modal();
+                //location.href = "dashboard.html";
+            });*/
+            $("#dashboardModal1").modal();
+            // var AdmZip = require('adm-zip');
+            // var zip = new AdmZip("/Users/JoeyChiou/Downloads/ELOs/" + title + ".zip");
+            // zip.extractAllTo("/Users/JoeyChiou/Downloads/ELOs/" + title, true);
+
+            // $.getScript("controller/dbfunc.js", function(data, textStatus, jqxhr) {
+            //     importELO("/Users/JoeyChiou/Downloads/ELOs/" + title, title, "TestMan");
+            // });
+
+            // location.href = "dashboard.html";
         }
     }));
     remotemenu.append(new gui.MenuItem({
@@ -337,23 +370,55 @@ function remoteContextMenu(divobj, eloURL, title) {
                 var request = require('request');
 
                 request({
-                    url: 'http://commonrepo.herokuapp.com/api/v1/elos/' + eloID + '/',
+                    url: 'http://commonrepo.herokuapp.com/api/v2/elos/' + eloID + '/',
                     method: 'DELETE',
                     headers: {
                         'Authorization': 'Token ' + content.AUTHKEY,
                         'Content-Type': 'application/x-www-form-urlencoded'
                     }
                 }, function(error, response, body) {
-                    alert("Purge Successful....");
-                    location.href = "dashboard.html";
+                    //if(!error && response.statusCode == 200)
                 });
             });
+            location.href = "dashboard.html";
         }
     }));
     remotemenu.append(new gui.MenuItem({
         label: 'Publish',
         click: function() {
+            var _elourl = eloURL.split("/");
+            var eloID = _elourl[_elourl.length - 2];
 
+            var fs = require('fs');
+            fs.readFile('collections/users.json', function(err, filedata) {
+                var content = JSON.parse(filedata);
+                var querystring = require('querystring');
+                var request = require('request');
+
+                var form = {
+                    is_public: '1'
+                };
+
+                var formData = querystring.stringify(form);
+                // url: 'http://commonrepo.herokuapp.com/api/v2/elos/' + eloID + '/',
+                // url: 'http://commonrepo.herokuapp.com/api/v2/elos/583/',
+                //url: 'http://commonrepo.herokuapp.com/api/v2/elos/' + eloID + '/',
+                // 'Content-Type': 'application/x-www-form-urlencoded'
+                request({
+                    url: 'http://commonrepo.herokuapp.com/api/v2/elos/583/',
+                    method: 'PATCH',
+                    headers: {
+                        'Authorization': 'Token ' + content.AUTHKEY,
+                        'Content-Type': 'application/json;charset=utf-8'
+                    },
+                    formData: form
+                }, function(error, response, body) {
+                    //if(!error && response.statusCode == 200)
+                    console.log("status:" + response.statusCode);
+                    console.log(JSON.stringify(response.headers));
+                });
+            });
+            location.href = "dashboard.html";
         }
     }));
 

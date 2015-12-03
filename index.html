@@ -137,18 +137,29 @@
             password: $("#password").val().trim(),
             username: $("#userid").val().trim()
         }, function(data) {
-            var AUTHKEY;
-            var fs = require('fs');
-            fs.readFile('collections/users.json', function(err, filedata) {
-                if (err) throw err;
-                //console.log(data);
-                var content = JSON.parse(filedata);
-                AUTHKEY = content.AUTHKEY;
-                if (AUTHKEY == data.auth_token) {
-                    alert("Wellcome Back!");
-                    location.href = "dashboard.html";
+            var AUTHKEY = data.auth_token;
+
+            var request = require('request');
+            request({
+                url: 'http://www.commonrepo.com/api/v1/auth/me/',
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Token ' + AUTHKEY
+                }
+            }, function(error, response, body) {
+                if (!error && response.statusCode == 200) {
+                    var info = JSON.parse(body);
+
+                    var fs = require('fs');
+                    fs.writeFile('collections/users.json', "{ \"userID\": \"" + info.id + "\", \"AUTHKEY\": \"" + AUTHKEY + "\" , \"userName\": \"" + info.username + "\"}", function(err) {
+                        if (err) throw err;
+                        location.href = "dashboard.html";
+                    });
+                } else {
+                    alert("Check your account or password and try it again, please.");
                 }
             });
+
         });*/
         location.href = "dashboard.html";
     }

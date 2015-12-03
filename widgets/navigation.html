@@ -14,7 +14,7 @@
                 </a>
             </li>
 
-            <li class="dropdown task-menu">
+            <!--<li class="dropdown task-menu">
                 <a class="dropdown-toggle" data-toggle="modal" data-target="#myModal1">
                     <i class="fa fa-google-plus"></i> 
                     <span>INVITED AUTHOR(Similarity)</span>
@@ -33,12 +33,19 @@
                     <i class="fa fa-google-plus"></i> 
                     <span>INVITED AUTHOR(Google+)</span>
                 </a>
-            </li>
+            </li>-->
 
             <li class="dropdown task-menu">
                 <a class="dropdown-toggle" href="author_manage.html">
                     <i class="fa fa-google-plus"></i> 
                     <span>MANAGE AUTHOR GROUP</span>
+                </a>
+            </li>
+
+            <li class="dropdown task-menu">
+                <a class="dropdown-toggle" href="testfunc.html">
+                    <i class="fa fa-google-plus"></i> 
+                    <span>Test Function</span>
                 </a>
             </li>
         </ul>
@@ -174,9 +181,9 @@
 </ul>
 
 <script type="text/javascript">
-    var user = JSON.parse(localStorage.getItem('user'));
+    //var user = JSON.parse(localStorage.getItem('user'));
     var settings = JSON.parse(localStorage.getItem('settings'));
-    $('.uname').text(user.name.trim());
+    //$('.uname').text(user.name.trim());
 
     $('#signout').on('click', function(e) {
         e.preventDefault();
