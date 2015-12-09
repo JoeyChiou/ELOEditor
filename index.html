@@ -133,7 +133,7 @@
     // });
 
     function login() {
-        /*$.post("http://commonrepo.herokuapp.com/api/v1/auth/login/", {
+        $.post("http://commonrepo.herokuapp.com/api/v1/auth/login/", {
             password: $("#password").val().trim(),
             username: $("#userid").val().trim()
         }, function(data) {
@@ -156,12 +156,12 @@
                         location.href = "dashboard.html";
                     });
                 } else {
-                    alert("Check your account or password and try it again, please.");
+                    //alert("Check your account or password and try it again, please.");
                 }
             });
 
-        });*/
-        location.href = "dashboard.html";
+        });
+        //location.href = "dashboard.html";
     }
     </script>
 </body>

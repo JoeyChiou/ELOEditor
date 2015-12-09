@@ -31,34 +31,80 @@
     <script type="text/javascript" src="controller/settings.js"></script>
     <script>
     function join(groupID) {
-        // alert(groupID);
-    /*fs.readFile('collections/users.json', function(err, filedata) {
+        var fs = require('fs');
+        fs.readFile('collections/users.json', function(err, filedata) {
+            var content = JSON.parse(filedata);
+
             var request = require('request');
             request({
                 url: 'http://www.commonrepo.com/api/v2/groups/join/' + groupID + '/',
                 method: 'POST',
                 headers: {
-                    'Authorization': 'Token ' + filedata.AUTHKEY,
-                    'Content-Type': 'application/x-www-form-urlencoded'
+                    'Authorization': 'Token ' + content.AUTHKEY,
+                    'Content-Type': 'application/json'
                 }
             }, function(error, response, body) {
                 if (!error && response.statusCode == 200) {
 
                 } else {
-                    alert(response.statusCode);
+                    console.log("response:" + response.statusCode);
+                    console.log("body:" + body);
                 }
             });
-            $.post("http://www.commonrepo.com/api/v2/groups/join/" + groupID + "/", {
-                auth_token: filedata.AUTHKEY
-            }, function(data, status) {
-                alert(status);
+        });
+    }
+
+    function groupInfo(groupID) {
+        $("#groupinfotbody").empty();
+        $.get("http://www.commonrepo.com/api/v2/groups/" + groupID + "/", function(data) {
+            $.get("http://www.commonrepo.com/api/v2/users/" + data.creator + "/", function(data2) {
+                $("#groupinfotbody").append("<tr><td>Group name:</td><td>" + data.name + "</td></tr>");
+                $("#groupinfotbody").append("<tr><td>Group creator:</td><td>" + data2.username + "</td></tr>");
+
+                $("#groupinfotbody").append("<tr><td>Created date:</td><td>" + data.create_date + "</td></tr>");
+                $("#groupinfotbody").append("<tr><td>description:</td><td>" + data.description + "</td></tr>");
+
+                $("#groupinfotbody").append("<tr><td colspan='2'>Members:</td></tr>");
+                for (var index = 0; index < data.members.length; index++) {
+                    $.get("http://www.commonrepo.com/api/v2/users/" + data.members[index] + "/", function(data3) {
+                        $("#groupinfotbody").append("<tr><td></td><td>" + data3.username + "</td></tr>");
+                    });
+                }
             });
-        });*/
+
+
+
+
+
+        });
+
+        $("#groupinfoModal").modal();
     }
     </script>
 </head>
 
 <body class="skin-blue sidebar-mini fixed">
+    <!-- Modal Group Info -->
+    <div id="groupinfoModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Group Information</h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-striped">
+                        <tbody id="groupinfotbody">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Modal -->
     <div id="myModal1" class="modal fade" role="dialog">
         <div class="modal-dialog">
@@ -289,7 +335,7 @@
                                                     }
 
                                                     for (var index = 0; index < allgroups.length; index++) {
-                                                        $("#invitationlist").append("<tr><td width='80%'>" + invitegroups[index] + "</td><td width='10%'><button type='button' class='btn btn-warning'>Info</button></td><td width='10%'><button type='button' class='btn btn-success' onclick='join(" + invitegroupsID[index] + ")'>Join</button></td></tr>");
+                                                        $("#invitationlist").append("<tr><td width='80%'>" + invitegroups[index] + "</td><td width='10%'><button type='button' class='btn btn-warning' onclick='groupInfo(" + invitegroupsID[index] + ")'>Info</button></td><td width='10%'><button type='button' class='btn btn-success' onclick='join(" + invitegroupsID[index] + ")'>Join</button></td></tr>");
                                                     }
                                                 });
                                                 //var tc2 = "under graduate"; //str.replace(/\s/g,'');
@@ -337,7 +383,7 @@
                                                 var groups = data.commonrepo_groups;
                                                 for (var index = 0; index < groups.length; index++) {
                                                     $.get("http://www.commonrepo.com/api/v2/groups/" + groups[index] + "/", function(data) {
-                                                        $("#groupcreated").append("<tr><td width='90%'>" + data.name + "</td><td width='10%'><button type='button' class='btn btn-danger'>Abort</button></td></tr>");
+                                                        $("#groupcreated").append("<tr><td width='80%'>" + data.name + "</td><td width='10%'><button type='button' class='btn btn-warning' onclick='groupInfo(" + data.id + ")'>Info</button></td><td width='10%'><button type='button' class='btn btn-danger'>Abort</button></td></tr>");
                                                     });
                                                 }
                                             });
@@ -370,7 +416,7 @@
                                                 var groups = data.commonrepo_groups_members;
                                                 for (var index = 0; index < groups.length; index++) {
                                                     $.get("http://www.commonrepo.com/api/v2/groups/" + groups[index] + "/", function(data) {
-                                                        $("#groupjoined").append("<tr><td width='90%'>" + data.name + "</td><td width='10%'><button type='button' class='btn btn-danger'>Abort</button></td></tr>");
+                                                        $("#groupjoined").append("<tr><td width='80%'>" + data.name + "</td><td width='10%'><button type='button' class='btn btn-warning' onclick='groupInfo(" + data.id + ")'>Info</button></td><td width='10%'><button type='button' class='btn btn-danger'>Abort</button></td></tr>");
                                                     });
                                                 }
                                             });
