@@ -114,31 +114,45 @@
                                     fs.readFile('collections/users.json', function(err, filedata) {
                                         var content = JSON.parse(filedata);
 
-                                        $.get("http://www.commonrepo.com/api/v2/users/" + content.userID + "/", function(data) {
-                                            $("#content").append("<p>The number of ELOs the author created: ELOc(User)<br>" + data.elos.length + "</p>");
+                                        var fs = require('fs');
+                                        fs.readFile('collections/users.json', function(err, filedata) {
+                                            var content = JSON.parse(filedata);
+                                            var request = require('request');
 
-                                            if (data.elos_from_others.length == undefined)
-                                                var fromother = 0;
-                                            else
-                                                var fromother = data.elos_from_others.length;
+                                            request({
+                                                url: 'http://www.commonrepo.com/api/v2/users/' + content.userID + '/',
+                                                method: 'GET',
+                                                headers: {
+                                                    'Authorization': 'Token ' + content.AUTHKEY
+                                                }
+                                            }, function(error, response, body) {
+                                                var info = JSON.parse(body);
 
-                                            $("#content").append("<p>The number of ELOs the author revised: ELOr(User)<br>" + fromother + "</p>");
+                                                $("#content").append("<p>The number of ELOs the author created: ELOc(User)<br>" + info.elos.length + "</p>");
+                                                $("#content").append("<p>The number of ELOs the author revised: ELOr(User)<br>" + info.elos_from_others + "</p>");
+                                                $("#content").append("<p>The number of ELOs the author published (including created and revised ELOs): ELOp(User)<br>" + info.elos_published + "</p>");
+                                                $("#content").append("<p>The number of other ELOs directly revised by others from the author’s published ELOs: ELOu(User)<br>" + info.elos.length + "</p>");
 
-                                            if (data.elos_published.length == undefined)
-                                                var published = 0;
-                                            else
-                                                var published = data.elos_published.length;
+                                                $("#content").append("<br><br><br><br>");
 
-                                            $("#content").append("<p>The number of ELOs the author published (including created and revised ELOs): ELOp(User)<br>" + published + "</p>");
+                                                $("#content").append("<p>The number of Author Groups created by the author: Groupc (User)<br>" + info.commonrepo_groups.length + "</p>");
+                                                $("#content").append("<p>The number of Author Groups joined (i.e., the “follow” relationship) by the author: Groupj(User)<br>" + info.commonrepo_groups_members.length + "</p>");
 
-                                            $("#content").append("<p>The number of other ELOs directly revised by others from the author’s published ELOs: ELOu(User)<br>" + data.elos.length + "</p>");
+                                                $("#content").append("<p>How many other authors joined the Author Groups created by the author (i.e., the “followed by” relationship): Authorj(User)<br>" + getTotalMember(info.commonrepo_groups) + "</p>");
+                                            });
 
-                                            $("#content").append("<br><br><br><br>");
+                                            request({
+                                                url: 'http://www.commonrepo.com/api/v2/metadata/',
+                                                method: 'GET',
+                                                headers: {
+                                                    'Authorization': 'Token ' + content.AUTHKEY
+                                                }
+                                            }, function(error, response, body) {
+                                                console.log("resp:" + response.statusCode);
+                                                console.log("bod:" + body);
 
-                                            $("#content").append("<p>The number of Author Groups created by the author: Groupc (User)<br>" + data.commonrepo_groups.length + "</p>");
-                                            $("#content").append("<p>The number of Author Groups joined (i.e., the “follow” relationship) by the author: Groupj(User)<br>" + data.commonrepo_groups_members.length + "</p>");
-
-                                            $("#content").append("<p>How many other authors joined the Author Groups created by the author (i.e., the “followed by” relationship): Authorj(User)<br>" + getTotalMember(data.commonrepo_groups) + "</p>");
+                                                var info = JSON.parse(body);
+                                            });
                                         });
                                     });
                                     </script>

@@ -91,7 +91,7 @@
                             </div>
                             <!-- /.box-header -->
                             <div class="box-body">
-                                <iframe name="iframe01" width="100%" height="500" frameborder="0" seamless>
+                                <iframe name="iframe01" width="100%" height="500" src="" frameborder="0" seamless>
                                 </iframe>
                             </div>
                         </div>
@@ -154,47 +154,46 @@
     </script>
     <script type="text/javascript">
     $('#navigation').load('widgets/navigation.html');
-
-    $('#TestSearch').on('click', function() {
-        var result = "";
-        result += "<a href='#'><i class='fa fa-dashboard'></i><span>Search Result</span></a>";
-        result += "<ol class='treeview-menu'>";
-        result += "<li><a href='javascript:viewELO();'><i class='fa fa-circle-o'></i>BKME</a></li>";
-        result += "<li><a href='#''><i class='fa fa-circle-o'></i>BKME</a></li>";
-        result += "<li><a href='#''><i class='fa fa-circle-o'></i>BKME</a></li>";
-        result += "</ol>";
-        document.getElementById("search-result").innerHTML = result;
-    });
-
-    $('#localSearch').on('click', function() {
-        var resp = dash.saveSetting(user._id, {
-            'location': $loc,
-            'flickr': $flickr
+    /*$('#TestSearch').on('click', function() {
+            var result = "";
+            result += "<a href='#'><i class='fa fa-dashboard'></i><span>Search Result</span></a>";
+            result += "<ol class='treeview-menu'>";
+            result += "<li><a href='javascript:viewELO();'><i class='fa fa-circle-o'></i>BKME</a></li>";
+            result += "<li><a href='#''><i class='fa fa-circle-o'></i>BKME</a></li>";
+            result += "<li><a href='#''><i class='fa fa-circle-o'></i>BKME</a></li>";
+            result += "</ol>";
+            document.getElementById("search-result").innerHTML = result;
         });
 
-        if (resp == 1) {
+        $('#localSearch').on('click', function() {
+            var resp = dash.saveSetting(user._id, {
+                'location': $loc,
+                'flickr': $flickr
+            });
+
+            if (resp == 1) {
+                location.href = 'dashboard.html';
+            } else {
+                alert('Oops something went wrong!');
+            }
+        });
+
+        $('#remoteSearch').on('click', function() {
+            $.get('widgets/flickr.html', function(data) {
+                $('body').append(data)
+            });
+        });
+
+        $('#skip').on('click', function() {
+            if (!(settings && !settings.dummy)) {
+                localStorage.setItem('settings', JSON.stringify({
+                    'dummy': 'object',
+                    'location': 'new york',
+                    'flickr': 'bikes'
+                }));
+            }
             location.href = 'dashboard.html';
-        } else {
-            alert('Oops something went wrong!');
-        }
-    });
-
-    $('#remoteSearch').on('click', function() {
-        $.get('widgets/flickr.html', function(data) {
-            $('body').append(data)
-        });
-    });
-
-    $('#skip').on('click', function() {
-        if (!(settings && !settings.dummy)) {
-            localStorage.setItem('settings', JSON.stringify({
-                'dummy': 'object',
-                'location': 'new york',
-                'flickr': 'bikes'
-            }));
-        }
-        location.href = 'dashboard.html';
-    });
+        });*/
     </script>
 </body>
 

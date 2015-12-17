@@ -60,6 +60,20 @@ function ELO_ListBySearch(title) {
     });
 }
 
+function allowDrop(ev) {
+    ev.preventDefault();
+}
+
+function drag(ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function drop(ev) {
+    ev.preventDefault();
+    var data = ev.dataTransfer.getData("text");
+    document.getElementById("ulroot").insertBefore(document.getElementById(data), ev.target.parentNode.parentNode);
+}
+
 function viewELO(elopath) {
     var path = elopath + "/";
     var jsdom = require("jsdom");
@@ -69,40 +83,19 @@ function viewELO(elopath) {
         scripts: ["http://code.jquery.com/jquery.js"],
         done: function(errors, window) {
             var tnID;
+            $("#search-result-treeview").append("<ul id='ulroot' class='list-group'></ul>");
 
             for (var i = 0; i < window.$("container").length; i++) {
                 tnID = window.$("container")[i].getAttribute("id");
-                var treeL1 = "<ul class='treeview-menu'>";
-                treeL1 += "<li>";
-                treeL1 += "<a href='#'>";
-                treeL1 += "<i class='fa fa-plus'></i>";
-                treeL1 += window.$("container")[i].getAttribute("display_name");
-                //treeL1 += "<i class='fa fa-angle-left pull-right'></i>";
-                //treeL1 += "</a>";
+                $("#ulroot").append("<li id='li_" + tnID + "' class='list-group-item' draggable='true' ondragstart='drag(event)' ondrop='drop(event)' ondragover='allowDrop(event)'></li>");
+                $("#li_" + tnID).append("<ul id='ul_" + tnID + "' class='list-group'>" + window.$("container")[i].getAttribute("display_name") + "</ul>");
 
-                var treeL2 = "";
-                //treeL2 = "<ul class='treeview-menu'>";
                 for (var j = 0; j < window.$("content").length; j++) {
                     if (window.$("content")[j].getAttribute("tid") == tnID) {
-                        // treeL2 += "<li>";
-                        // treeL2 += "<a href=" + path + window.$("content")[j].getAttribute("id") + "/" + window.$("content")[j].getAttribute("url_name") + ".html target='iframe01'>";
-                        treeL2 += "<a href=" + path + window.$("content")[j].getAttribute("tid") + "/" + window.$("content")[j].getAttribute("url_name") + ".html target='iframe01'>";
-                        // treeL2 += "<i class='fa fa-circle-o'></i>";
-                        treeL2 += "<font color='yellow'>"
-                        treeL2 += window.$("content")[j].getAttribute("url_name").toString();
-                        treeL2 += "</font>"
-                        treeL2 += "</a>";
-                        // treeL2 += "</li>";
+                        var URL = path + window.$("content")[j].getAttribute("tid") + "/" + window.$("content")[j].getAttribute("url_name") + ".html";
+                        $("#ul_" + tnID).append("<li class='list-group-item list-group-item-danger' onclick=iframe01.location.href='" + URL + "'>" + window.$("content")[j].getAttribute("url_name").toString() + "</li>");
                     }
                 }
-                //treeL2 += "</ul>";
-                treeL1 += treeL2;
-
-                treeL1 += "</a>";
-                treeL1 += "</li>";
-                treeL1 += "</ul>";
-                document.getElementById("search-result-treeview").innerHTML += treeL1;
-                //document.getElementById("search-result-treeview").innerHTML += treeDebug;
             }
         }
     });
@@ -167,7 +160,7 @@ function ELO_remotelist() {
                     var name = content.userName;
                     var li = document.createElement("li");
                     li.setAttribute("onclick", "intentViewRemoteELO('" + data.id + "')");
-                    li.setAttribute("oncontextmenu", "remoteContextMenu('" + data.url + "','" + title + "','" + data.init_file + "')");
+                    li.setAttribute("oncontextmenu", "remoteContextMenu('" + data.id + "','" + data.url + "','" + title + "','" + data.init_file + "')");
                     // remoteContextMenu(li, data.url, title, data.init_file);
 
                     var img = document.createElement("img");
@@ -192,20 +185,20 @@ function ELO_remotelist() {
         });
 
         $.get("http://www.commonrepo.com/api/v2/elos/", function(data) {
+            var div = document.getElementById("remoteELO");
+            var ul = document.createElement("ul");
+            ul.setAttribute("class", "users-list clearfix");
+
             for (var i = 0; i < data.length; i++) {
                 if (data[i].is_public == 1 && data[i].author != content.userID) {
                     $.get("http://www.commonrepo.com/api/v2/elos/" + data[i].id + "/", function(data2) {
                         $.get("http://www.commonrepo.com/api/v2/users/" + data2.author + "/", function(data3) {
-                            var div = document.getElementById("remoteELO");
-                            var ul = document.createElement("ul");
-                            ul.setAttribute("class", "users-list clearfix");
-
                             var title = data2.name;
                             var name = data3.username;
 
                             var li = document.createElement("li");
                             li.setAttribute("onclick", "intentViewRemoteELO('" + data2.id + "')");
-                            li.setAttribute("oncontextmenu", "remoteContextMenu('" + data2.url + "','" + title + "','" + data2.init_file + "')");
+                            li.setAttribute("oncontextmenu", "remoteContextMenu('" + data2.id + "','" + data2.url + "','" + title + "','" + data2.init_file + "')");
                             // remoteContextMenu(li, data2.url, title, data2.init_file);
 
                             var img = document.createElement("img");
@@ -308,11 +301,31 @@ function localContextMenu(elotitle, eloname, elopath) {
 }
 
 // context for remote
-function remoteContextMenu(eloURL, title, filepath) {
+function remoteContextMenu(eloID, eloURL, title, filepath) {
     remotemenu = new gui.Menu();
     remotemenu.append(new gui.MenuItem({
         label: 'Download',
         click: function() {
+            var fs = require('fs');
+            fs.readFile('collections/users.json', function(err, filedata) {
+                var content = JSON.parse(filedata);
+                var request = require('request');
+                request({
+                    url: 'http://www.commonrepo.com/api/v2/elos/fork/' + eloID + '/',
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Token ' + content.AUTHKEY,
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    }
+                }, function(error, response, body) {
+                    console.log("response:" + response.statusCode);
+                    console.log("body:" + body);
+                    if (!error && response.statusCode == 200) {
+
+                    }
+                });
+            });
+
             var https = require('https');
             var fs = require('fs');
 

@@ -151,10 +151,12 @@
                     var info = JSON.parse(body);
 
                     var fs = require('fs');
-                    fs.writeFile('collections/users.json', "{ \"userID\": \"" + info.id + "\", \"AUTHKEY\": \"" + AUTHKEY + "\" , \"userName\": \"" + info.username + "\"}", function(err) {
+                    fs.writeFile('collections/users.json', "{ \"userID\": \"" + info.id + "\", \"AUTHKEY\": \"" + AUTHKEY + "\" , \"userName\": \"" + info.username + "\", \"email\": \"" + info.email + "\"}", function(err) {
                         if (err) throw err;
                         location.href = "dashboard.html";
                     });
+
+                    console.log("body:" + body);
                 } else {
                     //alert("Check your account or password and try it again, please.");
                 }
