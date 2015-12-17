@@ -132,24 +132,15 @@
     $("#search-result-treeview").append("<ul id='elo_contentlist' class='treeview-menu'></ul>");
 
     fs.readdir(elopath[elopath.length - 1], function(err, list) {
-        var li;
-        var a;
-        var i;
-
         for (var x = 0; x < list.length; x++) {
-            if (path.extname(list[x]) == ".xml") {
-                li = document.createElement("li");
-                a = document.createElement("a");
-                i = document.createElement("i");
-                i.setAttribute("class", "fa fa-circle-o");
-                a.setAttribute("href", "#");
-                a.innerHTML = list[x];
-                a.appendChild(i);
-                li.appendChild(a);
-                $("#elo_contentlist").append(li);
+            if (path.extname(list[x]) == ".xml" && list[x] != "elo_metadata.xml") {
+                $("#elo_contentlist").append("<li><a href='#'>" + list[x] + "<i class='fa fa-circle-o'></i></a></li>");
+            } else if (path.extname(list[x]) == ".xml" && list[x] == "elo_metadata.xml") {
+                $("#elo_contentlist").append("<li class='list-group-item list-group-item-warning' onclick=location.href='elo_metadata.html?elopath=" + elopath[elopath.length - 1] + "'>" + list[x] + "</li>");
             }
         }
     });
+
     viewELO(elopath[elopath.length - 1]);
     </script>
     <script type="text/javascript">

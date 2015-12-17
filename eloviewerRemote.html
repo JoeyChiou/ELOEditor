@@ -41,8 +41,7 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">ELO Info</h4>
                 </div>
-                <div class="modal-body">
-                    <p id="eloinfo"></p>
+                <div id="eloinfo" class="modal-body">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -153,55 +152,12 @@
     <!-- AdminLTE App -->
     <script src="assets/js/app.js" type="text/javascript"></script>
     <script type="text/javascript">
-    //document.getElementById("iframe01").src = getELOID();
-
     $('#navigation').load('widgets/navigation.html');
-
-    $('#TestSearch').on('click', function() {
-        var result = "";
-        result += "<a href='#'><i class='fa fa-dashboard'></i><span>Search Result</span></a>";
-        result += "<ol class='treeview-menu'>";
-        result += "<li><a href='javascript:viewELO();'><i class='fa fa-circle-o'></i>BKME</a></li>";
-        result += "<li><a href='#''><i class='fa fa-circle-o'></i>BKME</a></li>";
-        result += "<li><a href='#''><i class='fa fa-circle-o'></i>BKME</a></li>";
-        result += "</ol>";
-        document.getElementById("search-result").innerHTML = result;
-    });
-
-    $('#localSearch').on('click', function() {
-        var resp = dash.saveSetting(user._id, {
-            'location': $loc,
-            'flickr': $flickr
-        });
-
-        if (resp == 1) {
-            location.href = 'dashboard.html';
-        } else {
-            alert('Oops something went wrong!');
-        }
-    });
-
-    $('#remoteSearch').on('click', function() {
-        $.get('widgets/flickr.html', function(data) {
-            $('body').append(data)
-        });
-    });
-
-    $('#skip').on('click', function() {
-        if (!(settings && !settings.dummy)) {
-            localStorage.setItem('settings', JSON.stringify({
-                'dummy': 'object',
-                'location': 'new york',
-                'flickr': 'bikes'
-            }));
-        }
-        location.href = 'dashboard.html';
-    });
     </script>
     <script>
     function setInfo(name) {
         $("#eloinfo").empty();
-        $("#eloinfo").append("ELO Name: " + name);
+        $("#eloinfo").append("<p>ELO Name: " + name + "</p>");
         $("#myModal").modal();
     }
 
@@ -218,36 +174,63 @@
 
             if (parentELO == "1") {
                 var rootELO = data.id;
-                $("#reftree").append("<ul><li id='root' onclick='setInfo(" + title + ")'><a href='#'>ID:" + rootELO + "</a></li></ul>");
+                $("#reftree").append("<ul><li id='root'><a href='#' onclick='setInfo(" + title + ")'>ID:" + rootELO + "</a></li></ul>");
 
-                getsubtree(rootELO, "root");
+                getELOARRAY(rootELO, "root");
+                //getsubtree(rootELO, "root");
             } else {
                 retrieve("http://www.commonrepo.com/api/v2/elos/" + parentELO + "/");
             }
         });
     }
 
-    function getsubtree(parentELO, elementID) {
-        var flag = false;
+    function getELOARRAY(parentELO, elementID) {
+        var _parentELO = [];
+        var _elementID = [];
+
         $.get("http://www.commonrepo.com/api/v2/elos/", function(data) {
-            for (var index = 0; index < data.length; index++) {
-                if (data[index].parent_elo == parentELO) {
-                    $("#" + elementID).append("<ul></ul>");
+            var eloArray = $.map(data, function(el) {
+                return el
+            });
+            //console.log("ettt:" + eloarray[0].url);
+            _parentELO[0] = parentELO;
+            _elementID[0] = elementID;
+            getsubtree(_parentELO, _elementID, eloArray);
+        });
+    }
+
+    function getsubtree(parentELO, elementID, eloArray) {
+        var flag = false;
+        for (var pindex = 0; pindex < parentELO.length; pindex++) {
+            for (var index = 0; index < eloArray.length; index++) {
+                if (eloArray[index].parent_elo == parentELO[pindex]) {
+                    $("#" + elementID[pindex]).append("<ul></ul>");
                     flag = true;
                     break;
                 }
             }
+        }
 
-            if (flag == true) {
-                for (var index = 0; index < data.length; index++) {
-                    if (data[index].parent_elo == parentELO) {
-                        $("#" + elementID + " > ul").append("<li id='" + data[index].id + "' onclick='setInfo(" + data[index].name + ")'><a href='#'>ID:" + data[index].id + "</a></li>");
-                        getsubtree(data[index].id, data[index].id);
+        if (flag == true) {
+            var _parentELO = [];
+            var _elementID = [];
+            var count = 0;
+
+            for (var pindex = 0; pindex < parentELO.length; pindex++) {
+                for (var index = 0; index < eloArray.length; index++) {
+                    if (eloArray[index].parent_elo == parentELO[pindex]) {
+                        $("#" + elementID[pindex] + " > ul").append("<li id='" + eloArray[index].id + "'><a href='#' onclick=setInfo('" + eloArray[index].name + "')>ID:" + eloArray[index].id + "</a></li>");
+                        _parentELO[count] = eloArray[index].id;
+                        _elementID[count] = eloArray[index].id;
+                        count++;
                     }
                 }
             }
-        });
+            getsubtree(_parentELO, _elementID, eloArray);
+        }
     }
+
+    $("#"+eloID).attr("class", "list-group-item list-group-item-danger");
     </script>
 </body>
 
