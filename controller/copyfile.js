@@ -38,8 +38,8 @@ function create_static_file(){
 };
 
 
-function mycopyfile(callback){
-	setTimeout( function(){
+function mycopyfile(){
+	//setTimeout( function(){
 		var fs = require("fs");
 		var y = document.getElementById("fileImportDialog");
 		var file5 = y.files[0];
@@ -136,11 +136,11 @@ function mycopyfile(callback){
 		mycopyfile2("/files/data/", "/static/data/");								/* copy data */
 		mycopyfile2("/files/views/", "/static/views/")								/* copy views */
 
-	}, 150 )																	/* set timeout 0.15 sec */
+	//}, 150 )																	/* set timeout 0.15 sec */
 
-	if (callback && typeof(callback) === "function") {
-        callback();
-    }
+	//if (callback && typeof(callback) === "function") {
+        //callback();
+    //}
 };
 
 

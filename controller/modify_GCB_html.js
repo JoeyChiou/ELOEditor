@@ -1,5 +1,5 @@
 function modify_html(){
-	setTimeout(function(){
+	//setTimeout(function(){
 		var fs = require("fs");
 		var y = document.getElementById("fileImportDialog");
 		var file7 = y.files[0];
@@ -40,7 +40,7 @@ function modify_html(){
 
 			console.log(cnfile);
 	console.log(elofile.toString());
-	}, 350)
+	//}, 350)
 };
 
 
