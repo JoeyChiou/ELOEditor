@@ -17,18 +17,25 @@
          folder instead of downloading all of them to reduce the load. -->
     <link href="assets/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="assets/css/tree.css">
+    <!-- jQuery 2.1.4 -->
+    <script src="assets/js/jquery.min.js" type="text/javascript"></script>
+    <!-- jQuery UI 1.11.4 -->
+    <script src="assets/js/jquery-ui.min.js" type="text/javascript"></script>
+    <!-- Bootstrap 3.3.4 -->
+    <script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
+    <!-- SlimScroll -->
+    <script src="plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <!-- FastClick -->
+    <script src="plugins/fastclick/fastclick.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="assets/js/app.js" type="text/javascript"></script>
+    <script type="text/javascript">
+    $('#navigation').load('widgets/navigation.html');
+    </script>
     <script type="text/javascript" src="controller/settings.js"></script>
     <script type="text/javascript" src="controller/tree.js"></script>
     <script type="text/javascript" src="controller/ELO_Functions.js"></script>
-    <script language="JavaScript">
-    var str = decodeURI(location.search);
-    var tempID = str.split("=");
-    var eloID = tempID[tempID.length - 1];
-
-    function getELOID() {
-        return "tree.html?id=" + eloID;
-    }
-    </script>
+    <script type="text/javascript" src="controller/usabilitytree.js"></script>
 </head>
 
 <body class="skin-blue sidebar-mini fixed">
@@ -121,8 +128,6 @@
                             <div class="box-body">
                                 <div id="reftree" class="tree">
                                 </div>
-                                <!-- <iframe id="iframe01" name="iframe01" width="100%" height="500" frameborder="0" src="" seamless>
-                                </iframe> -->
                             </div>
                         </div>
                     </div>
@@ -139,98 +144,103 @@
             <strong>Copyright &copy; 2015 <a href="http://edxpdrlab.ncu.cc">NCU Open edX PDR Lab</a>.</strong> All rights reserved.
         </footer>
     </div>
-    <!-- jQuery 2.1.4 -->
-    <script src="assets/js/jquery.min.js" type="text/javascript"></script>
-    <!-- jQuery UI 1.11.4 -->
-    <script src="assets/js/jquery-ui.min.js" type="text/javascript"></script>
-    <!-- Bootstrap 3.3.4 -->
-    <script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
-    <!-- SlimScroll -->
-    <script src="plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
-    <!-- FastClick -->
-    <script src="plugins/fastclick/fastclick.min.js"></script>
-    <!-- AdminLTE App -->
-    <script src="assets/js/app.js" type="text/javascript"></script>
-    <script type="text/javascript">
-    $('#navigation').load('widgets/navigation.html');
-    </script>
+    
     <script>
-    function setInfo(name) {
-        $("#eloinfo").empty();
-        $("#eloinfo").append("<p>ELO Name: " + name + "</p>");
-        $("#myModal").modal();
-    }
+    // function setInfo(name) {
+    //     $("#eloinfo").empty();
+    //     $("#eloinfo").append("<p>ELO Name: " + decodeURI(name) + "</p>");
+    //     $("#myModal").modal();
+    // }
 
-    var str = decodeURI(location.search);
-    var tempID = str.split("=");
-    var eloID = tempID[tempID.length - 1];
+    // var str = decodeURI(location.search);
+    // var tempID = str.split("=");
+    // var eloID = tempID[tempID.length - 1];
+    // var eloNodesID = [];
+    // var eloNodesName = [];
+    // var eloNodesCount = 0;
 
-    retrieve("http://www.commonrepo.com/api/v2/elos/" + eloID + "/");
+    // retrieve("http://www.commonrepo.com/api/v2/elos/" + eloID + "/");
 
-    function retrieve(url) {
-        $.get(url, function(data) {
-            var title = data.name;
-            var parentELO = data.parent_elo;
+    // function retrieve(url) {
+    //     $.get(url, function(data) {
+    //         var title = data.name;
+    //         var parentELO = data.parent_elo;
 
-            if (parentELO == "1") {
-                var rootELO = data.id;
-                $("#reftree").append("<ul><li id='root'><a href='#' onclick='setInfo(" + title + ")'>ID:" + rootELO + "</a></li></ul>");
+    //         if (parentELO == "1") {
+    //             var rootELO = data.id;
+    //             $("#reftree").append("<ul><li id='root'><a href='#' onclick='setInfo(" + title + ")'>ID:" + rootELO + "</a></li></ul>");
 
-                getELOARRAY(rootELO, "root");
-                //getsubtree(rootELO, "root");
-            } else {
-                retrieve("http://www.commonrepo.com/api/v2/elos/" + parentELO + "/");
-            }
-        });
-    }
+    //             eloNodesID[eloNodesCount] = eloID;
+    //             eloNodesName[eloNodesCount] = title;
+    //             eloNodesCount++;
 
-    function getELOARRAY(parentELO, elementID) {
-        var _parentELO = [];
-        var _elementID = [];
+    //             getELOARRAY(rootELO, "root");
+    //         } else {
+    //             retrieve("http://www.commonrepo.com/api/v2/elos/" + parentELO + "/");
+    //         }
+    //     });
+    // }
 
-        $.get("http://www.commonrepo.com/api/v2/elos/", function(data) {
-            var eloArray = $.map(data, function(el) {
-                return el
-            });
-            //console.log("ettt:" + eloarray[0].url);
-            _parentELO[0] = parentELO;
-            _elementID[0] = elementID;
-            getsubtree(_parentELO, _elementID, eloArray);
-        });
-    }
+    // function getELOARRAY(parentELO, elementID) {
+    //     var _parentELO = [];
+    //     var _elementID = [];
 
-    function getsubtree(parentELO, elementID, eloArray) {
-        var flag = false;
-        for (var pindex = 0; pindex < parentELO.length; pindex++) {
-            for (var index = 0; index < eloArray.length; index++) {
-                if (eloArray[index].parent_elo == parentELO[pindex]) {
-                    $("#" + elementID[pindex]).append("<ul></ul>");
-                    flag = true;
-                    break;
-                }
-            }
-        }
+    //     $.get("http://www.commonrepo.com/api/v2/elos/", function(data) {
+    //         var eloArray = $.map(data, function(el) {
+    //             return el
+    //         });
+    //         //console.log("ettt:" + eloarray[0].url);
+    //         _parentELO[0] = parentELO;
+    //         _elementID[0] = elementID;
+    //         getsubtree(_parentELO, _elementID, eloArray);
+    //     });
+    // }
 
-        if (flag == true) {
-            var _parentELO = [];
-            var _elementID = [];
-            var count = 0;
+    // function getsubtree(parentELO, elementID, eloArray) {
+    //     var flag = false;
+    //     for (var pindex = 0; pindex < parentELO.length; pindex++) {
+    //         for (var index = 0; index < eloArray.length; index++) {
+    //             if (eloArray[index].parent_elo == parentELO[pindex]) {
+    //                 $("#" + elementID[pindex]).append("<ul></ul>");
+    //                 flag = true;
+    //                 break;
+    //             }
+    //         }
+    //     }
 
-            for (var pindex = 0; pindex < parentELO.length; pindex++) {
-                for (var index = 0; index < eloArray.length; index++) {
-                    if (eloArray[index].parent_elo == parentELO[pindex]) {
-                        $("#" + elementID[pindex] + " > ul").append("<li id='" + eloArray[index].id + "'><a href='#' onclick=setInfo('" + eloArray[index].name + "')>ID:" + eloArray[index].id + "</a></li>");
-                        _parentELO[count] = eloArray[index].id;
-                        _elementID[count] = eloArray[index].id;
-                        count++;
-                    }
-                }
-            }
-            getsubtree(_parentELO, _elementID, eloArray);
-        }
-    }
 
-    $("#"+eloID).attr("class", "list-group-item list-group-item-danger");
+
+    //     if (flag == true) {
+    //         var _parentELO = [];
+    //         var _elementID = [];
+    //         var count = 0;
+
+    //         for (var pindex = 0; pindex < parentELO.length; pindex++) {
+    //             for (var index = 0; index < eloArray.length; index++) {
+    //                 if (eloArray[index].parent_elo == parentELO[pindex]) {
+    //                     $("#" + elementID[pindex] + " > ul").append("<li id='" + eloArray[index].id + "'><a href='#' onclick=setInfo('" + encodeURI(eloArray[index].name) + "')>ID:" + eloArray[index].id + "</a></li>");
+    //                     _parentELO[count] = eloArray[index].id;
+    //                     _elementID[count] = eloArray[index].id;
+
+    //                     eloNodesID[eloNodesCount] = eloArray[index].id;
+    //                     eloNodesName[eloNodesCount] = eloArray[index].name;
+    //                     eloNodesCount++;
+    //                     count++;
+    //                 }
+    //             }
+    //         }
+    //         getsubtree(_parentELO, _elementID, eloArray);
+    //     }
+    // }
+
+    // $("#"+eloID).attr("class", "list-group-item list-group-item-danger");
+    // for (var index = 0; index < eloNodesCount; index++) {
+    //     $("#" + eloNodesID[index] + " > a").click(function(){
+    //         $("#eloinfo").empty();
+    //         $("#eloinfo").append("<p>ELO Name: " + eloNodesName[index] + "</p>");
+    //         $("#myModal").modal();
+    //     });
+    // }
     </script>
 </body>
 

@@ -52,6 +52,8 @@
                 }
             });
         });
+
+        location.href = "author_manage.html";
     }
 
     function groupInfo(groupID) {
@@ -71,11 +73,6 @@
                     });
                 }
             });
-
-
-
-
-
         });
 
         $("#groupinfoModal").modal();
@@ -383,7 +380,7 @@
                                                 var groups = data.commonrepo_groups;
                                                 for (var index = 0; index < groups.length; index++) {
                                                     $.get("http://www.commonrepo.com/api/v2/groups/" + groups[index] + "/", function(data) {
-                                                        $("#groupcreated").append("<tr><td width='80%'>" + data.name + "</td><td width='10%'><button type='button' class='btn btn-warning' onclick='groupInfo(" + data.id + ")'>Info</button></td><td width='10%'><button type='button' class='btn btn-danger'>Abort</button></td></tr>");
+                                                        $("#groupcreated").append("<tr><td width='80%'>" + data.name + "</td><td width='10%'><button type='button' class='btn btn-warning' onclick='groupInfo(" + data.id + ")'>Info</button></td><td width='10%'><button type='button' class='btn btn-danger'>Leave</button></td></tr>");
                                                     });
                                                 }
                                             });
@@ -416,7 +413,7 @@
                                                 var groups = data.commonrepo_groups_members;
                                                 for (var index = 0; index < groups.length; index++) {
                                                     $.get("http://www.commonrepo.com/api/v2/groups/" + groups[index] + "/", function(data) {
-                                                        $("#groupjoined").append("<tr><td width='80%'>" + data.name + "</td><td width='10%'><button type='button' class='btn btn-warning' onclick='groupInfo(" + data.id + ")'>Info</button></td><td width='10%'><button type='button' class='btn btn-danger'>Abort</button></td></tr>");
+                                                        $("#groupjoined").append("<tr><td width='80%'>" + data.name + "</td><td width='10%'><button type='button' class='btn btn-warning' onclick='groupInfo(" + data.id + ")'>Info</button></td><td width='10%'><button type='button' class='btn btn-danger'>Leave</button></td></tr>");
                                                     });
                                                 }
                                             });

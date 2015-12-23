@@ -159,13 +159,26 @@ function ELO_remotelist() {
                     var title = data.name;
                     var name = content.userName;
                     var li = document.createElement("li");
+                    var publicvalue;
                     li.setAttribute("onclick", "intentViewRemoteELO('" + data.id + "')");
-                    li.setAttribute("oncontextmenu", "remoteContextMenu('" + data.id + "','" + data.url + "','" + title + "','" + data.init_file + "')");
+                    if (data.is_public == 1) {
+                        publicvalue = 0;
+                    } else {
+                        publicvalue = 1;
+                    }
+
+                    li.setAttribute("oncontextmenu", "remoteContextMenu('" + data.id + "','" + data.url + "','" + title + "','" + data.init_file + "','" + publicvalue + "')");
                     // remoteContextMenu(li, data.url, title, data.init_file);
 
-                    var img = document.createElement("img");
-                    img.setAttribute("src", "assets/img/book-64.png");
-                    img.setAttribute("alt", "User Image");
+                    if (data.is_public == 1) {
+                        var img = document.createElement("img");
+                        img.setAttribute("src", "assets/img/bookr-64.png");
+                        img.setAttribute("alt", "User Image");
+                    } else {
+                        var img = document.createElement("img");
+                        img.setAttribute("src", "assets/img/book-64.png");
+                        img.setAttribute("alt", "User Image");
+                    }
 
                     var a = document.createElement("a");
                     a.setAttribute("class", "users-list-date");
@@ -183,9 +196,16 @@ function ELO_remotelist() {
             }
             div.appendChild(ul);
         });
+    });
 
+}
+
+function ELO_publiclist() {
+    var fs = require('fs');
+    fs.readFile('collections/users.json', function(err, filedata) {
+        var content = JSON.parse(filedata);
         $.get("http://www.commonrepo.com/api/v2/elos/", function(data) {
-            var div = document.getElementById("remoteELO");
+            var div = document.getElementById("publicELO");
             var ul = document.createElement("ul");
             ul.setAttribute("class", "users-list clearfix");
 
@@ -198,7 +218,7 @@ function ELO_remotelist() {
 
                             var li = document.createElement("li");
                             li.setAttribute("onclick", "intentViewRemoteELO('" + data2.id + "')");
-                            li.setAttribute("oncontextmenu", "remoteContextMenu('" + data2.id + "','" + data2.url + "','" + title + "','" + data2.init_file + "')");
+                            li.setAttribute("oncontextmenu", "publicContextMenu('" + data2.id + "','" + data2.url + "','" + title + "','" + data2.init_file + "')");
                             // remoteContextMenu(li, data2.url, title, data2.init_file);
 
                             var img = document.createElement("img");
@@ -224,7 +244,6 @@ function ELO_remotelist() {
             }
         });
     });
-
 }
 
 function intentView(elopath) {
@@ -301,31 +320,11 @@ function localContextMenu(elotitle, eloname, elopath) {
 }
 
 // context for remote
-function remoteContextMenu(eloID, eloURL, title, filepath) {
+function remoteContextMenu(eloID, eloURL, title, filepath, publicvalue) {
     remotemenu = new gui.Menu();
     remotemenu.append(new gui.MenuItem({
         label: 'Download',
         click: function() {
-            var fs = require('fs');
-            fs.readFile('collections/users.json', function(err, filedata) {
-                var content = JSON.parse(filedata);
-                var request = require('request');
-                request({
-                    url: 'http://www.commonrepo.com/api/v2/elos/fork/' + eloID + '/',
-                    method: 'POST',
-                    headers: {
-                        'Authorization': 'Token ' + content.AUTHKEY,
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    }
-                }, function(error, response, body) {
-                    console.log("response:" + response.statusCode);
-                    console.log("body:" + body);
-                    if (!error && response.statusCode == 200) {
-
-                    }
-                });
-            });
-
             var https = require('https');
             var fs = require('fs');
 
@@ -344,10 +343,8 @@ function remoteContextMenu(eloID, eloURL, title, filepath) {
                     importELO("/Users/JoeyChiou/Downloads/ELOs/" + title, title, "TestMan");
                 });
 
-                //$("#dashboardModal1").modal();
-                //location.href = "dashboard.html";
+                location.href = "dashboard.html";
             });
-            $("#dashboardModal1").modal();
         }
     }));
     remotemenu.append(new gui.MenuItem({
@@ -372,11 +369,12 @@ function remoteContextMenu(eloID, eloURL, title, filepath) {
                     //if(!error && response.statusCode == 200)
                 });
             });
+
             location.href = "dashboard.html";
         }
     }));
     remotemenu.append(new gui.MenuItem({
-        label: 'Publish',
+        label: 'Publish or UnPublish',
         click: function() {
             var _elourl = eloURL.split("/");
             var eloID = _elourl[_elourl.length - 2];
@@ -395,7 +393,7 @@ function remoteContextMenu(eloID, eloURL, title, filepath) {
                     },
                     json: true,
                     body: {
-                        "is_public": "1"
+                        "is_public": publicvalue
                     }
                 }, function(error, response, body) {
                     //if(!error && response.statusCode == 200)
@@ -404,6 +402,42 @@ function remoteContextMenu(eloID, eloURL, title, filepath) {
                 });
             });
             location.href = "dashboard.html";
+        }
+    }));
+
+    this.addEventListener('contextmenu', function(ev) {
+        ev.preventDefault();
+        remotemenu.popup(ev.x, ev.y);
+        return false;
+    });
+}
+
+// context for public
+function publicContextMenu(eloID, eloURL, title, filepath) {
+    remotemenu = new gui.Menu();
+    remotemenu.append(new gui.MenuItem({
+        label: 'Fork',
+        click: function() {
+            var fs = require('fs');
+            fs.readFile('collections/users.json', function(err, filedata) {
+                var content = JSON.parse(filedata);
+                var request = require('request');
+                request({
+                    url: 'http://www.commonrepo.com/api/v2/elos/fork/' + eloID + '/',
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Token ' + content.AUTHKEY,
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    }
+                }, function(error, response, body) {
+                    console.log("response:" + response.statusCode);
+                    console.log("body:" + body);
+                    if (!error && response.statusCode == 200) {
+
+                    }
+                });
+            });
+            $("#dashboardModal1").modal();
         }
     }));
 

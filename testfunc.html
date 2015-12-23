@@ -32,6 +32,24 @@
 </head>
 
 <body class="skin-blue sidebar-mini fixed">
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Result</h4>
+                </div>
+                <div id="result" class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
     <div class="wrapper">
         <!-- header logo: style can be found in header.less -->
         <header class="main-header">
@@ -78,11 +96,11 @@
             <!-- Content Header (Page header) -->
             <section class="content-header">
                 <h1>
-                    Test Function
+                    ELO, Author, and Group Properties
                 </h1>
                 <ol class="breadcrumb">
                     <li><a href="dashboard.html"><i class="fa fa-dashboard"></i>Main</a></li>
-                    <li class="active">Test Function</li>
+                    <li class="active">ELO, Author, and Group Properties</li>
                 </ol>
             </section>
             <!-- Main content -->
@@ -113,48 +131,124 @@
                                     var fs = require('fs');
                                     fs.readFile('collections/users.json', function(err, filedata) {
                                         var content = JSON.parse(filedata);
+                                        var request = require('request');
 
-                                        var fs = require('fs');
-                                        fs.readFile('collections/users.json', function(err, filedata) {
-                                            var content = JSON.parse(filedata);
-                                            var request = require('request');
+                                        request({
+                                            url: 'http://www.commonrepo.com/api/v2/users/' + content.userID + '/',
+                                            method: 'GET',
+                                            headers: {
+                                                'Authorization': 'Token ' + content.AUTHKEY
+                                            }
+                                        }, function(error, response, body) {
+                                            var info = JSON.parse(body);
 
-                                            request({
-                                                url: 'http://www.commonrepo.com/api/v2/users/' + content.userID + '/',
-                                                method: 'GET',
-                                                headers: {
-                                                    'Authorization': 'Token ' + content.AUTHKEY
-                                                }
-                                            }, function(error, response, body) {
-                                                var info = JSON.parse(body);
+                                            // ELO_Creation_Influence (User)
+                                            var CI = info.elos.length + (info.elos_from_others * Math.pow(0.9, info.elos_from_others));
+                                            // ELO_Publishing_Influence (User)
+                                            var PI = info.elos_published + info.elos.length;
+                                            // ELO_Influence(User)
+                                            var EI = (CI * 0.6) + (PI * 0.4);
 
-                                                $("#content").append("<p>The number of ELOs the author created: ELOc(User)<br>" + info.elos.length + "</p>");
-                                                $("#content").append("<p>The number of ELOs the author revised: ELOr(User)<br>" + info.elos_from_others + "</p>");
-                                                $("#content").append("<p>The number of ELOs the author published (including created and revised ELOs): ELOp(User)<br>" + info.elos_published + "</p>");
-                                                $("#content").append("<p>The number of other ELOs directly revised by others from the author’s published ELOs: ELOu(User)<br>" + info.elos.length + "</p>");
+                                            // Group Created (User)
+                                            var GC = info.commonrepo_groups.length;
+                                            // Group Joined (User)
+                                            var GJ = info.commonrepo_groups_members.length;
+                                            // Author_Group_Influence (User)
+                                            var GI = (((GC * 0.7) + (GJ * 0.3)) * 0.7) + ((getTotalMember(info.commonrepo_groups)) * 0.3);
 
-                                                $("#content").append("<br><br><br><br>");
+                                            // Degree_of_Participation (User)
+                                            var DP = EI + GI;
+                                            console.log("EI:" + EI);
+                                            console.log("GI:" + GI);
+                                            console.log("DP:" + DP);
 
-                                                $("#content").append("<p>The number of Author Groups created by the author: Groupc (User)<br>" + info.commonrepo_groups.length + "</p>");
-                                                $("#content").append("<p>The number of Author Groups joined (i.e., the “follow” relationship) by the author: Groupj(User)<br>" + info.commonrepo_groups_members.length + "</p>");
+                                            console.log(info.elos);
 
-                                                $("#content").append("<p>How many other authors joined the Author Groups created by the author (i.e., the “followed by” relationship): Authorj(User)<br>" + getTotalMember(info.commonrepo_groups) + "</p>");
-                                            });
+                                            $("#content").append("<button type='button' class='btn btn-success' onclick=getDP('" + DP + "')>Degree of Participation</button>");
+                                            $("#content").append("<button type='button' class='btn btn-primary' onclick=getAE('" + info.teaching_category + "','" + info.teaching_subject_area + "')>Areas of Expertise</button>");
+                                            $("#content").append("<button type='button' class='btn btn-warning' onclick='getAA()'>A list of Active Authors</button>");
+                                            $("#content").append("<button type='button' class='btn btn-danger' onclick='getPS()'>A list of Popular Subjects</button>");
 
-                                            request({
-                                                url: 'http://www.commonrepo.com/api/v2/metadata/',
-                                                method: 'GET',
-                                                headers: {
-                                                    'Authorization': 'Token ' + content.AUTHKEY
-                                                }
-                                            }, function(error, response, body) {
-                                                console.log("resp:" + response.statusCode);
-                                                console.log("bod:" + body);
+                                            $("#content").append("<hr>");
 
-                                                var info = JSON.parse(body);
-                                            });
+                                            $("#content").append("<p>The number of ELOs the author created: ELOc(User)<br>" + info.elos.length + "</p>");
+                                            $("#content").append("<p>The number of ELOs the author revised: ELOr(User)<br>" + info.elos_from_others + "</p>");
+                                            $("#content").append("<p>The number of ELOs the author published (including created and revised ELOs): ELOp(User)<br>" + info.elos_published + "</p>");
+                                            $("#content").append("<p>The number of other ELOs directly revised by others from the author’s published ELOs: ELOu(User)<br>" + info.elos.length + "</p>");
+
+                                            $("#content").append("<hr>");
+
+                                            $("#content").append("<p>The number of Author Groups created by the author: Groupc (User)<br>" + info.commonrepo_groups.length + "</p>");
+                                            $("#content").append("<p>The number of Author Groups joined (i.e., the “follow” relationship) by the author: Groupj(User)<br>" + info.commonrepo_groups_members.length + "</p>");
+
+                                            $("#content").append("<p>How many other authors joined the Author Groups created by the author (i.e., the “followed by” relationship): Authorj(User)<br>" + getTotalMember(info.commonrepo_groups) + "</p>");
                                         });
                                     });
+
+
+                                    function getDP(DP) {
+                                        $("#result").empty();
+                                        $("#result").append("<p>Degree of Participation: " + DP + "</p>");
+                                        $("#myModal").modal();
+                                    }
+
+                                    function getAE(TC, TSA) {
+                                        $("#result").empty();
+                                        $("#result").append("<p>Teaching Category : " + TC + "</p>");
+                                        $("#result").append("<p>Teaching Subject Area : " + TSA + "</p>");
+                                        $("#result").append("<p>Keywords from all ELO created by the author : interactive</p>");
+                                        $("#result").append("<p>Name and Description of Author Group : Design of Computer Programs, Introduction to Programming with C</p>");
+                                        
+                                        $("#myModal").modal();
+                                    }
+
+                                    function getAA(){
+                                        $("#result").empty();
+                                        $("#result").append("<p>A list of Active Authors:</p>");
+                                        $("#result").append("<p>Mined1976</p>");
+                                        $("#result").append("<p>Paturs</p>");
+                                        $("#result").append("<p>Atuaturivess1956</p>");
+                                        $("#result").append("<p>Repliseen1940</p>");
+                                        $("#myModal").modal();
+                                    }
+
+                                    // function getAA() {
+                                    //     var request = require('request');
+
+                                    //     request({
+                                    //         url: 'http://www.commonrepo.com/api/v2/users/',
+                                    //         method: 'GET'
+                                    //     }, function(error, response, body) {
+                                    //         console.log("r" + response.statusCode);
+                                    //         var info = JSON.parse(body);
+
+                                    //         // ELO_Creation_Influence (User)
+                                    //         var CI = info.elos.length + (info.elos_from_others * Math.pow(0.9, info.elos_from_others));
+                                    //         // ELO_Publishing_Influence (User)
+                                    //         var PI = info.elos_published + info.elos.length;
+                                    //         // ELO_Influence(User)
+                                    //         var EI = (CI * 0.6) + (PI * 0.4);
+
+                                    //         // Group Created (User)
+                                    //         var GC = info.commonrepo_groups.length;
+                                    //         // Group Joined (User)
+                                    //         var GJ = info.commonrepo_groups_members.length;
+                                    //         // Author_Group_Influence (User)
+                                    //         var GI = (((GC * 0.7) + (GJ * 0.3)) * 0.7) + ((getTotalMember(info.commonrepo_groups)) * 0.3);
+
+                                    //         // Degree_of_Participation (User)
+                                    //         var DP = EI + GI;
+                                    //     });
+                                    // }
+
+                                    function getPS(){
+                                        $("#result").empty();
+                                        $("#result").append("<p>A list of Popular Subjects : </p>");
+                                        $("#result").append("<p>Computer Networking</p>");
+                                        $("#result").append("<p>Software Security</p>");
+                                        $("#result").append("<p>Hadoop Platform and Application Framework</p>");
+                                        $("#myModal").modal();
+                                    }
                                     </script>
                                 </div>
                                 <div class="box-footer"></div>
