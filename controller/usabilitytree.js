@@ -13,7 +13,7 @@ function retrieve(url) {
 
         if (parentELO == "1") {
             var rootELO = data.id;
-            $("#reftree").append("<ul><li id='li_root'><a href='#' onclick=update('" + rootELO + "','" + title + "')>ID:" + rootELO + "</a></li></ul>");
+            $("#reftree").append("<ul><li id='li_root'><a href='#' onclick=update('" + rootELO + "','" + title + "')>" + rootELO + "</a></li></ul>");
 
             eloNodesID[eloNodesCount] = eloID;
             eloNodesName[eloNodesCount] = title;
@@ -115,7 +115,7 @@ function getsubtree(parentELO, elementID, eloArray) {
             for (var index = 0; index < eloArray.length; index++) {
                 if (eloArray[index].parent_elo == parentELO[pindex]) {
                     $("#li_" + elementID[pindex] + " > ul").append("<li id='li_" + eloArray[index].id + "'></li>");
-                    $("#li_" + eloArray[index].id).append("<a id='a_" + eloArray[index].id + "' href='#'>ID:" + eloArray[index].id + "</a>");
+                    $("#li_" + eloArray[index].id).append("<a id='a_" + eloArray[index].id + "' href='#'>" + eloArray[index].id + "</a>");
 
                     _parentELO[count] = eloArray[index].id;
                     _elementID[count] = eloArray[index].id;

@@ -110,9 +110,6 @@ function ELO_List(divID) {
             // }).exec(function(err, docs) {
             var div = document.getElementById(divID);
             $("#" + divID).append("<ul class='users-list clearfix'></ul>");
-            // var ul = document.createElement("ul");
-            // ul.setAttribute("class", "users-list clearfix");
-            // div.appendChild(ul);
 
             for (var i = 0; i < count; i++) {
                 var title = docs[i].title;
@@ -138,7 +135,6 @@ function ELO_List(divID) {
                 li.appendChild(img);
                 li.appendChild(a);
                 li.appendChild(span);
-                //ul.appendChild(li);
                 $("#" + divID + " ul").append(li);
             }
         });
@@ -150,12 +146,13 @@ function ELO_remotelist() {
     fs.readFile('collections/users.json', function(err, filedata) {
         var content = JSON.parse(filedata);
 
-        $.get("http://www.commonrepo.com/api/v2/users/" + content.userID + "/", function(data) {
+        $.get("http://www.commonrepo.com/api/v2/users/" + content.userID + "/").done(function(data) {
             var div = document.getElementById("remoteELO");
             var ul = document.createElement("ul");
             ul.setAttribute("class", "users-list clearfix");
+
             for (var i = 0; i < data.elos.length; i++) {
-                $.get("http://www.commonrepo.com/api/v2/elos/" + data.elos[i] + "/", function(data) {
+                $.get("http://www.commonrepo.com/api/v2/elos/" + data.elos[i] + "/").done(function(data) {
                     var title = data.name;
                     var name = content.userName;
                     var li = document.createElement("li");
@@ -200,46 +197,105 @@ function ELO_remotelist() {
 
 }
 
+function getAuthors(authors, callback) {
+    console.log("getAuthors");
+    $.get("http://www.commonrepo.com/api/v2/users/").done(function(data) {
+        for (var count = 0; count < data.length; count++) {
+            authors[data[count].id] = data[count].username;
+        }
+        console.log("getAuthors end");
+    });
+    callback();
+}
+
+function ELOobj(id, name, author, init_file) {
+    this.id = id;
+    this.name = name;
+    this.author = author;
+    this.init_file = init_file;
+}
+
+function CB2(elos, callback) {
+    console.log("CB2 func");
+    var elo;
+    $.get("http://www.commonrepo.com/api/v2/elos/").done(function(data) {
+        for (var count = 0; count < data.length; count++) {
+            elo = new ELOobj();
+            elo.id = data[count].id;
+            elo.name = data[count].name;
+            elo.author = data[count].author;
+            elo.init_file = data[count].init_file;
+            elos[count] = elo;
+        }
+        console.log("CB2 func end");
+    });
+    callback();
+}
+
+function CB3(elos, callback) {
+    console.log("elo:" + elos.length);
+    callback();
+}
+
 function ELO_publiclist() {
+    var authors = {};
+    var elos = {};
+
+    getAuthors(authors, function() {
+        CB2(elos, function() {
+            CB3(elos, function() {
+                console.log("Main");
+            });
+        });
+    });
+    // var authors = {};
+    // getAuthors(authors);
+    // var authors = getAuthors();
+    // console.log("auth:"+authors.length);
+
     var fs = require('fs');
     fs.readFile('collections/users.json', function(err, filedata) {
         var content = JSON.parse(filedata);
-        $.get("http://www.commonrepo.com/api/v2/elos/", function(data) {
-            var div = document.getElementById("publicELO");
-            var ul = document.createElement("ul");
-            ul.setAttribute("class", "users-list clearfix");
+        var elos;
 
+        // var div = document.getElementById("publicELO");
+        //var ul = document.createElement("ul");
+        //ul.setAttribute("class", "users-list clearfix");
+        // div.appendChild(ul);
+        $("#publicELO").append("<ul id='publicELO_ul' class='users-list clearfix'></ul>");
+
+        $.get("http://www.commonrepo.com/api/v2/elos/").done(function(data) {
             for (var i = 0; i < data.length; i++) {
                 if (data[i].is_public == 1 && data[i].author != content.userID) {
-                    $.get("http://www.commonrepo.com/api/v2/elos/" + data[i].id + "/", function(data2) {
-                        $.get("http://www.commonrepo.com/api/v2/users/" + data2.author + "/", function(data3) {
-                            var title = data2.name;
-                            var name = data3.username;
+                    //$.get("http://www.commonrepo.com/api/v2/users/" + data[i].author + "/", function(data2) {
+                    var url = "http://www.commonrepo.com/api/v2/elos/" + data[i].id + "/";
+                    var ID = data[i].id;
+                    var NAME = data[i].name;
+                    var FILE = data[i].init_file;
 
-                            var li = document.createElement("li");
-                            li.setAttribute("onclick", "intentViewRemoteELO('" + data2.id + "')");
-                            li.setAttribute("oncontextmenu", "publicContextMenu('" + data2.id + "','" + data2.url + "','" + title + "','" + data2.init_file + "')");
-                            // remoteContextMenu(li, data2.url, title, data2.init_file);
+                    var li = document.createElement("li");
+                    li.setAttribute("id", "publicELO_li_" + ID);
+                    li.setAttribute("onclick", "intentViewRemoteELO('" + ID + "')");
+                    li.setAttribute("oncontextmenu", "publicContextMenu('" + ID + "','" + url + "','" + NAME + "','" + FILE + "')");
 
-                            var img = document.createElement("img");
-                            img.setAttribute("src", "assets/img/bookr-64.png");
-                            img.setAttribute("alt", "User Image");
+                    var img = document.createElement("img");
+                    img.setAttribute("src", "assets/img/booko-64.png");
+                    img.setAttribute("alt", "User Image");
 
-                            var a = document.createElement("a");
-                            a.setAttribute("class", "users-list-date");
-                            a.innerHTML = title;
+                    var a = document.createElement("a");
+                    a.setAttribute("class", "users-list-date");
+                    a.innerHTML = NAME;
 
-                            var span = document.createElement("span");
-                            span.setAttribute("class", "users-list-date");
-                            span.innerHTML = name;
+                    var span = document.createElement("span");
+                    span.setAttribute("class", "users-list-date");
+                    span.innerHTML = authors[data[i].author];
 
-                            li.appendChild(img);
-                            li.appendChild(a);
-                            li.appendChild(span);
-                            ul.appendChild(li);
-                            div.appendChild(ul);
-                        });
-                    });
+                    li.appendChild(img);
+                    li.appendChild(a);
+                    li.appendChild(span);
+                    $("#publicELO_ul").append(li);
+                    //ul.appendChild(li);
+                    //});
                 }
             }
         });
@@ -307,8 +363,8 @@ function localContextMenu(elotitle, eloname, elopath) {
             $.getScript("controller/dbfunc.js", function(data, textStatus, jqxhr) {
                 deleteELO(elotitle);
                 $(this).remove();
-                location.href = "dashboard.html";
             });
+            location.href = "dashboard.html";
         }
     }));
 
@@ -401,6 +457,11 @@ function remoteContextMenu(eloID, eloURL, title, filepath, publicvalue) {
                     console.log("body:" + body);
                 });
             });
+
+            var shareURL = "https://plus.google.com/share?url={" + filepath + "}";
+            $("#gplus").attr("href", shareURL);
+            $("#gplus").click();
+
             location.href = "dashboard.html";
         }
     }));

@@ -31,12 +31,14 @@
     <!--<script type="text/javascript" src="controller/auth.js"></script>-->
     <script type="text/javascript" src="controller/dbfunc.js"></script>
     <script type="text/javascript" src="controller/ELO_Functions.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script type="text/javascript">
     if (!JSON.parse(localStorage.getItem('settings'))) location.href = 'settings.html';
     </script>
 </head>
 
 <body class="skin-blue sidebar-mini fixed">
+    <a id="gplus" href="https://plus.google.com/share?url={URL}" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"></a>
     <!-- Modal -->
     <div id="dashboardModal1" class="modal fade" role="dialog">
         <div class="modal-dialog">
@@ -131,7 +133,7 @@
                         <div class="info-box">
                             <span class="info-box-icon bg-aqua"><i class="ion ion-document-text"></i></span>
                             <div class="info-box-content">
-                                <span class="info-box-text">Local ELOs</span>
+                                <span class="info-box-text">Groups <br>Created</span>
                                 <span class="info-box-number"></span>
                             </div>
                             <!-- /.info-box-content -->
@@ -143,7 +145,7 @@
                         <div class="info-box">
                             <span class="info-box-icon bg-green"><i class="ion ion-cloud"></i></span>
                             <div class="info-box-content">
-                                <span class="info-box-text">Remote ELOs</span>
+                                <span class="info-box-text">Groups <br>Followed</span>
                                 <span class="info-box-number"></span>
                             </div>
                             <!-- /.info-box-content -->
@@ -155,7 +157,7 @@
                         <div class="info-box">
                             <span class="info-box-icon bg-red"><i class="fa fa-google-plus"></i></span>
                             <div class="info-box-content">
-                                <span class="info-box-text">Likes</span>
+                                <span class="info-box-text">Friends <br>as Authors</span>
                                 <span class="info-box-number"></span>
                             </div>
                             <!-- /.info-box-content -->
@@ -167,7 +169,7 @@
                         <div class="info-box">
                             <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
                             <div class="info-box-content">
-                                <span class="info-box-text">Members</span>
+                                <span class="info-box-text">Friends <br>in Google+</span>
                                 <span class="info-box-number"></span>
                             </div>
                             <!-- /.info-box-content -->
@@ -212,7 +214,7 @@
                         <!-- LOCAL ELO LIST -->
                         <div class="box box-danger">
                             <div class="box-header with-border">
-                                <h3 class="box-title">Public ELOs</h3>
+                                <h3 class="box-title">Published ELOs</h3>
                                 <div class="box-tools pull-right">
                                     <span class="label label-danger">ELOs</span>
                                     <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
@@ -251,7 +253,7 @@
                                 </div>
                             </div>
                             <!-- /.box-header -->
-                            <div class="box-body no-padding"  style="height:118px;overflow:auto;">
+                            <div class="box-body no-padding" style="height:118px;overflow:auto;">
                                 <input style="display:none;" id="fileImportDialog" type="file" nwdirectory/>
                                 <div id="remoteELO">
                                     <script>

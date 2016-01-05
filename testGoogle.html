@@ -29,6 +29,7 @@
     <!-- AdminLTE App -->
     <script src="assets/js/app.js" type="text/javascript"></script>
     <script type="text/javascript" src="controller/settings.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
 </head>
 
 <body class="skin-blue sidebar-mini fixed">
@@ -113,6 +114,10 @@
                                 <!--<h3 class="box-title">Create New Author Group</h3>-->
                             </div>
                             <!-- /.box-header -->
+                            <!-- <div class="g-plus" data-action="share" data-href="http://www.google.com.tw">
+                                <button id="gplus"></button>
+                            </div> -->
+                            
                             <!-- form start -->
                             <form role="form">
                                 <div class="box-body" id="content">
@@ -120,7 +125,7 @@
                                     // id 109772328457024588009
                                     // API Key AIzaSyAeNMyNVPePJo-9VGgV1BqsDyRZeqf0xYw
                                     // id Tim 118354235733409155040
-                                    var acts = [];
+                                    /*var acts = [];
                                     var request = require('request');
                                     request({
                                         url: 'https://www.googleapis.com/plus/v1/people/109772328457024588009?key=AIzaSyAeNMyNVPePJo-9VGgV1BqsDyRZeqf0xYw',
@@ -158,6 +163,31 @@
                                             $("#content").append("<p>Comment " + i + " ID: " + body.items[i].id + " Comment: " + body.items[i].object.content + "</p>");
                                         }
                                     });
+
+                                    //ya29.WwIIrW4axLTTw365lYVJvo4vdVZiXaR8Din2Zcli-BbRxP20JhxZ6S5j-1wL0-DT4p9l
+
+                                    request({
+                                        url: 'https://www.googleapis.com/plusDomains/v1/people/109772328457024588009/activities',
+                                        method: 'POST',
+                                        authorization: 'Bearer 1/fFBGRNJru1FQd44AzqT3Zg',
+                                        json: true,
+                                        data: {
+                                            "object": {
+                                                "originalContent": "Happy Monday! #caseofthemondays",
+                                            },
+                                            "access": {
+                                                "items": [{
+                                                    "type": "domain"
+                                                }],
+                                                "domainRestricted": true
+                                            }
+                                        }
+                                    }, function(error, response, body) {
+                                        console.log("status:" + response.statusCode);
+                                        //var info = JSON.parse(body);
+                                        //console.log("body:" + info);
+                                        //console.log("error:"+error);
+                                    });*/
                                     </script>
                                 </div>
                                 <div class="box-footer"></div>

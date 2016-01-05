@@ -273,7 +273,7 @@
                         <div class="box box-info">
                             <div class="box-header with-border">
                                 <!--<h3 class="box-title">Author Groups Management</h3>-->
-                                <h3 class="box-title">Searching author groups:</h3>
+                                <h3 class="box-title">Searching Author Group by Keywords:</h3>
                             </div>
                             <!-- /.box-header -->
                             <!-- form start -->
@@ -361,7 +361,7 @@
                 </div>
                 <!-- /.box-body -->
             </section>
-            <section class="content">
+            <section id="created_section" class="content">
                 <div id="result-row" class="row">
                     <div id="result-columns" class="col-md-12">
                         <div class="box box-info">
@@ -378,10 +378,14 @@
                                             var content = JSON.parse(filedata);
                                             $.get("http://www.commonrepo.com/api/v2/users/" + content.userID + "/", function(data) {
                                                 var groups = data.commonrepo_groups;
-                                                for (var index = 0; index < groups.length; index++) {
-                                                    $.get("http://www.commonrepo.com/api/v2/groups/" + groups[index] + "/", function(data) {
-                                                        $("#groupcreated").append("<tr><td width='80%'>" + data.name + "</td><td width='10%'><button type='button' class='btn btn-warning' onclick='groupInfo(" + data.id + ")'>Info</button></td><td width='10%'><button type='button' class='btn btn-danger'>Leave</button></td></tr>");
-                                                    });
+                                                if (groups.length == 0) {
+                                                    $("#created_section").remove();
+                                                } else {
+                                                    for (var index = 0; index < groups.length; index++) {
+                                                        $.get("http://www.commonrepo.com/api/v2/groups/" + groups[index] + "/", function(data) {
+                                                            $("#groupcreated").append("<tr><td width='80%'>" + data.name + "</td><td width='10%'><button type='button' class='btn btn-warning' onclick='groupInfo(" + data.id + ")'>Info</button></td><td width='10%'><button type='button' class='btn btn-danger'>Leave</button></td></tr>");
+                                                        });
+                                                    }
                                                 }
                                             });
                                         });
