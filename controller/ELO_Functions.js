@@ -157,55 +157,48 @@ function ELO_remotelist() {
             $("#remoteELO_li_" + ELOS[count].id).append("<span class='users-list-date'>" + AUTHORS[ELOS[count].author] + "</span>");
         }
     }
-
-    // var fs = require('fs');
-    // fs.readFile('collections/users.json', function(err, filedata) {
-    //     var content = JSON.parse(filedata);
-
     //     $.get("http://www.commonrepo.com/api/v2/users/" + content.userID + "/").done(function(data) {
-    //         for (var i = 0; i < data.elos.length; i++) {
-    //             $.get("http://www.commonrepo.com/api/v2/elos/" + data.elos[i] + "/").done(function(data) {
-    //                 var title = data.name;
-    //                 var name = content.userName;
-    //                 var li = document.createElement("li");
-    //                 var publicvalue;
-    //                 li.setAttribute("onclick", "intentViewRemoteELO('" + data.id + "')");
-    //                 if (data.is_public == 1) {
-    //                     publicvalue = 0;
-    //                 } else {
-    //                     publicvalue = 1;
-    //                 }
+    //     for (var i = 0; i < data.elos.length; i++) {
+    //         $.get("http://www.commonrepo.com/api/v2/elos/" + data.elos[i] + "/").done(function(data) {
+    //             var title = data.name;
+    //             var name = content.userName;
+    //             var li = document.createElement("li");
+    //             var publicvalue;
+    //             li.setAttribute("onclick", "intentViewRemoteELO('" + data.id + "')");
+    //             if (data.is_public == 1) {
+    //                 publicvalue = 0;
+    //             } else {
+    //                 publicvalue = 1;
+    //             }
 
-    //                 li.setAttribute("oncontextmenu", "remoteContextMenu('" + data.id + "','" + data.url + "','" + title + "','" + data.init_file + "','" + publicvalue + "')");
-    //                 // remoteContextMenu(li, data.url, title, data.init_file);
+    //             li.setAttribute("oncontextmenu", "remoteContextMenu('" + data.id + "','" + data.url + "','" + title + "','" + data.init_file + "','" + publicvalue + "')");
+    //             // remoteContextMenu(li, data.url, title, data.init_file);
 
-    //                 if (data.is_public == 1) {
-    //                     var img = document.createElement("img");
-    //                     img.setAttribute("src", "assets/img/bookr-64.png");
-    //                     img.setAttribute("alt", "User Image");
-    //                 } else {
-    //                     var img = document.createElement("img");
-    //                     img.setAttribute("src", "assets/img/book-64.png");
-    //                     img.setAttribute("alt", "User Image");
-    //                 }
+    //             if (data.is_public == 1) {
+    //                 var img = document.createElement("img");
+    //                 img.setAttribute("src", "assets/img/bookr-64.png");
+    //                 img.setAttribute("alt", "User Image");
+    //             } else {
+    //                 var img = document.createElement("img");
+    //                 img.setAttribute("src", "assets/img/book-64.png");
+    //                 img.setAttribute("alt", "User Image");
+    //             }
 
-    //                 var a = document.createElement("a");
-    //                 a.setAttribute("class", "users-list-date");
-    //                 a.innerHTML = title;
+    //             var a = document.createElement("a");
+    //             a.setAttribute("class", "users-list-date");
+    //             a.innerHTML = title;
 
-    //                 var span = document.createElement("span");
-    //                 span.setAttribute("class", "users-list-date");
-    //                 span.innerHTML = name;
+    //             var span = document.createElement("span");
+    //             span.setAttribute("class", "users-list-date");
+    //             span.innerHTML = name;
 
-    //                 li.appendChild(img);
-    //                 li.appendChild(a);
-    //                 li.appendChild(span);
-    //                 $("#remoteELO_ul").append(li);
-    //             });
-    //         }
-    //     });
+    //             li.appendChild(img);
+    //             li.appendChild(a);
+    //             li.appendChild(span);
+    //             $("#remoteELO_ul").append(li);
+    //         });
+    //     }
     // });
-
 }
 
 function ELO_publiclist() {
@@ -221,23 +214,6 @@ function ELO_publiclist() {
             // li.setAttribute("id", "publicELO_li_" + ELOS[count].id);
             // li.setAttribute("onclick", "intentViewRemoteELO('" + ELOS[count].id + "')");
             // li.setAttribute("oncontextmenu", "publicContextMenu('" + ELOS[count].id + "','" + ELOS[count].url + "','" + ELOS[count].name + "','" + ELOS[count].init_file + "')");
-
-            // var img = document.createElement("img");
-            // img.setAttribute("src", "assets/img/booko-64.png");
-            // img.setAttribute("alt", "User Image");
-
-            // var a = document.createElement("a");
-            // a.setAttribute("class", "users-list-date");
-            // a.innerHTML = ELOS[count].name;
-
-            // var span = document.createElement("span");
-            // span.setAttribute("class", "users-list-date");
-            // span.innerHTML = AUTHORS[ELOS[count].author];
-
-            // li.appendChild(img);
-            // li.appendChild(a);
-            // li.appendChild(span);
-            // $("#publicELO_ul").append(li);
         }
     }
 }

@@ -31,6 +31,7 @@
     <!--<script type="text/javascript" src="controller/auth.js"></script>-->
     <script type="text/javascript" src="controller/dbfunc.js"></script>
     <script type="text/javascript" src="controller/ELO_Functions.js"></script>
+    <script type="text/javascript" src="controller/user_Functions.js"></script>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script type="text/javascript">
     if (!JSON.parse(localStorage.getItem('settings'))) location.href = 'settings.html';
@@ -127,14 +128,14 @@
                 <div class="row">
                     <!-- Get counts of all objects. -->
                     <script>
-                    getCount();
+                    // getCount();
                     </script>
                     <div class="col-md-3 col-sm-6 col-xs-12">
                         <div class="info-box">
                             <span class="info-box-icon bg-aqua"><i class="ion ion-document-text"></i></span>
                             <div class="info-box-content">
                                 <span class="info-box-text">Groups <br>Created</span>
-                                <span class="info-box-number"></span>
+                                <span id="span_groups_created" class="info-box-number"></span>
                             </div>
                             <!-- /.info-box-content -->
                         </div>
@@ -146,19 +147,7 @@
                             <span class="info-box-icon bg-green"><i class="ion ion-cloud"></i></span>
                             <div class="info-box-content">
                                 <span class="info-box-text">Groups <br>Followed</span>
-                                <span class="info-box-number"></span>
-                            </div>
-                            <!-- /.info-box-content -->
-                        </div>
-                        <!-- /.info-box -->
-                    </div>
-                    <!-- /.col -->
-                    <div class="col-md-3 col-sm-6 col-xs-12">
-                        <div class="info-box">
-                            <span class="info-box-icon bg-red"><i class="fa fa-google-plus"></i></span>
-                            <div class="info-box-content">
-                                <span class="info-box-text">Friends <br>as Authors</span>
-                                <span class="info-box-number"></span>
+                                <span id="span_groups_joined" class="info-box-number"></span>
                             </div>
                             <!-- /.info-box-content -->
                         </div>
@@ -168,6 +157,18 @@
                     <div class="col-md-3 col-sm-6 col-xs-12">
                         <div class="info-box">
                             <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Friends <br>as Authors</span>
+                                <span id="span_friends" class="info-box-number"></span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-red"><i class="fa fa-google-plus"></i></span>
                             <div class="info-box-content">
                                 <span class="info-box-text">Friends <br>in Google+</span>
                                 <span class="info-box-number"></span>
