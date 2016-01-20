@@ -4,33 +4,33 @@ function create_static_file(){
 	var file4 = y.files[0];
 	var elo_course_path = file4.path.replace(file4.name, "") + "ELO_" + file4.name.replace(/ /g, "_");
 
-	fs.mkdir(elo_course_path + "/static", function(err){
+	fs.mkdirSync(elo_course_path + "/static", function(err){
 		if(err) throw err;
 		console.log("static was created !");
 	})
 
 	setTimeout(function(){
-		fs.mkdir(elo_course_path + "/static/image", function(err){
+		fs.mkdirSync(elo_course_path + "/static/image", function(err){
 			if(err) throw err;
 			console.log("image was created !");
 		})
-		fs.mkdir(elo_course_path + "/static/css", function(err){
+		fs.mkdirSync(elo_course_path + "/static/css", function(err){
 			if(err) throw err;
 			console.log("css was created !");
 		})
-		fs.mkdir(elo_course_path + "/static/models", function(err){
+		fs.mkdirSync(elo_course_path + "/static/models", function(err){
 			if(err) throw err;
 			console.log("models was created !");
 		})
-		fs.mkdir(elo_course_path + "/static/html", function(err){
+		fs.mkdirSync(elo_course_path + "/static/html", function(err){
 			if(err) throw err;
 			console.log("html was created !");
 		})
-		fs.mkdir(elo_course_path + "/static/data", function(err){
+		fs.mkdirSync(elo_course_path + "/static/data", function(err){
 			if(err) throw err;
 			console.log("data was created !");
 		})
-		fs.mkdir(elo_course_path + "/static/views", function(err){
+		fs.mkdirSync(elo_course_path + "/static/views", function(err){
 			if(err) throw err;
 			console.log("views was created !");
 		})

@@ -72,11 +72,11 @@
             <!-- Content Header (Page header) -->
             <section class="content-header">
                 <h1>
-                    Convert course of Course Builder to ELOs
+                    Convert Units of Course Builder to ELOs
                 </h1>
                 <ol class="breadcrumb">
                     <li><a href="dashboard.html"><i class="fa fa-dashboard"></i>Main</a></li>
-                    <li class="active">Convert course of Course Builder to ELOs</li>
+                    <li class="active">Convert Units of Course Builder to ELOs</li>
                 </ol>
             </section>
 
@@ -85,9 +85,9 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="importTerms">Import your course of Course Builder:</label>
+                            <label for="importTerms">Import your Units of Course Builder:</label>
                             <br>
-                            <button id="buttonImport" class="btn btn-primary" onclick="$('#fileImportDialog').click();"><i class="fa fa-folder-open"></i> Import course of GCB</button>
+                            <button id="buttonImport" class="btn btn-primary" onclick="$('#fileImportDialog').click();"><i class="fa fa-folder-open"></i> Import Units of GCB</button>
                             <input style="display:none;" id="fileImportDialog" type="file" nwdirectory />
                             <!--nwdirectory will return the path of directory -->
                             
@@ -154,9 +154,9 @@
     <script src="plugins/fastclick/fastclick.min.js"></script>
     <!-- AdminLTE App -->
     <script src="assets/js/app.js" type="text/javascript"></script>
-    <script type="text/javascript" src="controller/GCB_to_ELO/GCB_to_ELO_Function.js"></script>
-    <script type="text/javascript" src="controller/GCB_to_ELO/copyfile.js"></script>
-    <script type="text/javascript" src="controller/GCB_to_ELO/modify_GCB_html.js"></script>
+    <script type="text/javascript" src="controller/Units_of_GCB_to_ELO/Units_of_GCB_to_ELO_Function.js"></script>
+    <script type="text/javascript" src="controller/Units_of_GCB_to_ELO/Units_copyfile.js"></script>
+    <script type="text/javascript" src="controller/Units_of_GCB_to_ELO/Units_modify_GCB_html.js"></script>
     <script type="text/javascript">
     $('#navigation').load('widgets/navigation.html');
 
@@ -188,22 +188,20 @@
 
 
     $("#convert").on('click', function() {
-        mkdirectory();
+        Units_mkdirectory();
+
         setTimeout(function(){
-            open_aggregation_file();
-        }, 50);
+            Units_create_static_file();
+        }, 400);
+
         setTimeout(function(){
-            open_manifest_file();
-        }, 100);
-        setTimeout(function(){
-            create_static_file();
-        }, 200);
-        setTimeout(function(){
-            mycopyfile();
-        }, 250);
+            mycopyfile_exe();
+        }, 950);
+
         setTimeout(function(){
             modify_html();
-        }, 350);
+        }, 1100);
+
     });
 
 

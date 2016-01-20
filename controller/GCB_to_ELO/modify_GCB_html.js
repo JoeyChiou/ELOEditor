@@ -4,8 +4,8 @@ function modify_html(){
 		var y = document.getElementById("fileImportDialog");
 		var file7 = y.files[0];
 		var elo_course_path = file7.path.replace(file7.name, "") + "ELO_" + file7.name.replace(/ /g, "_");
-		var cnfile = [];
-		var resoure_path = [];
+		var cnfile = [];									/* using array to solve Synchronous problem */
+		var resoure_path = [];								/* using array to solve Synchronous problem */
 
 
 		var elofile = fs.readdirSync(elo_course_path);
