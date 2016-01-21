@@ -153,7 +153,6 @@ function mycopyfile(aggregation_path, seg_unit){
 				x = xmlDoc.getElementsByTagName("content");
 
 				for(var i = 1; i <= x.length; i++){
-					console.log("hello");
 					if(x[i-1].getAttribute("tid") == ("cn" + pad(1, 4))){
 						var html_file_name = x[i-1].getAttribute("url_name");
 						console.log(html_file_name);

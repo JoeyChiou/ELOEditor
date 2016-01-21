@@ -156,7 +156,7 @@ function course_yaml(){
 		else{
 
 			var buf = new Buffer("# my new course.yaml\ncourse:\n  title: " + "\'" + new_file_name1.replace(/_/g, " ") 
-			+ "\'\n" + "  admin_user_emails: '[jeremy55662004@gmail.com]'\n  now_available: False");
+			+ "\'\n" + "  admin_user_emails:\n  now_available: False");
 
 			fs.write(fd, buf, 0, buf.length, 0, function(err, written, buffer){
 				if(err) throw err;

@@ -156,6 +156,7 @@
     <script src="assets/js/app.js" type="text/javascript"></script>
     <script type="text/javascript" src="controller/ELO_to_GCB/ELO_to_GCB_copyfile.js"></script>
     <script type="text/javascript" src="controller/ELO_to_GCB/GCB_manifest.js"></script>
+    <script type="text/javascript" src="controller/ELO_to_GCB/ELO_to_GCB_course_json.js"></script>
     <script type="text/javascript">
     $('#navigation').load('widgets/navigation.html');
 
@@ -194,8 +195,9 @@
         setTimeout(function(){
             gcb_manifest();
         }, 50);
-
-
+        setTimeout(function(){
+            gcb_course_json();
+        }, 200);
     });
 
 
