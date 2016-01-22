@@ -1,9 +1,16 @@
+/* author: Jeremy																				*/
+/* 1.function gcb_course_json will write course.json under /files/data.							*/
+/* 2.function write_lesson_course_json will write a part of lesson in course.json files         */
+/* 3. function write_unit_course_json will write a part of units in course.json files			*/
+
+
+
 function write_lesson_course_json(myunit_name, mylesson_id, myunit_id, my_html){
 	var fs = require("fs");
 	var y = document.getElementById("fileImportDialog");
 	var file1 = y.files[0];
 	var new_file_name = file1.name.replace(/ELO/, "");
-	var gcb_path = file1.path.replace(file1.name, "") + "GCB " + new_file_name.replace(/ /g, "_");
+	var gcb_path = file1.path.replace(file1.name, "") + "GCB" + new_file_name.replace(/ /g, "_");
 
 
 	fs.appendFile(gcb_path + "/files/data/course.json", 
@@ -24,7 +31,7 @@ function write_unit_course_json(myunit_name, myunit_id){
 	var y = document.getElementById("fileImportDialog");
 	var file1 = y.files[0];
 	var new_file_name = file1.name.replace(/ELO/, "");
-	var gcb_path = file1.path.replace(file1.name, "") + "GCB " + new_file_name.replace(/ /g, "_");
+	var gcb_path = file1.path.replace(file1.name, "") + "GCB" + new_file_name.replace(/ /g, "_");
 
 	fs.appendFile(gcb_path + "/files/data/course.json",
 	"\n\t{\n\t  \"custom_unit_type\": null,\n\t  \"description\": \"\",\n\t  \"href\": null," + 
@@ -46,7 +53,7 @@ function gcb_course_json(){
 	var file1 = y.files[0];
 	var elo_course_path = file1.path;
 	var new_file_name = file1.name.replace(/ELO/, "");
-	var gcb_path = file1.path.replace(file1.name, "") + "GCB " + new_file_name.replace(/ /g, "_");
+	var gcb_path = file1.path.replace(file1.name, "") + "GCB" + new_file_name.replace(/ /g, "_");
 	var buf2 = new Buffer(1000000);
 	var buf3 = new Buffer(1000000);
 	var unit_id = 1;

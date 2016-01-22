@@ -1,3 +1,10 @@
+/* author: Jeremy																				*/
+/* 1.function Units_create_static_file will make directory under static directory of elo. 		*/
+/* 2.function mycopyfile will copy any files from course builder package to elo package. 		*/
+/* 3.function mycopyfile will call function mycopyfile2 to wirte files.							*/
+
+
+
 function Units_create_static_file(){
 	var fs = require("fs");
 	var y = document.getElementById("fileImportDialog");
@@ -81,24 +88,22 @@ function mycopyfile_exe(){
 	var buf = new Buffer(1000000);
 	var count = -1;
 
-	/*fs.createReadStream("/Users/howard/Desktop/course1/files/assets/html/Lesson 1.1  Instructions for taking this course (Text).html")
-	.pipe(fs.createWriteStream(elo_course_path + "/cn0001/Lesson_1.1__Instructions_for_taking_this_course_(Text).html")); */
 
 	fs.open(coursejsonpath, "r", function(err, fd){
 		if(err) throw err;
 
-		fs.read(fd, buf, 0, buf.length, 0, function(err, bytes){		/* read course.json file */
+		fs.read(fd, buf, 0, buf.length, 0, function(err, bytes){		// read course.json file
 			if(err) throw err;
 			else{
-				var content = buf.slice(0, bytes).toString();    		/* read all file and becoming string */
-				var obj = JSON.parse(content);							/* convert to javascript (object)*/
+				var content = buf.slice(0, bytes).toString();    		// read all file and becoming string
+				var obj = JSON.parse(content);							// convert to javascript (object)
 
 				fs.close(fd, function(err){
 					if(err) throw err;
 					console.log("course.json was closed successfully !");
 				})
 
-				for(var j = 0; j < obj.units.length; j++){				/* for units */
+				for(var j = 0; j < obj.units.length; j++){				// for units 
 					if(obj.units[j].type == "U"){
 						count += 1;
 						var myunit = [];
@@ -181,6 +186,6 @@ function mycopyfile(aggregation_path, seg_unit){
 			console.log("elo_aggregation is closed !");
 		})
 	})
-	//mycopyfile2("/files/assets/html/", seg_unit + "/static/html/");						/* copy html */
+	//mycopyfile2("/files/assets/html/", seg_unit + "/static/html/");						// copy html
 	mycopyfile2("/files/assets/img/", seg_unit + "/static/image/");					
 };

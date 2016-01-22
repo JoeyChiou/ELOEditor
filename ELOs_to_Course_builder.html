@@ -193,11 +193,15 @@
         GCB_css();
         course_yaml();
         setTimeout(function(){
-            gcb_manifest();
+            gcb_course_json();
         }, 50);
         setTimeout(function(){
-            gcb_course_json();
-        }, 200);
+            gcb_manifest();
+        }, 150);
+        setTimeout(function () {
+            alert("Notice! After conversion was complete please add gmail under /files/course.yaml\n" + 
+                "For example: \nadmin_user_emails: '[example@gmail.com]'");
+        },200);
     });
 
 

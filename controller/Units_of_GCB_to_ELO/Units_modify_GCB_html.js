@@ -1,10 +1,16 @@
+/* author: Jeremy																				*/
+/* 1.function modify_html() will correct the path of images in html file.						*/
+/* 2.function openhtmlfile() will add javascript under html file.								*/
+
+
+
 function modify_html(){
 	var fs = require("fs");
 	var y = document.getElementById("fileImportDialog");
 	var file7 = y.files[0];
 	var units_elo_path = file7.path.replace(file7.name, "") + "Units_ELO_" + file7.name.replace(/ /g, "_");
-	var cnfile = [];									/* using array to solve Synchronous problem */
-	var resoure_path = [];								/* using array to solve Synchronous problem */
+	var cnfile = [];									// using array to solve Synchronous problem 
+	var resoure_path = [];								// using array to solve Synchronous problem 
 	var coursejsonpath = file7.path + "/files/data/course.json";
 	var buf = new Buffer(1000000);
 	var count = -1;
@@ -13,18 +19,18 @@ function modify_html(){
 	fs.open(coursejsonpath, "r", function(err, fd){
 	if(err) throw err;
 
-		fs.read(fd, buf, 0, buf.length, 0, function(err, bytes){		/* read course.json file */
+		fs.read(fd, buf, 0, buf.length, 0, function(err, bytes){		// read course.json file
 			if(err) throw err;
 			else{
-				var content = buf.slice(0, bytes).toString();    		/* read all file and becoming string */
-				var obj = JSON.parse(content);							/* convert to javascript (object)*/
+				var content = buf.slice(0, bytes).toString();    		// read all file and becoming string
+				var obj = JSON.parse(content);							// convert to javascript (object)
 
 				fs.close(fd, function(err){
 					if(err) throw err;
 					console.log("course.json was closed successfully !");
 				})
 
-				for(var t = 0; t < obj.units.length; t++){				/* for units */
+				for(var t = 0; t < obj.units.length; t++){				// for units 
 					if(obj.units[t].type == "U"){
 						count += 1;
 						var myunit = [];
@@ -90,7 +96,6 @@ function openhtmlfile(htmlpath, seg_unit){
 	var file8 = z.files[0];
 	var units_elo_path = file8.path.replace(file8.name, "") + "Units_ELO_" + file8.name.replace(/ /g, "_");
 
-	//fs.openSync(htmlpath, r+);
 	var htmlcontent = fs.readFileSync(htmlpath);
 	var modifyhtml = htmlcontent.toString();
 
@@ -101,7 +106,6 @@ function openhtmlfile(htmlpath, seg_unit){
 	y = htmlDoc.getElementsByTagName("img");
 
 	for(var i = 0; i < y.length; i++){
-		// console.log(i+" "+ y[i].toString());
 
 		var img_path = y[i].getAttribute("src");
 		var decode_img_path = decodeURI(img_path);

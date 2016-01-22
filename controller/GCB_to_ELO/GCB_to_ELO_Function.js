@@ -1,22 +1,31 @@
+/* author: Jeremy																				 */
+/* 1.function open_aggregation_file() will create elo_aggreagation file.						 */
+/* 2.function mkdirectory() uses createfile() to create elo_aggregation.xml, elo_manifest.xml.   */
+/*   and elo_metadata.xml under directory. 														 */
+/* 3.function open_manifest_file will create elo_manifest.xml. 									 */
+/* 4.function pad will generate a four-digit number ex: 0001.									 */
+
+
+
 function open_aggregation_file(){
 
 	var x = document.getElementById("fileImportDialog");
 	var message = "";
 	var fs = require("fs");
-	var buf = new Buffer(1000000);								/* buffer like an array (1MB)*/
+	var buf = new Buffer(1000000);								// buffer like an array (1MB)
 
 	if ("files" in x) {
 		if(x.files.length == 0){
 			message = "Select a GCB file.";
 		}
 		else{
-				var file = x.files[0];								/* x.files[0] for the first file */
+				var file = x.files[0];								// x.files[0] for the first file 
 				var elo_course_path = file.path.replace(file.name, "") + "ELO_" + file.name.replace(/ /g, "_");
 				if("name" in file){
 					message += "You selected a file : " + file.name + "<br>";
 				}
 				console.log("Going to read GCB directory");
-				coursejsonpath = file.path + "/files/data/course.json";		/* To find where is course.json file */
+				coursejsonpath = file.path + "/files/data/course.json";		// To find where is course.json file
 				
 				fs.open(coursejsonpath, "r", function(err, fd){
 					if(err){
@@ -24,13 +33,13 @@ function open_aggregation_file(){
 					}
 					console.log("course.json opened successfully!");
 					console.log("Going to read the course.json file");
-					fs.read(fd, buf, 0, buf.length, 0, function(err, bytes){		/* read course.json file */
+					fs.read(fd, buf, 0, buf.length, 0, function(err, bytes){		//read course.json file
 						if(err){
 							console.log(err);
 						}
 						else if(bytes > 0){
-							var content = buf.slice(0, bytes).toString();    		/* read all file and becoming string */
-							var obj = JSON.parse(content);							/* convert to javascript (object)*/
+							var content = buf.slice(0, bytes).toString();    		//read all file and becoming string
+							var obj = JSON.parse(content);							//convert to javascript (object)
 
 							fs.open(elo_course_path + "/elo_aggregation.xml", "w", function(err,fd){
 								if(err){
@@ -50,7 +59,7 @@ function open_aggregation_file(){
     								console.log(err, written, buffer);
 								})
 
-								for(var j = 0; j < obj.units.length; j++){				/* for units */
+								for(var j = 0; j < obj.units.length; j++){				//for units
 									if(obj.units[j].type == "U"){
 										count += 1;
 										var myunit = [];
@@ -91,13 +100,13 @@ function open_aggregation_file(){
 								for(var j = 0; j < obj.units.length; j++){
 									if(obj.units[j].type == "U"){
 										count1 += 1;
-										for(var i = 0; i < obj.lessons.length; i++){			/* for lessons & fewer than its length */ 
+										for(var i = 0; i < obj.lessons.length; i++){			//for lessons & fewer than its length 
 											if((obj.lessons[i].auto_index == true)&&
 												(obj.units[j].unit_id == obj.lessons[i].unit_id)){
 											
 												count2 += 1;
 												var mynotes = obj.lessons[i].notes.split("/");
-												mynotes[2] = mynotes[2].replace(/ /g, "_");		/* change path to correct */
+												mynotes[2] = mynotes[2].replace(/ /g, "_");		//change path to correct
 												mynotes[2] = mynotes[2].replace(/.html/, "");
 												console.log(mynotes[2]);
 
@@ -117,7 +126,7 @@ function open_aggregation_file(){
 									if(err) throw err;
 								})
 
-								fs.close(fd, function(){							/* close aggregation.xml file */
+								fs.close(fd, function(){							//close aggregation.xml file
       								console.log('Done');
     							})
 							})
@@ -125,7 +134,7 @@ function open_aggregation_file(){
 						}
 					})
 
-					fs.close(fd, function(err){										/* close course.json file */
+					fs.close(fd, function(err){										//close course.json file
 						if(err){
 							console.log(err);
 						}
@@ -152,7 +161,7 @@ function createfile(myfile){
 	var y = document.getElementById("fileImportDialog");
 	var file1 = y.files[0];
 	var elo_course_path = file1.path.replace(file1.name, "") + "ELO_" + file1.name.replace(/ /g, "_");
-	var s1 =  elo_course_path + "/xml_file";										/* Should be string object */
+	var s1 =  elo_course_path + "/xml_file";										//Should be string object
 	var s2 =  "xml_file opened successfully !";
 	var s3 =  "xml_file closed successfully !";
 
@@ -171,7 +180,7 @@ function createfile(myfile){
 };
 
 
-function mkdirectory(){													/* make directory */
+function mkdirectory(){													//make directory
 	var fs = require("fs");
 	var y = document.getElementById("fileImportDialog");
 	var file2 = y.files[0];
@@ -195,7 +204,7 @@ function mkdirectory(){													/* make directory */
 function pad(n, width, z){
 	z = z || '0';
 	n = n + '';
-	return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;    /* if statement & to be string*/
+	return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;    //if statement & to be string
 };
 
 
@@ -244,13 +253,13 @@ function open_manifest_file(){
 					})
 
 					fs.close(fd, function(){
-						console.log("elo_manifest colsed successfully !");					/* close elo_manifest file */
+						console.log("elo_manifest colsed successfully !");					//close elo_manifest file
 					})
 				})
 			}
 
 			fs.close(fd, function(){
-				console.log("course.yaml colsed successfully !");					/* close course.yaml file */
+				console.log("course.yaml colsed successfully !");					//close course.yaml file
 			})
 		})
 	})

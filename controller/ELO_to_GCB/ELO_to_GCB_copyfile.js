@@ -1,9 +1,19 @@
+/* author: Jeremy																				*/
+/* 1.function gcbmkdirectory will create directory like /files, /models and so on.				*/
+/* 2.function mygcbcopyfile2 will create files under /models and copy image files.				*/
+/* 3.function GCB_css will create css files. 													*/
+/* 4.function course_yaml will write some information in course.yaml. 							*/
+/* 5.function copy_html_file will copy html files from cn node of elo to /files/assets/html/    */
+/*	 of course builder. 																		*/
+
+
+
 function gcbcreatedir(mydir){
 	var fs = require("fs");
 	var y = document.getElementById("fileImportDialog");
 	var file1 = y.files[0];
 	var new_file_name = file1.name.replace(/ELO/, "");
-	var gcb_path = file1.path.replace(file1.name, "") + "GCB " + new_file_name.replace(/ /g, "_"); 
+	var gcb_path = file1.path.replace(file1.name, "") + "GCB" + new_file_name.replace(/ /g, "_"); 
 
 	fs.mkdirSync(gcb_path + mydir, function(err){
 		if(err) throw err;
@@ -16,7 +26,7 @@ function gcbmkdirectory(callback){						// make directory
 	var y = document.getElementById("fileImportDialog");
 	var file = y.files[0];
 	var new_file_name = file.name.replace(/ELO/, "");
-	var gcb_path = file.path.replace(file.name, "") + "GCB " + new_file_name.replace(/ /g, "_");
+	var gcb_path = file.path.replace(file.name, "") + "GCB" + new_file_name.replace(/ /g, "_");
 
 	console.log("Going to create GCB file");
 
@@ -41,7 +51,7 @@ function mygcbcopyfile(elo_file_path, gcb_file_path){
 	var file6 = y.files[0];
 	var elo_course_path = file6.path;
 	var new_file_name = file6.name.replace(/ELO/, "");
-	var GCB_path = file6.path.replace(file6.name, "") + "GCB " + new_file_name.replace(/ /g, "_");
+	var GCB_path = file6.path.replace(file6.name, "") + "GCB" + new_file_name.replace(/ /g, "_");
 
 	fs.readdir(elo_course_path + elo_file_path, function(err, files){
 		if(err) throw err;
@@ -60,7 +70,7 @@ function write_jsonfile(directory, myfile){
 	var file = y.files[0];
 	var elo_course_path = file.path;
 	var new_file_name = file.name.replace(/ELO/, "");
-	var GCB_path = file.path.replace(file.name, "") + "GCB " + new_file_name.replace(/ /g, "_");
+	var GCB_path = file.path.replace(file.name, "") + "GCB" + new_file_name.replace(/ /g, "_");
 	
 	fs.writeFile(GCB_path + directory + myfile, "{\"rows\": []}", function(err){
    		if (err) {
@@ -77,7 +87,7 @@ function mygcbcopyfile2(){
 	var file = y.files[0];
 	var elo_course_path = file.path;
 	var new_file_name = file.name.replace(/ELO/, "");
-	var GCB_path = file.path.replace(file.name, "") + "GCB " + new_file_name.replace(/ /g, "_");
+	var GCB_path = file.path.replace(file.name, "") + "GCB" + new_file_name.replace(/ /g, "_");
 
 	fs.readdir(elo_course_path + "/static/", function(err, files){
 		for(var i = 0 in files){                                                    // i for index
@@ -122,7 +132,7 @@ function GCB_css(){
 	var y = document.getElementById("fileImportDialog");
 	var file = y.files[0];
 	var new_file_name = file.name.replace(/ELO/, "");
-	var gcb_path = file.path.replace(file.name, "") + "GCB " + new_file_name.replace(/ /g, "_");
+	var gcb_path = file.path.replace(file.name, "") + "GCB" + new_file_name.replace(/ /g, "_");
 
 	var dirpath = process.execPath;
 	var n = dirpath.indexOf("node_modules");
@@ -148,7 +158,7 @@ function course_yaml(){
 	var file = y.files[0];
 	var new_file_name = file.name.replace(/ELO/, "");
 	var new_file_name1 = file.name.replace(/ELO_/, "");
-	var gcb_path = file.path.replace(file.name, "") + "GCB " + new_file_name.replace(/ /g, "_");
+	var gcb_path = file.path.replace(file.name, "") + "GCB" + new_file_name.replace(/ /g, "_");
 
 	fs.open(gcb_path + "/files/course.yaml", "w", function(err,fd){
 		if(err) throw err;
@@ -179,7 +189,7 @@ function copy_html_file(){
 	var file = y.files[0];
 	var elo_course_path = file.path;
 	var new_file_name = file.name.replace(/ELO/, "");
-	var GCB_path = file.path.replace(file.name, "") + "GCB " + new_file_name.replace(/ /g, "_");
+	var GCB_path = file.path.replace(file.name, "") + "GCB" + new_file_name.replace(/ /g, "_");
 	var cnfile = [];											// using array to solve Synchronous problem 
 	var resoure_path = [];										// using array to solve Synchronous problem
 
@@ -216,25 +226,3 @@ function copy_html_file(){
 	}
    	
 }; 
-
-/*function mygcbcopyfile2(){
-	var fs = require("fs");
-	var y = document.getElementById("fileImportDialog");
-	var file = y.files[0];
-	var elo_course_path = file.path;
-	var new_file_name = file.name.replace(/ELO/, "");
-	var GCB_path = file.path.replace(file.name, "") + "GCB " + new_file_name.replace(/ /g, "_");
-
-	fs.createReadStream(elo_course_path + "/static/manifest.json")
-	.pipe(fs.createWriteStream(GCB_path + "/manifest.json"));  			
-
-	fs.createReadStream(elo_course_path + "/static/course.yaml")
-	.pipe(fs.createWriteStream(GCB_path + "/files/course.yaml"));  		
-
-	mygcbcopyfile("/static/models/", "/models/");
-	mygcbcopyfile("/static/css/", "/files/assets/css/");
-	mygcbcopyfile("/static/html/", "/files/assets/html/");
-	mygcbcopyfile("/static/image/", "/files/assets/img/");
-	mygcbcopyfile("/static/data/", "/files/data/");
-	mygcbcopyfile("/static/views/", "/files/views/")
-};*/

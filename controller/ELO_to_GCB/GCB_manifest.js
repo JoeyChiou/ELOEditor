@@ -1,9 +1,15 @@
+/* author: Jeremy																				 */
+/* 1.function gcb_manifest will write any other paht of files under	package of course builder.   */
+/* 2.function gcb_manifest will call gcb_manifest_content() to write the manifest.json.			 */
+
+
+
 function gcb_manifest_content(filepath){
 	var fs = require("fs");
 	var y = document.getElementById("fileImportDialog");
 	var file = y.files[0];
 	var new_file_name = file.name.replace(/ELO/, "");
-	var gcb_path = file.path.replace(file.name, "") + "GCB " + new_file_name.replace(/ /g, "_");
+	var gcb_path = file.path.replace(file.name, "") + "GCB" + new_file_name.replace(/ /g, "_");
 
 
 	fs.appendFile(gcb_path + "/manifest.json", 
@@ -20,7 +26,7 @@ function gcb_manifest(){
 	var y = document.getElementById("fileImportDialog");
 	var file = y.files[0];
 	var new_file_name = file.name.replace(/ELO/, "");
-	var gcb_path = file.path.replace(file.name, "") + "GCB " + new_file_name.replace(/ /g, "_");
+	var gcb_path = file.path.replace(file.name, "") + "GCB" + new_file_name.replace(/ /g, "_");
 	var count = 0;
 
 	fs.open(gcb_path + "/manifest.json", "w", function(err,fd){
@@ -95,9 +101,9 @@ function gcb_manifest(){
 				if(err) throw err;
 				console.log("raw was added");
 				})
-			}, 10)
+			}, 20)
 
-			fs.close(fd, function(err){										/* close course.yaml file */
+			fs.close(fd, function(err){										//close course.yaml file
 				if(err) throw err;
 				console.log("manifest.json closed successfully !");
 			})
