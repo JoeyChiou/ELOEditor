@@ -66,6 +66,7 @@
                 },
                 body: formData
             }, function(error, response, body) {
+                console.log("rep:" + response.statusCode);
                 if (!error && response.statusCode == 200) {
                     /*var info = JSON.parse(body);
                     for (var i = 0; i < info.length; i++) {
@@ -233,7 +234,7 @@
                                         <script>
                                         getName();
                                         </script>
-                                        <label for="groupPass">Passrowd:</label>
+                                        <label for="groupPass">Password:</label>
                                         <input type="text" class="form-control" placeholder="Password" id="groupPass">
                                         <label for="groupDpt">Discription:</label>
                                         <input type="text" class="form-control" placeholder="Discription for this group" id="groupDpt">

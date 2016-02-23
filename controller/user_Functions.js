@@ -32,21 +32,13 @@ $(function() {
                 GROUPSJOINED[count] = data.commonrepo_groups_members[count];
             }
         }).done(function() {
-            for (var count1 = 0; count1 < GROUPSCREATED.length; count1++) {
-                $.get("http://www.commonrepo.com/api/v2/groups/" + GROUPSCREATED[count1] + "/", function(data) {
-                    FRIENDS += data.members.length;
-                }).done(function() {
-                    for (var count2 = 0; count2 < GROUPSJOINED.length; count2++) {
-                        $.get("http://www.commonrepo.com/api/v2/groups/" + GROUPSJOINED[count2] + "/", function(data2) {
-                            FRIENDS += data2.members.length - 1;
-                        }).done(function() {
-                            getGroupsCreated();
-                            getGroupsJoined();
-                            getFriends();
-                        });
-                    }
-                });
-            }
+            $.get("http://www.commonrepo.com/api/v2/users/", function(data) {
+                FRIENDS = data.length;
+            }).done(function() {
+                getGroupsCreated();
+                getGroupsJoined();
+                getFriends();
+            });
         });
     });
 });

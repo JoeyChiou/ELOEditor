@@ -1,15 +1,16 @@
-var gui = require("nw.gui");
+//var gui = require("nw.gui");
 
 // Count all documents in the datastore
-function getCount() {
-    db.count({}, function(err, count) {
-        $("span:contains(Local ELOs) ~ span").text(count);
-        $("span:contains(Remote ELOs) ~ span").text(count + 20);
-        $("span:contains(Likes) ~ span").text(count + 34);
-        $("span:contains(Members) ~ span").text(count + 73);
-    });
-}
+// function getCount() {
+//     db.count({}, function(err, count) {
+//         $("span:contains(Local ELOs) ~ span").text(count);
+//         $("span:contains(Remote ELOs) ~ span").text(count + 20);
+//         $("span:contains(Likes) ~ span").text(count + 34);
+//         $("span:contains(Members) ~ span").text(count + 73);
+//     });
+// }
 
+// Search Metadata
 function MT_Search(str) {
     var query = str.split(",");
     // alert(str);
@@ -60,56 +61,15 @@ function ELO_ListBySearch(title) {
     });
 }
 
-function allowDrop(ev) {
-    ev.preventDefault();
-}
-
-function drag(ev) {
-    ev.dataTransfer.setData("text", ev.target.id);
-}
-
-function drop(ev) {
-    ev.preventDefault();
-    var data = ev.dataTransfer.getData("text");
-    document.getElementById("ulroot").insertBefore(document.getElementById(data), ev.target.parentNode.parentNode);
-}
-
-function viewELO(elopath) {
-    var path = elopath + "/";
-    var jsdom = require("jsdom");
-
-    jsdom.env({
-        file: path + "elo_aggregation.xml",
-        scripts: ["http://code.jquery.com/jquery.js"],
-        done: function(errors, window) {
-            var tnID;
-            $("#search-result-treeview").append("<ul id='ulroot' class='list-group'></ul>");
-
-            for (var i = 0; i < window.$("container").length; i++) {
-                tnID = window.$("container")[i].getAttribute("id");
-                $("#ulroot").append("<li id='li_" + tnID + "' class='list-group-item' draggable='true' ondragstart='drag(event)' ondrop='drop(event)' ondragover='allowDrop(event)'></li>");
-                $("#li_" + tnID).append("<ul id='ul_" + tnID + "' class='list-group'>" + window.$("container")[i].getAttribute("display_name") + "</ul>");
-
-                for (var j = 0; j < window.$("content").length; j++) {
-                    if (window.$("content")[j].getAttribute("tid") == tnID) {
-                        var URL = path + window.$("content")[j].getAttribute("tid") + "/" + window.$("content")[j].getAttribute("url_name") + ".html";
-                        $("#ul_" + tnID).append("<li class='list-group-item list-group-item-danger' onclick=iframe01.location.href='" + URL + "'>" + window.$("content")[j].getAttribute("url_name").toString() + "</li>");
-                    }
-                }
-            }
-        }
-    });
-}
-
-// List all ELOs
-function ELO_List(divID) {
+// Local ELO list
+function ELO_locallist() {
     db.count({}, function(err, count) {
         db.find({}, function(err, docs) {
             // db.find({}).sort({
             //     _id: 1
             // }).exec(function(err, docs) {
-            // var div = document.getElementById(divID);
-            $("#" + divID).append("<ul class='users-list clearfix'></ul>");
+            // var div = document.getElementById("localELO");
+            $("#localELO").append("<ul class='users-list clearfix'></ul>");
 
             for (var i = 0; i < count; i++) {
                 var title = docs[i].title;
@@ -135,98 +95,13 @@ function ELO_List(divID) {
                 li.appendChild(img);
                 li.appendChild(a);
                 li.appendChild(span);
-                $("#" + divID + " ul").append(li);
+                $("#localELO ul").append(li);
             }
         });
     });
 }
 
-function ELO_remotelist() {
-    $("#remoteELO").append("<ul id='remoteELO_ul' class='users-list clearfix'></ul>");
-
-    for (var count = 0; count < ELOS.length; count++) {
-        if (ELOS[count].author == USERID) {
-            $("#remoteELO_ul").append("<li id='remoteELO_li_" + ELOS[count].id + "' onclick=intentViewRemoteELO('" + ELOS[count].id + "') oncontextmenu=remoteContextMenu('" + ELOS[count].id + "','" + ELOS[count].url + "','" + ELOS[count].name + "','" + ELOS[count].init_file + "','" + ELOS[count].is_public + "')></li>");
-
-            if (ELOS[count].is_public == 1)
-                $("#remoteELO_li_" + ELOS[count].id).append("<img src='assets/img/bookr-64.png' alt='User Image'></img>");
-            else
-                $("#remoteELO_li_" + ELOS[count].id).append("<img src='assets/img/book-64.png' alt='User Image'></img>");
-
-            $("#remoteELO_li_" + ELOS[count].id).append("<a class='users-list-date'>" + ELOS[count].name + "</a>");
-            $("#remoteELO_li_" + ELOS[count].id).append("<span class='users-list-date'>" + AUTHORS[ELOS[count].author] + "</span>");
-        }
-    }
-    //     $.get("http://www.commonrepo.com/api/v2/users/" + content.userID + "/").done(function(data) {
-    //     for (var i = 0; i < data.elos.length; i++) {
-    //         $.get("http://www.commonrepo.com/api/v2/elos/" + data.elos[i] + "/").done(function(data) {
-    //             var title = data.name;
-    //             var name = content.userName;
-    //             var li = document.createElement("li");
-    //             var publicvalue;
-    //             li.setAttribute("onclick", "intentViewRemoteELO('" + data.id + "')");
-    //             if (data.is_public == 1) {
-    //                 publicvalue = 0;
-    //             } else {
-    //                 publicvalue = 1;
-    //             }
-
-    //             li.setAttribute("oncontextmenu", "remoteContextMenu('" + data.id + "','" + data.url + "','" + title + "','" + data.init_file + "','" + publicvalue + "')");
-    //             // remoteContextMenu(li, data.url, title, data.init_file);
-
-    //             if (data.is_public == 1) {
-    //                 var img = document.createElement("img");
-    //                 img.setAttribute("src", "assets/img/bookr-64.png");
-    //                 img.setAttribute("alt", "User Image");
-    //             } else {
-    //                 var img = document.createElement("img");
-    //                 img.setAttribute("src", "assets/img/book-64.png");
-    //                 img.setAttribute("alt", "User Image");
-    //             }
-
-    //             var a = document.createElement("a");
-    //             a.setAttribute("class", "users-list-date");
-    //             a.innerHTML = title;
-
-    //             var span = document.createElement("span");
-    //             span.setAttribute("class", "users-list-date");
-    //             span.innerHTML = name;
-
-    //             li.appendChild(img);
-    //             li.appendChild(a);
-    //             li.appendChild(span);
-    //             $("#remoteELO_ul").append(li);
-    //         });
-    //     }
-    // });
-}
-
-function ELO_publiclist() {
-    $("#publicELO").append("<ul id='publicELO_ul' class='users-list clearfix'></ul>");
-
-    for (var count = 0; count < ELOS.length; count++) {
-        if (ELOS[count].is_public == 1 && ELOS[count].author != USERID) {
-            $("#publicELO_ul").append("<li id='publicELO_li_" + ELOS[count].id + "' onclick=intentViewRemoteELO('" + ELOS[count].id + "') oncontextmenu=publicContextMenu('" + ELOS[count].id + "','" + ELOS[count].url + "','" + ELOS[count].name + "','" + ELOS[count].init_file + "')></li>");
-            $("#publicELO_li_" + ELOS[count].id).append("<img src='assets/img/booko-64.png' alt='User Image'></img>");
-            $("#publicELO_li_" + ELOS[count].id).append("<a class='users-list-date'>" + ELOS[count].name + "</a>");
-            $("#publicELO_li_" + ELOS[count].id).append("<span class='users-list-date'>" + AUTHORS[ELOS[count].author] + "</span>");
-            // var li = document.createElement("li");
-            // li.setAttribute("id", "publicELO_li_" + ELOS[count].id);
-            // li.setAttribute("onclick", "intentViewRemoteELO('" + ELOS[count].id + "')");
-            // li.setAttribute("oncontextmenu", "publicContextMenu('" + ELOS[count].id + "','" + ELOS[count].url + "','" + ELOS[count].name + "','" + ELOS[count].init_file + "')");
-        }
-    }
-}
-
-function intentView(elopath) {
-    location.href = "eloviewer.html?elopath=" + elopath;
-}
-
-function intentViewRemoteELO(eloID) {
-    location.href = "eloviewerRemote.html?eloID=" + eloID;
-}
-
-// context for local
+// ContextMenu for LocalELO
 function localContextMenu(elotitle, eloname, elopath) {
     localmenu = new gui.Menu();
     localmenu.append(new gui.MenuItem({
@@ -291,8 +166,29 @@ function localContextMenu(elotitle, eloname, elopath) {
     });
 }
 
-// context for remote
+// Remote ELO list
+function ELO_remotelist() {
+    console.log("ELO_remotelist Function");
+    $("#remoteELO").append("<ul id='remoteELO_ul' class='users-list clearfix'></ul>");
+
+    for (var count = 0; count < ELOS.length; count++) {
+        if (ELOS[count].author == USERID) {
+            $("#remoteELO_ul").append("<li id='remoteELO_li_" + ELOS[count].id + "' onclick=intentViewRemoteELO('" + ELOS[count].id + "') oncontextmenu=remoteContextMenu('" + ELOS[count].id + "','" + ELOS[count].url + "','" + encodeURI(ELOS[count].name) + "','" + ELOS[count].init_file + "','" + ELOS[count].is_public + "')></li>");
+
+            if (ELOS[count].is_public == 1)
+                $("#remoteELO_li_" + ELOS[count].id).append("<img src='assets/img/bookr-64.png' alt='User Image'></img>");
+            else
+                $("#remoteELO_li_" + ELOS[count].id).append("<img src='assets/img/book-64.png' alt='User Image'></img>");
+
+            $("#remoteELO_li_" + ELOS[count].id).append("<a class='users-list-date'>" + ELOS[count].name + "</a>");
+            $("#remoteELO_li_" + ELOS[count].id).append("<span class='users-list-date'>" + AUTHORS[ELOS[count].author] + "</span>");
+        }
+    }
+}
+
+// ContextMenu for Remote ELO
 function remoteContextMenu(eloID, eloURL, title, filepath, publicvalue) {
+    console.log("remoteContextMenu");
     remotemenu = new gui.Menu();
     remotemenu.append(new gui.MenuItem({
         label: 'Download',
@@ -300,7 +196,7 @@ function remoteContextMenu(eloID, eloURL, title, filepath, publicvalue) {
             var https = require('https');
             var fs = require('fs');
 
-            var zipfile = "/Users/JoeyChiou/Downloads/ELOs/" + title + ".zip";
+            var zipfile = "/Users/JoeyChiou/Downloads/ELOs/" + decodeURI(title) + ".zip";
             var file = fs.createWriteStream(zipfile);
             var request = https.get(filepath, function(response) {
                 response.pipe(file);
@@ -308,11 +204,11 @@ function remoteContextMenu(eloID, eloURL, title, filepath, publicvalue) {
 
             file.on('close', function() {
                 var AdmZip = require('adm-zip');
-                var zip = new AdmZip("/Users/JoeyChiou/Downloads/ELOs/" + title + ".zip");
-                zip.extractAllTo("/Users/JoeyChiou/Downloads/ELOs/" + title, true);
+                var zip = new AdmZip("/Users/JoeyChiou/Downloads/ELOs/" + decodeURI(title) + ".zip");
+                zip.extractAllTo("/Users/JoeyChiou/Downloads/ELOs/" + decodeURI(title), true);
 
                 $.getScript("controller/dbfunc.js", function(data, textStatus, jqxhr) {
-                    importELO("/Users/JoeyChiou/Downloads/ELOs/" + title, title, "TestMan");
+                    importELO("/Users/JoeyChiou/Downloads/ELOs/" + decodeURI(title), decodeURI(title), "TestMan");
                 });
 
                 location.href = "dashboard.html";
@@ -368,13 +264,12 @@ function remoteContextMenu(eloID, eloURL, title, filepath, publicvalue) {
                         "is_public": publicvalue
                     }
                 }, function(error, response, body) {
-                    //if(!error && response.statusCode == 200)
-                    console.log("status:" + response.statusCode);
-                    console.log("body:" + body);
+                    if (!error && response.statusCode == 200)
+                        console.log("Publish request finish.");
                 });
             });
 
-            var shareURL = "https://plus.google.com/share?url={" + filepath + "}";
+            var shareURL = "https://plus.google.com/share?url={http://www.commonrepo.com/elos/" + eloID + "/}";
             $("#gplus").attr("href", shareURL);
             $("#gplus").click();
 
@@ -389,7 +284,26 @@ function remoteContextMenu(eloID, eloURL, title, filepath, publicvalue) {
     });
 }
 
-// context for public
+// Public ELO list
+function ELO_publiclist() {
+    console.log("ELO_publiclist Function");
+    $("#publicELO").append("<ul id='publicELO_ul' class='users-list clearfix'></ul>");
+
+    for (var count = 0; count < ELOS.length; count++) {
+        if (ELOS[count].is_public == 1 && ELOS[count].author != USERID) {
+            $("#publicELO_ul").append("<li id='publicELO_li_" + ELOS[count].id + "' onclick=intentViewRemoteELO('" + ELOS[count].id + "') oncontextmenu=publicContextMenu('" + ELOS[count].id + "','" + ELOS[count].url + "','" + ELOS[count].name + "','" + ELOS[count].init_file + "')></li>");
+            $("#publicELO_li_" + ELOS[count].id).append("<img src='assets/img/booko-64.png' alt='User Image'></img>");
+            $("#publicELO_li_" + ELOS[count].id).append("<a class='users-list-date'>" + ELOS[count].name + "</a>");
+            $("#publicELO_li_" + ELOS[count].id).append("<span class='users-list-date'>" + AUTHORS[ELOS[count].author] + "</span>");
+            // var li = document.createElement("li");
+            // li.setAttribute("id", "publicELO_li_" + ELOS[count].id);
+            // li.setAttribute("onclick", "intentViewRemoteELO('" + ELOS[count].id + "')");
+            // li.setAttribute("oncontextmenu", "publicContextMenu('" + ELOS[count].id + "','" + ELOS[count].url + "','" + ELOS[count].name + "','" + ELOS[count].init_file + "')");
+        }
+    }
+}
+
+// ContextMenu for PublicELO
 function publicContextMenu(eloID, eloURL, title, filepath) {
     publicmenu = new gui.Menu();
     publicmenu.append(new gui.MenuItem({
@@ -423,6 +337,14 @@ function publicContextMenu(eloID, eloURL, title, filepath) {
         publicmenu.popup(ev.x, ev.y);
         return false;
     });
+}
+
+function intentView(elopath) {
+    location.href = "eloviewer.html?elopath=" + elopath;
+}
+
+function intentViewRemoteELO(eloID) {
+    location.href = "eloviewerRemote.html?eloID=" + eloID;
 }
 
 function groupJoin() {
@@ -478,7 +400,7 @@ $(function() {
                 AUTHORS[data[count].id] = data[count].username;
             }
         }).done(function() {
-            $.get("http://www.commonrepo.com/api/v2/elos/", function(data) {
+            /*$.get("http://www.commonrepo.com/api/v2/elos/", function(data) {
                 console.log("elos");
                 for (var count = 0; count < data.length; count++) {
                     var elo = new objELO();
@@ -493,6 +415,33 @@ $(function() {
             }).done(function() {
                 ELO_remotelist();
                 ELO_publiclist();
+            });*/
+            var request = require('request');
+            request({
+                url: 'http://www.commonrepo.com/api/v2/elos/',
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Token ' + content.AUTHKEY,
+                    'Content-Type': 'application/json'
+                }
+            }, function(error, response, body) {
+                if (!error) {
+                    console.log("elos");
+                    var data = JSON.parse(body);
+                    for (var count = 0; count < data.length; count++) {
+                        var elo = new objELO();
+                        elo.id = data[count].id;
+                        elo.url = "http://www.commonrepo.com/api/v2/elos/" + data[count].id + "/";
+                        elo.name = data[count].name;
+                        elo.init_file = data[count].init_file;
+                        elo.is_public = data[count].is_public;
+                        elo.author = data[count].author;
+                        ELOS[count] = elo;
+                    }
+
+                    ELO_remotelist();
+                    ELO_publiclist();
+                }
             });
         });
     });
