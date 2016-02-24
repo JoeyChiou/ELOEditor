@@ -1,4 +1,6 @@
 /* author: Jeremy																				*/
+/* This file will copy files from package of ELO to package of Google course builder			*/
+/*																								*/
 /* 1.function gcbmkdirectory will create directory like /files, /models and so on.				*/
 /* 2.function mygcbcopyfile2 will create files under /models and copy image files.				*/
 /* 3.function GCB_css will create css files. 													*/
@@ -8,6 +10,7 @@
 
 
 
+/* function gcbcreatedir will create a directoy */
 function gcbcreatedir(mydir){
 	var fs = require("fs");
 	var y = document.getElementById("fileImportDialog");
@@ -21,6 +24,7 @@ function gcbcreatedir(mydir){
 };
 
 
+/* function gcbmkdirectory will create directory like /files, /models and so on */
 function gcbmkdirectory(callback){						// make directory
 	var fs = require("fs");
 	var y = document.getElementById("fileImportDialog");
@@ -45,6 +49,7 @@ function gcbmkdirectory(callback){						// make directory
 };
 
 
+/* function mygcbcopyfile will create a file from elo to google course builder */
 function mygcbcopyfile(elo_file_path, gcb_file_path){
 	var fs = require("fs");
 	var y = document.getElementById("fileImportDialog");
@@ -64,6 +69,7 @@ function mygcbcopyfile(elo_file_path, gcb_file_path){
 };
 
 
+/* function write_jsonfile will write contents in json file */
 function write_jsonfile(directory, myfile){
 	var fs = require("fs");
 	var y = document.getElementById("fileImportDialog");
@@ -81,6 +87,7 @@ function write_jsonfile(directory, myfile){
 };
 
 
+/* function mygcbcopyfile2 will create files under /models and copy image files. */
 function mygcbcopyfile2(){
 	var fs = require("fs");
 	var y = document.getElementById("fileImportDialog");
@@ -90,14 +97,14 @@ function mygcbcopyfile2(){
 	var GCB_path = file.path.replace(file.name, "") + "GCB" + new_file_name.replace(/ /g, "_");
 
 	fs.readdir(elo_course_path + "/static/", function(err, files){
-		for(var i = 0 in files){                                                    // i for index
+		for(var i = 0 in files){                                                 // i for index
             if(files[i] == "image"){
 				mygcbcopyfile("/static/image/", "/files/assets/img/");
 			}
 		}		
    	})
 
-   	fs.readdir(elo_course_path + "/static/", function(err, files){						 // for picture outside image directory
+   	fs.readdir(elo_course_path + "/static/", function(err, files){				 // for picture outside image directory
    		for(var j = 0 in files){
 			
 			var n = files[j].lastIndexOf(".");
@@ -127,6 +134,7 @@ function mygcbcopyfile2(){
 };
 
 
+/* function GCB_css will create css files. */
 function GCB_css(){
 	var fs = require("fs");
 	var y = document.getElementById("fileImportDialog");
@@ -136,7 +144,7 @@ function GCB_css(){
 
 	var dirpath = process.execPath;
 	var n = dirpath.indexOf("node_modules");
-	var common_dirpath = dirpath.slice(0, n);					//get path of commonrepo-client 
+	var common_dirpath = dirpath.slice(0, n);							//get path of commonrepo-client 
 	var GCB_common_css_path = common_dirpath + "assets/GCB_css/";		//get path of GCB css files in commonrepo
 
 	console.log(GCB_common_css_path);
@@ -152,6 +160,7 @@ function GCB_css(){
 };
 
 
+/* function course_yaml will write some information in course.yaml. */
 function course_yaml(){
 	var fs = require("fs");
 	var y = document.getElementById("fileImportDialog");
@@ -183,6 +192,8 @@ function course_yaml(){
 	})
 };
 
+
+/* function copy_html_file will copy html files from cn node of elo to /files/assets/html/ of course builder. */
 function copy_html_file(){
 	var fs = require("fs");
 	var y = document.getElementById("fileImportDialog");

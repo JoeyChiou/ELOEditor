@@ -17,6 +17,7 @@
          folder instead of downloading all of them to reduce the load. -->
     <link href="assets/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="controller/settings.js"></script>
+    <script type="text/javascript" src="controller/GCB_list.js"></script>
 </head>
 
 <body class="skin-blue sidebar-mini fixed">
@@ -83,7 +84,7 @@
             <!-- Main content -->
             <section class="content">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="form-group">
                             <label for="importTerms">Import your Units of Course Builder:</label>
                             <br>
@@ -96,10 +97,32 @@
 
                             <label class="control-label hide" for="importTerms1"><i class="fa fa-times-circle-o"></i> Required</label>
                         </div>
-                        <div class="box-body no-padding">
-                                <div id="localGCB">
+                        
+                        <!-- GCB LIST -->
+                        <div class="box">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Course of GCBs</h3>
+                                <div class="box-tools pull-right">
+                                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                    <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
                                 </div>
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body no-padding">
+                                <div id="localGCB">
+                                    <script>
+                                    GCB_List("localGCB");
+                                    </script>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-footer text-center">
+                                <a href="javascript::" class="uppercase"></a>
+                            </div>
+                            <!-- /.box-footer -->
                         </div>
+                        <!--/.box -->
+
                         <br/>
                         <button type="button" id="convert" class="btn bg-olive">
                             <i class="fa fa-exchange"></i>
@@ -160,30 +183,25 @@
     <script type="text/javascript">
     $('#navigation').load('widgets/navigation.html');
 
-    /*function chooseFile(name) {
-        var chooser = $(name);
-        chooser.change(function(evt) {
-            console.log($(this).val());
-        });
 
-        //chooser.trigger('click');  
-    }*/
     $("#fileImportDialog").change(function(evt){
         var gcbpath = $(this).val();
+        var gcbtitle = gcbpath.split("/");
 
-        var ul = document.createElement("ul");
-        ul.setAttribute("id", "gcblist");       /* set id=gcblist for ul*/
         var li = document.createElement("li");
 
         var img = document.createElement("img");
         img.setAttribute("src", "assets/img/book-64.png");
         img.setAttribute("alt", "User Image");
 
-        ul.appendChild(img);
-        ul.appendChild(li);
-        li.innerHTML = gcbpath;
-        $(path).append(ul);
+        var a = document.createElement("a");
+        a.setAttribute("class", "users-list-date");
+        a.innerHTML = gcbtitle[gcbtitle.length - 1];
 
+        li.appendChild(img);
+        li.appendChild(a);
+
+        $("#localGCB ul").append(li);
     });
 
 

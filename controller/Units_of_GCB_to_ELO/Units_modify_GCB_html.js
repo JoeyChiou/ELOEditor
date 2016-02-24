@@ -3,7 +3,7 @@
 /* 2.function openhtmlfile() will add javascript under html file.								*/
 
 
-
+/* function modify_html() will correct the path of images in html file. */
 function modify_html(){
 	var fs = require("fs");
 	var y = document.getElementById("fileImportDialog");
@@ -89,7 +89,7 @@ function modify_html(){
 };
 
 
-
+/* function openhtmlfile() will add javascript under html file. */
 function openhtmlfile(htmlpath, seg_unit){
 	var fs = require("fs");
 	var z = document.getElementById("fileImportDialog");

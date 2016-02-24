@@ -5,6 +5,7 @@
 
 
 
+/* function Units_create_static_file will make directory under static directory of elo. */
 function Units_create_static_file(){
 	var fs = require("fs");
 	var y = document.getElementById("fileImportDialog");
@@ -60,6 +61,8 @@ function Units_create_static_file(){
 	},70);
 };
 
+
+/* function mycopyfile2 will copy a file from course builder package to elo package. */
 function mycopyfile2(gcbpath, elopath){
 	var fs = require("fs");
 	var y = document.getElementById("fileImportDialog");
@@ -78,6 +81,7 @@ function mycopyfile2(gcbpath, elopath){
 };
 
 
+/* function mycopyfilr_exe() will separate units and copy resourses under units */
 function mycopyfile_exe(){
 	var fs = require("fs");
 	var y = document.getElementById("fileImportDialog");
@@ -131,6 +135,8 @@ function mycopyfile_exe(){
 };
 
 
+/* function mycopyfile will copy any files from course builder package to elo package. */
+/* function mycopyfile will call function mycopyfile2 to wirte files.				   */
 function mycopyfile(aggregation_path, seg_unit){
 	var fs = require("fs");
 	var y = document.getElementById("fileImportDialog");

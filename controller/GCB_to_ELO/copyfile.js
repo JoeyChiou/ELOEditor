@@ -5,6 +5,7 @@
 
 
 
+/* function create_static_file will make directory under static directory of elo. */
 function create_static_file(){
 	var fs = require("fs");
 	var y = document.getElementById("fileImportDialog");
@@ -45,6 +46,7 @@ function create_static_file(){
 };
 
 
+/* function mycopyfile will call function mycopyfile2 to wirte files. */
 function mycopyfile(){
 	//setTimeout( function(){
 		var fs = require("fs");
@@ -137,7 +139,7 @@ function mycopyfile(){
 };
 
 
-
+/* function mycopyfile2 will copy a file from course builder package to elo package. */
 function mycopyfile2(gcbpath, elopath){
 	var fs = require("fs");
 	var y = document.getElementById("fileImportDialog");

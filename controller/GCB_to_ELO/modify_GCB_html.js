@@ -1,9 +1,9 @@
 /* author: Jeremy																				*/
 /* 1.function modify_html() will correct the path of images in html file.						*/
-/* 2.function openhtmlfile() will add javascript under html file.								*/
+/* 2.function openhtmlfile() will add javascript files under html file.							*/
 
 
-
+/* function modify_html() will correct the path of images in html file */
 function modify_html(){
 	//setTimeout(function(){
 		var fs = require("fs");
@@ -50,7 +50,7 @@ function modify_html(){
 };
 
 
-
+/* function openhtmlfile() will add javascript files under html file */
 function openhtmlfile(htmlpath){
 	var fs = require("fs");
 	var z = document.getElementById("fileImportDialog");

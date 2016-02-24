@@ -1,9 +1,10 @@
 /* author: Jeremy																				 */
-/* 1.function gcb_manifest will write any other paht of files under	package of course builder.   */
+/* 1.function gcb_manifest_content will write any other files under	package of course builder.   */
 /* 2.function gcb_manifest will call gcb_manifest_content() to write the manifest.json.			 */
 
 
 
+/* function gcb_manifest_content will write any other files under package of course builder. */
 function gcb_manifest_content(filepath){
 	var fs = require("fs");
 	var y = document.getElementById("fileImportDialog");
@@ -21,6 +22,7 @@ function gcb_manifest_content(filepath){
 };
 
 
+/* function gcb_manifest will call gcb_manifest_content() to write the manifest.json. */
 function gcb_manifest(){
 	var fs = require("fs");
 	var y = document.getElementById("fileImportDialog");

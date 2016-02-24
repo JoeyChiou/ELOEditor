@@ -1,12 +1,13 @@
 /* author: Jeremy																				       */
 /* 1.function Units_open_aggregation_file() will create elo_aggreagation file.						   */
-/* 2.function Units_mkdirectory() uses createfile() to create elo_aggregation.xml, elo_manifest.xml.   */
+/* 2.function Units_mkdirectory() uses createfile() to create elo_aggregation.xml, elo_manifest.xml    */
 /*   and elo_metadata.xml under directory. 															   */
 /* 3.function units_open_manifest_file will create elo_manifest.xml. 								   */
 /* 4.function pad will generate a four-digit number ex: 0001.										   */
 
 
 
+/* function Units_open_aggregation_file() will create elo_aggreagation file. */
 function Units_open_aggregation_file(myunitfile, k){
 
 	var x = document.getElementById("fileImportDialog");
@@ -153,6 +154,7 @@ function Units_open_aggregation_file(myunitfile, k){
 };
 
 
+/* function createfile will create xml files under each units floders */
 function Units_createfile(myfile){
 	var fs = require("fs");
 	var y = document.getElementById("fileImportDialog");
@@ -181,6 +183,8 @@ function Units_createfile(myfile){
 };
 
 
+/* function Units_mkdirectory() uses createfile() to create elo_aggregation.xml, elo_manifest.xml    */
+/* and elo_metadata.xml under directory. 															 */
 function Units_mkdirectory(){													// make directory
 	var fs = require("fs");
 	var y = document.getElementById("fileImportDialog");
@@ -242,6 +246,7 @@ function Units_mkdirectory(){													// make directory
 };
 
 
+/* function pad will generate a four-digit number ex: 0001. */
 function pad(n, width, z){
 	z = z || '0';
 	n = n + '';
@@ -249,6 +254,7 @@ function pad(n, width, z){
 };
 
 
+/* function units_open_manifest_file will create elo_manifest.xml. */
 function Units_open_manifest_file(myunitfile){
 	var fs = require("fs");
 	var buf1 = new Buffer(1000000);

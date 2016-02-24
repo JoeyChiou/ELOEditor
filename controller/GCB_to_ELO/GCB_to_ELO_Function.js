@@ -1,12 +1,13 @@
 /* author: Jeremy																				 */
 /* 1.function open_aggregation_file() will create elo_aggreagation file.						 */
-/* 2.function mkdirectory() uses createfile() to create elo_aggregation.xml, elo_manifest.xml.   */
+/* 2.function mkdirectory() uses createfile() to create elo_aggregation.xml, elo_manifest.xml    */
 /*   and elo_metadata.xml under directory. 														 */
 /* 3.function open_manifest_file will create elo_manifest.xml. 									 */
 /* 4.function pad will generate a four-digit number ex: 0001.									 */
 
 
 
+/* function open_aggregation_file() will create elo_aggreagation file. */
 function open_aggregation_file(){
 
 	var x = document.getElementById("fileImportDialog");
@@ -156,6 +157,7 @@ function open_aggregation_file(){
 };
 
 
+/* function createfile will create xml files */
 function createfile(myfile){
 	var fs = require("fs");
 	var y = document.getElementById("fileImportDialog");
@@ -180,6 +182,8 @@ function createfile(myfile){
 };
 
 
+/* function mkdirectory() uses createfile() to create elo_aggregation.xml, elo_manifest.xml 	*/
+/* and elo_metadata.xml under directory. 														*/
 function mkdirectory(){													//make directory
 	var fs = require("fs");
 	var y = document.getElementById("fileImportDialog");
@@ -201,6 +205,7 @@ function mkdirectory(){													//make directory
 };
 
 
+/* function pad will generate a four-digit number ex: 0001. */
 function pad(n, width, z){
 	z = z || '0';
 	n = n + '';
@@ -208,6 +213,7 @@ function pad(n, width, z){
 };
 
 
+/* function open_manifest_file will create elo_manifest.xml. */
 function open_manifest_file(){
 	var fs = require("fs");
 	var buf1 = new Buffer(1000000);

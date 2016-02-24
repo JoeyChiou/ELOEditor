@@ -1,10 +1,11 @@
-/* author: Jeremy																				*/
-/* 1.function gcb_course_json will write course.json under /files/data.							*/
-/* 2.function write_lesson_course_json will write a part of lesson in course.json files         */
-/* 3. function write_unit_course_json will write a part of units in course.json files			*/
+/* author: Jeremy																				 */
+/* 1.function gcb_course_json will write course.json under /files/data.							 */
+/* 2.function write_lesson_course_json will write a part of lesson in course.json files.         */
+/* 3.function write_unit_course_json will write a part of units in course.json files.			 */
 
 
 
+/* function write_lesson_course_json will write a part of lesson in course.json files. */
 function write_lesson_course_json(myunit_name, mylesson_id, myunit_id, my_html){
 	var fs = require("fs");
 	var y = document.getElementById("fileImportDialog");
@@ -26,6 +27,7 @@ function write_lesson_course_json(myunit_name, mylesson_id, myunit_id, my_html){
 };
 
 
+/* function write_unit_course_json will write a part of units in course.json files. */
 function write_unit_course_json(myunit_name, myunit_id){
 	var fs = require("fs");
 	var y = document.getElementById("fileImportDialog");
@@ -47,6 +49,7 @@ function write_unit_course_json(myunit_name, myunit_id){
 };
 
 
+/* function gcb_course_json will write course.json under /files/data. */
 function gcb_course_json(){
 	var fs = require("fs");
 	var y = document.getElementById("fileImportDialog");
