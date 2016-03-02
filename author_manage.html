@@ -1,3 +1,26 @@
+<!--
+#
+# Copyright 2016 edX PDR Lab, National Central University, Taiwan.
+#
+#     http://edxpdrlab.ncu.cc/
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# Created By: joeyc0916@gmail.com
+# Maintained By: joeyc0916@gmail.com
+#
+-->
+
 <!DOCTYPE html>
 <html>
 
@@ -16,10 +39,118 @@
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link href="assets/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
+    <!-- jQuery 2.1.4 -->
+    <script src="assets/js/jquery.min.js" type="text/javascript"></script>
+    <!-- jQuery UI 1.11.4 -->
+    <script src="assets/js/jquery-ui.min.js" type="text/javascript"></script>
+    <!-- Bootstrap 3.3.4 -->
+    <script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
+    <!-- SlimScroll -->
+    <script src="plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <!-- FastClick -->
+    <script src="plugins/fastclick/fastclick.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="assets/js/app.js" type="text/javascript"></script>
     <script type="text/javascript" src="controller/settings.js"></script>
+    <script>
+    function abort(groupID) {
+        var fs = require('fs');
+        fs.readFile('collections/users.json', function(err, filedata) {
+            var content = JSON.parse(filedata);
+
+            var request = require('request');
+            request({
+                url: 'http://www.commonrepo.com/api/v2/groups/abort/' + groupID + '/',
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Token ' + content.AUTHKEY,
+                    'Content-Type': 'application/json'
+                }
+            }, function(error, response, body) {
+                if (!error && response.statusCode == 202) {
+                    console.log("leave error response:" + response.statusCode);
+                } else {
+                    console.log("leave response:" + response.statusCode);
+                    console.log("leave body:" + body);
+                }
+            });
+        });
+
+        location.href = "author_manage.html";
+    }
+
+    function join(groupID) {
+        var fs = require('fs');
+        fs.readFile('collections/users.json', function(err, filedata) {
+            var content = JSON.parse(filedata);
+
+            var request = require('request');
+            request({
+                url: 'http://www.commonrepo.com/api/v2/groups/join/' + groupID + '/',
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Token ' + content.AUTHKEY,
+                    'Content-Type': 'application/json'
+                }
+            }, function(error, response, body) {
+                if (!error && response.statusCode == 202) {
+
+                } else {
+                    console.log("response:" + response.statusCode);
+                    console.log("body:" + body);
+                }
+            });
+        });
+
+        location.href = "author_manage.html";
+    }
+
+    function groupInfo(groupID) {
+        $("#groupinfotbody").empty();
+        $.get("http://www.commonrepo.com/api/v2/groups/" + groupID + "/", function(data) {
+            $.get("http://www.commonrepo.com/api/v2/users/" + data.creator + "/", function(data2) {
+                $("#groupinfotbody").append("<tr><td>Group name:</td><td>" + data.name + "</td></tr>");
+                $("#groupinfotbody").append("<tr><td>Group creator:</td><td>" + data2.username + "</td></tr>");
+
+                $("#groupinfotbody").append("<tr><td>Created date:</td><td>" + data.create_date + "</td></tr>");
+                $("#groupinfotbody").append("<tr><td>description:</td><td>" + data.description + "</td></tr>");
+
+                $("#groupinfotbody").append("<tr><td colspan='2'>Members:</td></tr>");
+                for (var index = 0; index < data.members.length; index++) {
+                    $.get("http://www.commonrepo.com/api/v2/users/" + data.members[index] + "/", function(data3) {
+                        $("#groupinfotbody").append("<tr><td></td><td>" + data3.username + "</td></tr>");
+                    });
+                }
+            });
+        });
+
+        $("#groupinfoModal").modal();
+    }
+    </script>
 </head>
 
 <body class="skin-blue sidebar-mini fixed">
+    <!-- Modal Group Info -->
+    <div id="groupinfoModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Group Information</h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-striped">
+                        <tbody id="groupinfotbody">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Modal -->
     <div id="myModal1" class="modal fade" role="dialog">
         <div class="modal-dialog">
@@ -184,20 +315,16 @@
                 </ol>
             </section>
             <!-- Main content -->
-            <section class="content">
+            <!-- <section class="content">
                 <div class="row">
-                    <!-- left column -->
                     <div class="col-md-12">
                         <div class="box box-info">
                             <div class="box-header with-border">
-                                <h3 class="box-title">Author Groups Management</h3>
+                                <h3 class="box-title">Searching Author Group by Keywords:</h3>
                             </div>
-                            <!-- /.box-header -->
-                            <!-- form start -->
                             <form role="form">
                                 <div class="box-body">
                                     <div class="form-group">
-                                        <label for="groupKey">Searching by Author Group:</label>
                                         <input type="text" class="form-control" placeholder="Group name" id="groupKey">
                                     </div>
                                 </div>
@@ -208,37 +335,137 @@
                         </div>
                     </div>
                 </div>
-                <!-- /.row -->
+            </section> -->
+            <section class="content">
+                <div id="result-row" class="row">
+                    <div id="result-columns" class="col-md-12">
+                        <div class="box box-info">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">The following groups invite you to join:</h3>
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body">
+                                <table class="table table-striped">
+                                    <tbody id="invitationlist">
+                                        <script>
+                                        var fs = require('fs');
+                                        fs.readFile('collections/users.json', function(err, filedata) {
+                                            var content = JSON.parse(filedata);
+                                            var tc;
+                                            var ta;
+                                            $.get("http://www.commonrepo.com/api/v2/users/" + content.userID + "/", function(data) {
+                                                tc = data.teaching_category.replace(/\s/g, '');
+                                                ts = data.teaching_subject_area.replace(/\s/g, '');
+                                                var joinedgroups = data.commonrepo_groups_members;
+                                                var createdgroups = data.commonrepo_groups;
+                                                // Combine all of the user's group
+                                                var allgroups = createdgroups.concat(joinedgroups);
+
+                                                $.get("http://www.commonrepo.com/api/v2/groups/", function(data) {
+                                                    // Will invited group list
+                                                    var invitegroups = [];
+                                                    var invitegroupsID = [];
+                                                    var size = 0;
+                                                    for (var index = 0; index < data.length; index++) {
+                                                        if (allgroups.indexOf(data[index].id) == -1) {
+                                                            invitegroupsID[size] = data[index].id;
+                                                            invitegroups[size] = data[index].name;
+                                                            size++;
+                                                        }
+                                                    }
+
+                                                    for (var index = 0; index < allgroups.length; index++) {
+                                                        $("#invitationlist").append("<tr><td width='80%'>" + invitegroups[index] + "</td><td width='10%'><button type='button' class='btn btn-warning' onclick='groupInfo(" + invitegroupsID[index] + ")'>Info</button></td><td width='10%'><button type='button' class='btn btn-success' onclick='join(" + invitegroupsID[index] + ")'>Join</button></td></tr>");
+                                                    }
+                                                });
+                                                //var tc2 = "under graduate"; //str.replace(/\s/g,'');
+
+                                                /*fs.readFile('collections/parameters.json', function(err, filedata) {
+                                                    var param = JSON.parse(filedata);
+                                                    alert("" + param.tc["graduate"]["undergraduate"]);
+                                                });
+                                                $.get("http://www.commonrepo.com/api/v2/users/", function(data) {
+
+                                                    /*for (var index = 0; index < data.length; index++) {
+                                                        if (tc == data[index].teaching_category.replace(/\s/g, '') && ta == data[index].teaching_subject_area.replace(/\s/g, '')) {
+                                                            alert(data[index].id);
+                                                            total++;
+                                                        }
+                                                    }
+                                                });*/
+                                            });
+                                        });
+                                        </script>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-body -->
+            </section>
+            <section id="created_section" class="content">
+                <div id="result-row" class="row">
+                    <div id="result-columns" class="col-md-12">
+                        <div class="box box-info">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Author groups created:</h3>
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body">
+                                <table class="table table-striped">
+                                    <tbody id="groupcreated">
+                                        <script>
+                                        var fs = require('fs');
+                                        fs.readFile('collections/users.json', function(err, filedata) {
+                                            var content = JSON.parse(filedata);
+                                            $.get("http://www.commonrepo.com/api/v2/users/" + content.userID + "/", function(data) {
+                                                var groups = data.commonrepo_groups;
+                                                if (groups.length == 0) {
+                                                    $("#created_section").remove();
+                                                } else {
+                                                    for (var index = 0; index < groups.length; index++) {
+                                                        $.get("http://www.commonrepo.com/api/v2/groups/" + groups[index] + "/", function(data) {
+                                                            $("#groupcreated").append("<tr><td width='80%'>" + data.name + "</td><td width='10%'><button type='button' class='btn btn-warning' onclick='groupInfo(" + data.id + ")'>Info</button></td><td width='10%'><button type='button' class='btn btn-danger' onclick='abort(" + data.id + ")'>Abort</button></td></tr>");
+                                                        });
+                                                    }
+                                                }
+                                            });
+                                        });
+                                        </script>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-body -->
             </section>
             <section class="content">
                 <div id="result-row" class="row">
                     <div id="result-columns" class="col-md-12">
                         <div class="box box-info">
                             <div class="box-header with-border">
-                                <h3 class="box-title">Author Groups</h3>
+                                <h3 class="box-title">Author groups joined:</h3>
                             </div>
                             <!-- /.box-header -->
                             <div class="box-body">
                                 <table class="table table-striped">
-                                    <tbody>
-                                        <tr>
-                                            <td width="90%">Java Programing</td>
-                                            <td width="10%">
-                                                <button type="button" class="btn btn-danger">Abort</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Android</td>
-                                            <td>
-                                                <button type="button" class="btn btn-danger">Abort</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>E-Learning</td>
-                                            <td>
-                                                <button type="button" class="btn btn-danger">Abort</button>
-                                            </td>
-                                        </tr>
+                                    <tbody id="groupjoined">
+                                        <script>
+                                        var fs = require('fs');
+                                        fs.readFile('collections/users.json', function(err, filedata) {
+                                            var content = JSON.parse(filedata);
+                                            $.get("http://www.commonrepo.com/api/v2/users/" + content.userID + "/", function(data) {
+                                                var groups = data.commonrepo_groups_members;
+                                                for (var index = 0; index < groups.length; index++) {
+                                                    $.get("http://www.commonrepo.com/api/v2/groups/" + groups[index] + "/", function(data) {
+                                                        $("#groupjoined").append("<tr><td width='80%'>" + data.name + "</td><td width='10%'><button type='button' class='btn btn-warning' onclick='groupInfo(" + data.id + ")'>Info</button></td><td width='10%'><button type='button' class='btn btn-danger' onclick='abort(" + data.id + ")'>Abort</button></td></tr>");
+                                                    });
+                                                }
+                                            });
+                                        });
+                                        </script>
                                     </tbody>
                                 </table>
                             </div>
@@ -257,18 +484,6 @@
             <strong>Copyright &copy; 2015 <a href="http://edxpdrlab.ncu.cc">NCU Open edX PDR Lab</a>.</strong> All rights reserved.
         </footer>
     </div>
-    <!-- jQuery 2.1.4 -->
-    <script src="assets/js/jquery.min.js" type="text/javascript"></script>
-    <!-- jQuery UI 1.11.4 -->
-    <script src="assets/js/jquery-ui.min.js" type="text/javascript"></script>
-    <!-- Bootstrap 3.3.4 -->
-    <script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
-    <!-- SlimScroll -->
-    <script src="plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
-    <!-- FastClick -->
-    <script src="plugins/fastclick/fastclick.min.js"></script>
-    <!-- AdminLTE App -->
-    <script src="assets/js/app.js" type="text/javascript"></script>
     <script type="text/javascript">
     $('#navigation').load('widgets/navigation.html');
 
