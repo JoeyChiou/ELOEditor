@@ -173,63 +173,78 @@
     });*/
 
     $("#fileImportDialog").change(function(evt) {
+        var fs = require("fs"); 
         var elopath = $(this).val();
         var elotitle = elopath.split("/");
+        var count = 0;
 
-        var li = document.createElement("li");
-        li.onclick = function() {
-            location.href = "eloviewer.html?elopath=" + elopath;
-        };
+        fs.readdir(elopath, function(err, files){
+            if(err) throw err;
 
-        var img = document.createElement("img");
-        img.setAttribute("src", "assets/img/book-64.png");
-        img.setAttribute("alt", "User Image");
+            for(var i = 0 in files){                                                    // i for index
+                if(files[i] == "elo_aggregation.xml"){
+                    count = 1;
+                    
+                    var li = document.createElement("li");
+                    li.onclick = function() {
+                        location.href = "eloviewer.html?elopath=" + elopath;
+                    };
 
-        var a = document.createElement("a");
-        a.setAttribute("class", "users-list-date");
-        a.innerHTML = elotitle[elotitle.length - 1];
+                    var img = document.createElement("img");
+                    img.setAttribute("src", "assets/img/book-64.png");
+                    img.setAttribute("alt", "User Image");
 
-        var span = document.createElement("span");
-        span.setAttribute("class", "users-list-date");
-        span.innerHTML = "TestMan";
+                    var a = document.createElement("a");
+                    a.setAttribute("class", "users-list-date");
+                    a.innerHTML = elotitle[elotitle.length - 1];
 
-        li.appendChild(img);
-        li.appendChild(a);
-        li.appendChild(span);
-        $("#localELO ul").append(li);
+                    var span = document.createElement("span");
+                    span.setAttribute("class", "users-list-date");
+                    span.innerHTML = "TestMan";
 
-        importELO(elopath, elotitle[elotitle.length - 1], "TestMan");
+                    li.appendChild(img);
+                    li.appendChild(a);
+                    li.appendChild(span);
+                    $("#localELO ul").append(li);
 
-        // Get the info from metadata file
-        var jsdom = require("jsdom");
+                    importELO(elopath, elotitle[elotitle.length - 1], "TestMan");
 
-        jsdom.env({
-            file: elopath + "/elo_metadata.xml",
-            scripts: ["http://code.jquery.com/jquery.js"],
-            done: function(errors, window) {
-                var node;
-                var root = window.$("ELOMetadata")[0];
-                var subroot;
-                for (var count = 0; count < root.childNodes.length; count++) {
-                    subroot = root.childNodes[count]; //general
-                    if (subroot.nodeType == 1) {
-                        for (var i = 0; i < subroot.childNodes.length; i++) {
-                            node = subroot.childNodes[i];
-                            if (node.nodeType == 1) {
-                                if (node.childNodes.length > 1) {
-                                    for (var j = 0; j < node.childNodes.length; j++) {
-                                        if (node.childNodes[j].nodeType == 1)
-                                            importMetadata(elopath, subroot.nodeName, node.nodeName, node.childNodes[j].innerHTML);
+                    // Get the info from metadata file
+                    var jsdom = require("jsdom");
+
+                    jsdom.env({
+                        file: elopath + "/elo_metadata.xml",
+                        scripts: ["http://code.jquery.com/jquery.js"],
+                        done: function(errors, window) {
+                            var node;
+                            var root = window.$("ELOMetadata")[0];
+                            var subroot;
+                            for (var count = 0; count < root.childNodes.length; count++) {
+                                subroot = root.childNodes[count]; //general
+                                if (subroot.nodeType == 1) {
+                                    for (var i = 0; i < subroot.childNodes.length; i++) {
+                                        node = subroot.childNodes[i];
+                                        if (node.nodeType == 1) {
+                                            if (node.childNodes.length > 1) {
+                                                for (var j = 0; j < node.childNodes.length; j++) {
+                                                    if (node.childNodes[j].nodeType == 1)
+                                                        importMetadata(elopath, subroot.nodeName, node.nodeName, node.childNodes[j].innerHTML);
+                                                }
+                                            } else {
+                                                importMetadata(elopath, subroot.nodeName, node.nodeName, node.innerHTML);
+                                            }
+                                        }
                                     }
-                                } else {
-                                    importMetadata(elopath, subroot.nodeName, node.nodeName, node.innerHTML);
                                 }
                             }
                         }
-                    }
-                }
+                    })
+                } 
             }
-        });
+            if(count != 1){
+                alert("It is not an ELO !");
+            }
+        })
     });
     </script>
     <script src="controller/command.js" type="text/javascript"></script>
