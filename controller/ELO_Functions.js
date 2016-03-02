@@ -1,16 +1,27 @@
-//var gui = require("nw.gui");
+/**
+    Copyright 2016 edX PDR Lab, National Central University, Taiwan.
+    
+        http://edxpdrlab.ncu.cc/
+    
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    
+        http://www.apache.org/licenses/LICENSE-2.0
+    
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+    
+    Created By: joeyc0916@gmail.com
+    Maintained By: joeyc0916@gmail.com
+*/
 
-// Count all documents in the datastore
-// function getCount() {
-//     db.count({}, function(err, count) {
-//         $("span:contains(Local ELOs) ~ span").text(count);
-//         $("span:contains(Remote ELOs) ~ span").text(count + 20);
-//         $("span:contains(Likes) ~ span").text(count + 34);
-//         $("span:contains(Members) ~ span").text(count + 73);
-//     });
-// }
+/* This javascript file has write functions for control ELO. */
 
-// Search Metadata
+// Search Metadata for ELO
 function MT_Search(str) {
     var query = str.split(",");
     // alert(str);
@@ -339,14 +350,18 @@ function publicContextMenu(eloID, eloURL, title, filepath) {
     });
 }
 
+// Intent to view local ELO content
 function intentView(elopath) {
     location.href = "eloviewer.html?elopath=" + elopath;
 }
 
+// Intent to view remote ELO information
 function intentViewRemoteELO(eloID) {
     location.href = "eloviewerRemote.html?eloID=" + eloID;
 }
 
+
+// Invite a user to join group
 function groupJoin() {
     var fs = require('fs');
     fs.readFile('collections/users.json', function(err, filedata) {
