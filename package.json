@@ -1,7 +1,7 @@
 {
-  "name": "CommonRepo",
-  "version": "0.1.0",
-  "description": "Common Repo Client Application",
+  "name": "ELOEditor",
+  "version": "1.0.0",
+  "description": "ELO Editor for Common Repository",
   "main": "index.html",
   "private": true,
   "keywords": [
