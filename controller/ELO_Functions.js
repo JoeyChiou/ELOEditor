@@ -21,31 +21,38 @@
 
 /* This javascript file has write functions for control ELO. */
 
-// Count all documents in the datastore
-function getCount() {
-    db.count({}, function(err, count) {
-        $("span:contains(Local ELOs) ~ span").text(count);
-        $("span:contains(Remote ELOs) ~ span").text(count + 20);
-        $("span:contains(Likes) ~ span").text(count + 10000);
-        $("span:contains(Members) ~ span").text(count + 10908);
-    });
-}
-
 // Search Metadata for ELO
 function MT_Search(str) {
     var query = str.split(",");
-
+    // alert(str);
     metadata.find({
-        group: new RegExp(query[0]),
+        group: new RegExp(query[0].toUpperCase()),
         node: new RegExp(query[1]),
         value: new RegExp(query[2])
     }, function(err, docs) {
+        var temp;
+        var ELOname;
+
         if (docs.length > 0) {
+            hideDiv();
+
+            $("#searchresults").append("<div id='MTdiv' class='box box-info'>");
+            $("#MTdiv").append("<div id='MTresults' class='box-header with-border'>");
+            $("#MTresults").append("<h3 class='box-title'>Results</h3>");
+            $("#MTresults").append("<p>");
+
             for (var i = 0; i < docs.length; i++) {
-                alert(docs[i].elopath);
+                //alert(docs[i].elopath);
+                temp = docs[i].elopath.split("/");
+                ELOname = temp[temp.length - 1]
+                $("#MTresults").append("<a href='eloviewer.html?elopath=" + docs[i].elopath + "'>" + ELOname + "</a><br>");
             }
-        }else{
-            alert("none");
+
+            $("#MTresults").append("</p>");
+            $("#MTdiv").append("</div>");
+            $("searchresults").append("</div>");
+        } else {
+            alert("no results!");
         }
     });
 }
@@ -81,7 +88,6 @@ function ELO_locallist() {
                 var elopath = docs[i].elopath;
                 var li = document.createElement("li");
                 li.setAttribute("onclick", "intentView('" + elopath + "')");
-                img = document.createElement("img");
                 li.setAttribute("oncontextmenu", "localContextMenu('" + title + "','" + name + "','" + elopath + "')");
                 // localContextMenu(li, title, name, elopath);
 
@@ -100,17 +106,10 @@ function ELO_locallist() {
                 li.appendChild(img);
                 li.appendChild(a);
                 li.appendChild(span);
-                ul.appendChild(li);
-            }
-            div.appendChild(ul);
                 $("#localELO ul").append(li);
             }
         });
     });
-}
-
-function intentView(elopath) {
-    location.href = "eloviewer.html?elopath=" + elopath;
 }
 
 // ContextMenu for LocalELO
@@ -209,6 +208,8 @@ function remoteContextMenu(eloID, eloURL, title, filepath, publicvalue) {
             var fs = require('fs');
 
             var zipfile = "/Users/JoeyChiou/Downloads/ELOs/" + decodeURI(title) + ".zip";
+            console.log("zip:" + zipfile);
+            console.log("path:" + filepath);
             var file = fs.createWriteStream(zipfile);
             var request = https.get(filepath, function(response) {
                 response.pipe(file);
