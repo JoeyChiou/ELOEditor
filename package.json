@@ -30,7 +30,7 @@
         "email": "joeyc0916@gmail.com"
     }
   ],
-  "license": "MIT",
+  "license": "Apache License, Version 2.0",
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
     "diskdb": "^0.1.14",
