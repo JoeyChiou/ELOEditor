@@ -1,15 +1,3 @@
-<<<<<<< HEAD
-// Count all documents in the datastore
-function getCount() {
-    db.count({}, function(err, count) {
-        $("span:contains(Local ELOs) ~ span").text(count);
-        $("span:contains(Remote ELOs) ~ span").text(count + 20);
-        $("span:contains(Likes) ~ span").text(count + 10000);
-        $("span:contains(Members) ~ span").text(count + 10908);
-    });
-}
-
-=======
 /**
     Copyright 2016 edX PDR Lab, National Central University, Taiwan.
     
@@ -33,8 +21,17 @@ function getCount() {
 
 /* This javascript file has write functions for control ELO. */
 
+// Count all documents in the datastore
+function getCount() {
+    db.count({}, function(err, count) {
+        $("span:contains(Local ELOs) ~ span").text(count);
+        $("span:contains(Remote ELOs) ~ span").text(count + 20);
+        $("span:contains(Likes) ~ span").text(count + 10000);
+        $("span:contains(Members) ~ span").text(count + 10908);
+    });
+}
+
 // Search Metadata for ELO
->>>>>>> social_issue
 function MT_Search(str) {
     var query = str.split(",");
 
@@ -84,14 +81,11 @@ function ELO_locallist() {
                 var elopath = docs[i].elopath;
                 var li = document.createElement("li");
                 li.setAttribute("onclick", "intentView('" + elopath + "')");
-<<<<<<< HEAD
                 img = document.createElement("img");
-=======
                 li.setAttribute("oncontextmenu", "localContextMenu('" + title + "','" + name + "','" + elopath + "')");
                 // localContextMenu(li, title, name, elopath);
 
                 var img = document.createElement("img");
->>>>>>> social_issue
                 img.setAttribute("src", "assets/img/book-64.png");
                 img.setAttribute("alt", "User Image");
 
@@ -106,23 +100,19 @@ function ELO_locallist() {
                 li.appendChild(img);
                 li.appendChild(a);
                 li.appendChild(span);
-<<<<<<< HEAD
                 ul.appendChild(li);
             }
             div.appendChild(ul);
-=======
                 $("#localELO ul").append(li);
             }
->>>>>>> social_issue
         });
     });
 }
 
-<<<<<<< HEAD
 function intentView(elopath) {
     location.href = "eloviewer.html?elopath=" + elopath;
 }
-=======
+
 // ContextMenu for LocalELO
 function localContextMenu(elotitle, eloname, elopath) {
     localmenu = new gui.Menu();
@@ -472,4 +462,3 @@ $(function() {
         });
     });
 });
->>>>>>> social_issue

@@ -72,8 +72,6 @@ function importMetadata(elopath, group, node, value) {
         value,
         value
     });
-<<<<<<< HEAD
-=======
 }
 
 // Delete ELO
@@ -82,5 +80,4 @@ function deleteELO(title) {
         title: title
     }, {}, function(err, numRemoved) {
     });
->>>>>>> social_issue
 }
