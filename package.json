@@ -1,7 +1,7 @@
 {
-  "name": "CommonRepo",
-  "version": "0.1.0",
-  "description": "Common Repo Client Application",
+  "name": "ELOEditor",
+  "version": "1.0.0",
+  "description": "ELO Editor for Common Repository",
   "main": "index.html",
   "private": true,
   "keywords": [
@@ -20,17 +20,17 @@
     "position": "center"
   },
   "author": {
-    "name": "Xaver Y.R. Chen",
-    "email": "yrchen@ATCity.org",
-    "url": "http://about.me/yrchen"
+    "name": "Joey Chiou",
+    "email": "joeyc0916@gmail.com"
   },
   "contributors": [
     {
-        "name": "Joey Chiou",
-        "email": "joeyc0916@gmail.com"
+        "name": "Xaver Y.R. CHen",
+        "email": "yrchen@ATCity.org",
+	"url": "http://about.me/yrchen"
     }
   ],
-  "license": "MIT",
+  "license": "Apache License, Version 2.0",
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
     "diskdb": "^0.1.14",
