@@ -206,6 +206,13 @@ function remoteContextMenu(eloID, eloURL, title, filepath, publicvalue) {
         click: function() {
             var https = require('https');
             var fs = require('fs');
+            var fsUserInfo = require('fs');
+            var creatorName;
+
+            fsUserInfo.readFile('collections/users.json', function(err, filedata) {
+                var content = JSON.parse(filedata);
+                creatorName = content.userName;
+            });
 
             var zipfile = "/Users/JoeyChiou/Downloads/ELOs/" + decodeURI(title) + ".zip";
             console.log("zip:" + zipfile);
@@ -221,7 +228,7 @@ function remoteContextMenu(eloID, eloURL, title, filepath, publicvalue) {
                 zip.extractAllTo("/Users/JoeyChiou/Downloads/ELOs/" + decodeURI(title), true);
 
                 $.getScript("controller/dbfunc.js", function(data, textStatus, jqxhr) {
-                    importELO("/Users/JoeyChiou/Downloads/ELOs/" + decodeURI(title), decodeURI(title), "TestMan");
+                    importELO("/Users/JoeyChiou/Downloads/ELOs/" + decodeURI(title), decodeURI(title), creatorName);
                 });
 
                 location.href = "dashboard.html";
