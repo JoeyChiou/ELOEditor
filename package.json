@@ -27,7 +27,7 @@
     {
         "name": "Xaver Y.R. CHen",
         "email": "yrchen@ATCity.org",
-	"url": "http://about.me/yrchen"
+        "url": "http://about.me/yrchen"
     }
   ],
   "license": "Apache License, Version 2.0",
@@ -36,10 +36,11 @@
     "diskdb": "^0.1.14",
     "git-utils": "3.0.x",
     "jsdom": "^5.4.2",
-    "nw": "^0.12.2",
-    "sqlite3": "^3.0.8",
-    "weather-js": "^1.0.0",
+    "ncp": "2.0.0",
     "nedb": "1.1.2",
-    "ncp": "2.0.0"
+    "nw": "^0.12.2",
+    "request": "2.62.0",
+    "sqlite3": "^3.0.8",
+    "weather-js": "^1.0.0"
   }
 }
