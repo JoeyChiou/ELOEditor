@@ -35,7 +35,6 @@
     "adm-zip": "0.4.7",
     "bcrypt-nodejs": "0.0.3",
     "diskdb": "^0.1.14",
-    "git-utils": "4.1.2",
     "jsdom": "^5.4.2",
     "ncp": "2.0.0",
     "nedb": "1.1.2",
