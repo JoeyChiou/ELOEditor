@@ -87,14 +87,15 @@ function ELO_locallist() {
                 $("#localELO_ul").append("<button id='firstimportbtn' type='button' class='btn btn-warning' onclick='firstImport()'>Import your first ELO!</button>");
             } else {
                 for (var i = 0; i < count; i++) {
+                    var eloid = docs[i]._id;
                     var title = docs[i].title;
                     var name = docs[i].name;
                     var elopath = docs[i].elopath;
 
-                    $("#localELO_ul").append("<li id='localELO_li_" + i + "' onclick=intentView('" + encodeURI(elopath) + "') oncontextmenu=localContextMenu('" + encodeURI(title) + "','" + name + "','" + encodeURI(elopath) + "')></li>");
-                    $("#localELO_li_" + i).append("<img src='assets/img/book-64.png' alt='User Image'></img>");
-                    $("#localELO_li_" + i).append("<a class='users-list-date'>" + title + "</a>");
-                    $("#localELO_li_" + i).append("<span class='users-list-date'>" + name + "</span>");
+                    $("#localELO_ul").append("<li id='localELO_li_" + eloid + "' onclick=intentView('" + encodeURI(elopath) + "') oncontextmenu=localContextMenu('" + eloid + "','" + encodeURI(title) + "','" + name + "','" + encodeURI(elopath) + "')></li>");
+                    $("#localELO_li_" + eloid).append("<img src='assets/img/book-64.png' alt='User Image'></img>");
+                    $("#localELO_li_" + eloid).append("<a class='users-list-date'>" + title + "</a>");
+                    $("#localELO_li_" + eloid).append("<span class='users-list-date'>" + name + "</span>");
                 }
             }
         });
@@ -102,12 +103,12 @@ function ELO_locallist() {
 }
 
 // Import first ELO function
-function firstImport(){
+function firstImport() {
     $('#fileImportDialog').click();
 }
 
 // ContextMenu for LocalELO
-function localContextMenu(elotitle, eloname, elopath) {
+function localContextMenu(eloid, elotitle, eloname, elopath) {
     localmenu = new gui.Menu();
     localmenu.append(new gui.MenuItem({
         label: 'Import',
@@ -157,8 +158,7 @@ function localContextMenu(elotitle, eloname, elopath) {
         label: 'Delete',
         click: function() {
             $.getScript("controller/dbfunc.js", function(data, textStatus, jqxhr) {
-                deleteELO(elotitle);
-                $(this).remove();
+                deleteELO(eloid);
             });
             location.href = "dashboard.html";
         }
@@ -208,9 +208,7 @@ function remoteContextMenu(eloID, eloURL, title, filepath, publicvalue) {
                 creatorName = content.userName;
             });
 
-            var zipfile = "/Users/JoeyChiou/Downloads/ELOs/" + decodeURI(title) + ".zip";
-            console.log("zip:" + zipfile);
-            console.log("path:" + filepath);
+            var zipfile = process.cwd() + "/" + decodeURI(title) + ".zip";
             var file = fs.createWriteStream(zipfile);
             var request = https.get(filepath, function(response) {
                 response.pipe(file);
@@ -218,11 +216,11 @@ function remoteContextMenu(eloID, eloURL, title, filepath, publicvalue) {
 
             file.on('close', function() {
                 var AdmZip = require('adm-zip');
-                var zip = new AdmZip("/Users/JoeyChiou/Downloads/ELOs/" + decodeURI(title) + ".zip");
-                zip.extractAllTo("/Users/JoeyChiou/Downloads/ELOs/" + decodeURI(title), true);
+                var zip = new AdmZip(process.cwd() + "/" + decodeURI(title) + ".zip");
+                zip.extractAllTo(process.cwd() + "/" + decodeURI(title), true);
 
                 $.getScript("controller/dbfunc.js", function(data, textStatus, jqxhr) {
-                    importELO("/Users/JoeyChiou/Downloads/ELOs/" + decodeURI(title), decodeURI(title), creatorName);
+                    importELO(process.cwd() + "/" + decodeURI(title), decodeURI(title), creatorName);
                 });
 
                 location.href = "dashboard.html";

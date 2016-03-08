@@ -302,10 +302,15 @@
         var elopath = $(this).val();
         var elotitle = elopath.split("/");
 
-        $.getScript("controller/dbfunc.js", function(data, textStatus, jqxhr) {
-            importELO(encodeURI(elopath), encodeURI(elotitle[elotitle.length - 1]), "TestMan");
+        var fs = require('fs');
+        fs.readFile('collections/users.json', function(err, filedata) {
+            var content = JSON.parse(filedata);
+            var USERNAME = content.userName;
+           
+            $.getScript("controller/dbfunc.js", function(data, textStatus, jqxhr) {
+                importELO(encodeURI(elopath), encodeURI(elotitle[elotitle.length - 1]), USERNAME);
+            });
         });
-
 
         // Get the info from metadata file
         var jsdom = require("jsdom");

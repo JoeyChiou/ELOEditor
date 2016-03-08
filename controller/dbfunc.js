@@ -70,14 +70,15 @@ function importMetadata(elopath, group, node, value) {
         elopath: elopath,
         group: group,
         node: node,
-        value,
-        value
+        value: value
     });
 }
 
 // Delete ELO
-function deleteELO(title) {
+function deleteELO(id) {
     db.remove({
-        title: title
-    }, {}, function(err, numRemoved) {});
+        _id: id
+    }, {}, function(err, numRemoved) {
+        console.log("Delete an ELO object _id:" + id);
+    });
 }
