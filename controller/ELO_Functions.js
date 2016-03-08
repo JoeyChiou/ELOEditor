@@ -81,36 +81,29 @@ function ELO_locallist() {
             //     _id: 1
             // }).exec(function(err, docs) {
             // var div = document.getElementById("localELO");
-            $("#localELO").append("<ul class='users-list clearfix'></ul>");
+            $("#localELO").append("<ul id='localELO_ul' class='users-list clearfix'></ul>");
 
-            for (var i = 0; i < count; i++) {
-                var title = docs[i].title;
-                var name = docs[i].name;
-                var elopath = docs[i].elopath;
-                var li = document.createElement("li");
-                li.setAttribute("onclick", "intentView('" + elopath + "')");
-                li.setAttribute("oncontextmenu", "localContextMenu('" + title + "','" + name + "','" + elopath + "')");
-                // localContextMenu(li, title, name, elopath);
+            if (count == 0) {
+                $("#localELO_ul").append("<button id='firstimportbtn' type='button' class='btn btn-warning' onclick='firstImport()'>Import your first ELO!</button>");
+            } else {
+                for (var i = 0; i < count; i++) {
+                    var title = docs[i].title;
+                    var name = docs[i].name;
+                    var elopath = docs[i].elopath;
 
-                var img = document.createElement("img");
-                img.setAttribute("src", "assets/img/book-64.png");
-                img.setAttribute("alt", "User Image");
-
-                var a = document.createElement("a");
-                a.setAttribute("class", "users-list-date");
-                a.innerHTML = title;
-
-                var span = document.createElement("span");
-                span.setAttribute("class", "users-list-date");
-                span.innerHTML = name;
-
-                li.appendChild(img);
-                li.appendChild(a);
-                li.appendChild(span);
-                $("#localELO ul").append(li);
+                    $("#localELO_ul").append("<li id='localELO_li_" + i + "' onclick=intentView('" + encodeURI(elopath) + "') oncontextmenu=localContextMenu('" + encodeURI(title) + "','" + name + "','" + encodeURI(elopath) + "')></li>");
+                    $("#localELO_li_" + i).append("<img src='assets/img/book-64.png' alt='User Image'></img>");
+                    $("#localELO_li_" + i).append("<a class='users-list-date'>" + title + "</a>");
+                    $("#localELO_li_" + i).append("<span class='users-list-date'>" + name + "</span>");
+                }
             }
         });
     });
+}
+
+// Import first ELO function
+function firstImport(){
+    $('#fileImportDialog').click();
 }
 
 // ContextMenu for LocalELO
@@ -316,10 +309,6 @@ function ELO_publiclist() {
             $("#publicELO_li_" + ELOS[count].id).append("<img src='assets/img/booko-64.png' alt='User Image'></img>");
             $("#publicELO_li_" + ELOS[count].id).append("<a class='users-list-date'>" + ELOS[count].name + "</a>");
             $("#publicELO_li_" + ELOS[count].id).append("<span class='users-list-date'>" + AUTHORS[ELOS[count].author] + "</span>");
-            // var li = document.createElement("li");
-            // li.setAttribute("id", "publicELO_li_" + ELOS[count].id);
-            // li.setAttribute("onclick", "intentViewRemoteELO('" + ELOS[count].id + "')");
-            // li.setAttribute("oncontextmenu", "publicContextMenu('" + ELOS[count].id + "','" + ELOS[count].url + "','" + ELOS[count].name + "','" + ELOS[count].init_file + "')");
         }
     }
 }
@@ -425,22 +414,6 @@ $(function() {
                 AUTHORS[data[count].id] = data[count].username;
             }
         }).done(function() {
-            /*$.get("http://www.commonrepo.com/api/v2/elos/", function(data) {
-                console.log("elos");
-                for (var count = 0; count < data.length; count++) {
-                    var elo = new objELO();
-                    elo.id = data[count].id;
-                    elo.url = "http://www.commonrepo.com/api/v2/elos/" + data[count].id + "/";
-                    elo.name = data[count].name;
-                    elo.init_file = data[count].init_file;
-                    elo.is_public = data[count].is_public;
-                    elo.author = data[count].author;
-                    ELOS[count] = elo;
-                }
-            }).done(function() {
-                ELO_remotelist();
-                ELO_publiclist();
-            });*/
             var request = require('request');
             request({
                 url: 'http://www.commonrepo.com/api/v2/elos/',
