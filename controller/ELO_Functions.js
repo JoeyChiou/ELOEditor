@@ -74,6 +74,7 @@ function ELO_ListBySearch(title) {
 
 // Local ELO list
 function ELO_locallist() {
+    console.log("ELO_locallist Function");
     db.count({}, function(err, count) {
         db.find({}, function(err, docs) {
             // db.find({}).sort({
@@ -463,6 +464,7 @@ $(function() {
                         ELOS[count] = elo;
                     }
 
+                    ELO_locallist();
                     ELO_remotelist();
                     ELO_publiclist();
                 }
