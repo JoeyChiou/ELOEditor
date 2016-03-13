@@ -1,6 +1,6 @@
-/* author: Jeremy																				*/
-/* 1.function modify_html() will correct the path of images in html file.						*/
-/* 2.function openhtmlfile() will add javascript under html file.								*/
+// Author: jeremy55662004@gmail.com
+// 1.function modify_html() will correct the path of images in html file.
+// 2.function openhtmlfile() will add javascript under html file.
 
 
 /* function modify_html() will correct the path of images in html file. */

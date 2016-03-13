@@ -1,7 +1,7 @@
-/* author: Jeremy																				 */
-/* 1.function gcb_course_json will write course.json under /files/data.							 */
-/* 2.function write_lesson_course_json will write a part of lesson in course.json files.         */
-/* 3.function write_unit_course_json will write a part of units in course.json files.			 */
+// Author: jeremy55662004@gmail.com
+// 1.function gcb_course_json will write course.json under /files/data.
+// 2.function write_lesson_course_json will write a part of lesson in course.json files.
+// 3.function write_unit_course_json will write a part of units in course.json files.
 
 
 

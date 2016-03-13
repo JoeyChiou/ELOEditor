@@ -1,7 +1,7 @@
-/* author: Jeremy																				*/
-/* 1.function create_static_file will make directory under static directory of elo. 			*/
-/* 2.function mycopyfile will copy any files from course builder package to elo package. 		*/
-/* 3.function mycopyfile will call function mycopyfile2 to wirte files.							*/
+// Author: jeremy55662004@gamil.com
+// 1.function create_static_file will make directory under static directory of elo.
+// 2.function mycopyfile will copy any files from course builder package to elo package.
+// 3.function mycopyfile will call function mycopyfile2 to wirte files.
 
 
 

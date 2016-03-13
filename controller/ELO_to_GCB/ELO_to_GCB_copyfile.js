@@ -1,12 +1,12 @@
-/* author: Jeremy																				*/
-/* This file will copy files from package of ELO to package of Google course builder			*/
-/*																								*/
-/* 1.function gcbmkdirectory will create directory like /files, /models and so on.				*/
-/* 2.function mygcbcopyfile2 will create files under /models and copy image files.				*/
-/* 3.function GCB_css will create css files. 													*/
-/* 4.function course_yaml will write some information in course.yaml. 							*/
-/* 5.function copy_html_file will copy html files from cn node of elo to /files/assets/html/    */
-/*	 of course builder. 																		*/
+// Author: jeremy55662004@gmail.com
+// This file will copy files from package of ELO to package of Google course builder
+//
+// 1.function gcbmkdirectory will create directory like /files, /models and so on.
+// 2.function mygcbcopyfile2 will create files under /models and copy image files.
+// 3.function GCB_css will create css files.
+// 4.function course_yaml will write some information in course.yaml.
+// 5.function copy_html_file will copy html files from cn node of elo to /files/assets/html/
+//	 of course builder.
 
 
 
