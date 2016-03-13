@@ -136,18 +136,18 @@ function mygcbcopyfile2(){
 
 /* function GCB_css will create css files. */
 function GCB_css(){
+	var path = require("path");
 	var fs = require("fs");
 	var y = document.getElementById("fileImportDialog");
 	var file = y.files[0];
 	var new_file_name = file.name.replace(/ELO/, "");
 	var gcb_path = file.path.replace(file.name, "") + "GCB" + new_file_name.replace(/ /g, "_");
 
-	var dirpath = process.execPath;
-	var n = dirpath.indexOf("node_modules");
-	var common_dirpath = dirpath.slice(0, n);							//get path of commonrepo-client 
-	var GCB_common_css_path = common_dirpath + "assets/GCB_css/";		//get path of GCB css files in commonrepo
 
-	console.log(GCB_common_css_path);
+	var common_dirpath = path.resolve(".");								//get path of commonrepo-client 
+	var GCB_common_css_path = common_dirpath + "/assets/GCB_css/";		//get path of GCB css files in commonrepo
+
+	console.log(common_dirpath);
 	
 	fs.readdir(GCB_common_css_path, function(err, files){
 		if(err) throw err;
