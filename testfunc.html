@@ -1,0 +1,336 @@
+<!--
+#
+# Copyright 2016 edX PDR Lab, National Central University, Taiwan.
+#
+#     http://edxpdrlab.ncu.cc/
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# Created By: joeyc0916@gmail.com
+# Maintained By: joeyc0916@gmail.com
+#
+-->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>ELO Editor | Search ELO</title>
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <!-- bootstrap 3.3.4 -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- font Awesome 4.3.0 -->
+    <link href="assets/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <!-- Ionicons 2.0.1 -->
+    <link href="assets/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+    <!-- Theme style -->
+    <link href="assets/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link href="assets/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
+    <!-- jQuery 2.1.4 -->
+    <script src="assets/js/jquery.min.js" type="text/javascript"></script>
+    <!-- jQuery UI 1.11.4 -->
+    <script src="assets/js/jquery-ui.min.js" type="text/javascript"></script>
+    <!-- Bootstrap 3.3.4 -->
+    <script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
+    <!-- SlimScroll -->
+    <script src="plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <!-- FastClick -->
+    <script src="plugins/fastclick/fastclick.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="assets/js/app.js" type="text/javascript"></script>
+    <script type="text/javascript" src="controller/settings.js"></script>
+</head>
+
+<body class="skin-blue sidebar-mini fixed">
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Result</h4>
+                </div>
+                <div id="result" class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="wrapper">
+        <!-- header logo: style can be found in header.less -->
+        <header class="main-header">
+            <!-- Logo -->
+            <a href="dashboard.html" class="logo">
+                <!-- mini logo for sidebar mini 50x50 pixels -->
+                <span class="logo-mini"><b>EE</b></span>
+                <!-- logo for regular state and mobile devices -->
+                <span class="logo-lg"><b>E</b>LO</b> <b>E</b>ditor</span>
+            </a>
+            <!-- Header Navbar: style can be found in header.less -->
+            <nav class="navbar navbar-static-top" role="navigation">
+                <!-- Sidebar toggle button-->
+                <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                </a>
+                <!-- Navbar Right Menu -->
+                <div class="navbar-custom-menu">
+                    <div id="navigation"></div>
+                </div>
+            </nav>
+        </header>
+        <!-- Left side column. contains the logo and sidebar -->
+        <aside class="main-sidebar">
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar">
+                <!-- Sidebar user panel -->
+                <div class="user-panel">
+                    <div class="pull-left image">
+                        <img src="assets/img/avatar5.png" class="img-circle" alt="User Image" />
+                    </div>
+                    <div class="pull-left info">
+                        <p>
+                            <span class='uname'></span>
+                        </p>
+                        <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                    </div>
+                </div>
+                <!-- sidebar menu: : style can be found in sidebar.less -->
+            </section>
+        </aside>
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1>
+                    ELO, Author, and Group Properties
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="dashboard.html"><i class="fa fa-dashboard"></i>Main</a></li>
+                    <li class="active">ELO, Author, and Group Properties</li>
+                </ol>
+            </section>
+            <!-- Main content -->
+            <section class="content">
+                <div class="row">
+                    <!-- left column -->
+                    <div class="col-md-12">
+                        <div class="box box-info">
+                            <div class="box-header with-border">
+                                <!--<h3 class="box-title">Create New Author Group</h3>-->
+                            </div>
+                            <!-- /.box-header -->
+                            <!-- form start -->
+                            <form role="form">
+                                <div class="box-body" id="content">
+                                    <script>
+                                    function getTotalMember(DATA) {
+                                        var totalmember = 0;
+
+                                        for (var index = 0; index < DATA.length; index++) {
+                                            $.get("http://www.commonrepo.com/api/v2/groups/" + DATA[index] + "/", function(info) {
+                                                totalmember += info.members.length;
+                                            });
+                                        }
+                                        return totalmember;
+                                    }
+
+                                    var fs = require('fs');
+                                    fs.readFile('collections/users.json', function(err, filedata) {
+                                        var content = JSON.parse(filedata);
+                                        var request = require('request');
+
+                                        request({
+                                            url: 'http://www.commonrepo.com/api/v2/users/' + content.userID + '/',
+                                            method: 'GET',
+                                            headers: {
+                                                'Authorization': 'Token ' + content.AUTHKEY
+                                            }
+                                        }, function(error, response, body) {
+                                            var info = JSON.parse(body);
+
+                                            // ELO_Creation_Influence (User)
+                                            var CI = info.elos.length + (info.elos_from_others * Math.pow(0.9, info.elos_from_others));
+                                            // ELO_Publishing_Influence (User)
+                                            var PI = info.elos_published + info.elos.length;
+                                            // ELO_Influence(User)
+                                            var EI = (CI * 0.6) + (PI * 0.4);
+
+                                            // Group Created (User)
+                                            var GC = info.commonrepo_groups.length;
+                                            // Group Joined (User)
+                                            var GJ = info.commonrepo_groups_members.length;
+                                            // Author_Group_Influence (User)
+                                            var GI = (((GC * 0.7) + (GJ * 0.3)) * 0.7) + ((getTotalMember(info.commonrepo_groups)) * 0.3);
+
+                                            // Degree_of_Participation (User)
+                                            var DP = EI + GI;
+                                            console.log("EI:" + EI);
+                                            console.log("GI:" + GI);
+                                            console.log("DP:" + DP);
+
+                                            console.log(info.elos);
+
+                                            $("#content").append("<button type='button' class='btn btn-success' onclick=getDP('" + DP + "')>Degree of Participation</button>");
+                                            $("#content").append("<button type='button' class='btn btn-primary' onclick=getAE('" + info.teaching_category + "','" + info.teaching_subject_area + "')>Areas of Expertise</button>");
+                                            $("#content").append("<button type='button' class='btn btn-warning' onclick='getAA()'>A list of Active Authors</button>");
+                                            $("#content").append("<button type='button' class='btn btn-danger' onclick='getPS()'>A list of Popular Subjects</button>");
+
+                                            $("#content").append("<hr>");
+
+                                            $("#content").append("<p>The number of ELOs the author created: ELOc(User)<br>" + info.elos.length + "</p>");
+                                            $("#content").append("<p>The number of ELOs the author revised: ELOr(User)<br>" + info.elos_from_others + "</p>");
+                                            $("#content").append("<p>The number of ELOs the author published (including created and revised ELOs): ELOp(User)<br>" + info.elos_published + "</p>");
+                                            $("#content").append("<p>The number of other ELOs directly revised by others from the author’s published ELOs: ELOu(User)<br>" + info.elos.length + "</p>");
+
+                                            $("#content").append("<hr>");
+
+                                            $("#content").append("<p>The number of Author Groups created by the author: Groupc (User)<br>" + info.commonrepo_groups.length + "</p>");
+                                            $("#content").append("<p>The number of Author Groups joined (i.e., the “follow” relationship) by the author: Groupj(User)<br>" + info.commonrepo_groups_members.length + "</p>");
+
+                                            // $("#content").append("<p>How many other authors joined the Author Groups created by the author (i.e., the “followed by” relationship): Authorj(User)<br>" + getTotalMember(info.commonrepo_groups) + "</p>");
+                                        });
+                                    });
+
+
+                                    function getDP(DP) {
+                                        $("#result").empty();
+                                        $("#result").append("<p>Degree of Participation: " + DP + "</p>");
+                                        $("#myModal").modal();
+                                    }
+
+                                    function getAE(TC, TSA) {
+                                        $("#result").empty();
+                                        $("#result").append("<p>Teaching Category : " + TC + "</p>");
+                                        $("#result").append("<p>Teaching Subject Area : " + TSA + "</p>");
+                                        $("#result").append("<p>Keywords from all ELO created by the author : interactive</p>");
+                                        $("#result").append("<p>Name and Description of Author Group : Design of Computer Programs, Introduction to Programming with C</p>");
+
+                                        $("#myModal").modal();
+                                    }
+
+                                    function getAA(){
+                                        $("#result").empty();
+                                        $("#result").append("<p>A list of Active Authors:</p>");
+                                        $("#result").append("<p>Mined1976</p>");
+                                        $("#result").append("<p>Paturs</p>");
+                                        $("#result").append("<p>Atuaturivess1956</p>");
+                                        $("#result").append("<p>Repliseen1940</p>");
+                                        $("#myModal").modal();
+                                    }
+
+                                    // function getAA() {
+                                    //     var request = require('request');
+
+                                    //     request({
+                                    //         url: 'http://www.commonrepo.com/api/v2/users/',
+                                    //         method: 'GET'
+                                    //     }, function(error, response, body) {
+                                    //         console.log("r" + response.statusCode);
+                                    //         var info = JSON.parse(body);
+
+                                    //         // ELO_Creation_Influence (User)
+                                    //         var CI = info.elos.length + (info.elos_from_others * Math.pow(0.9, info.elos_from_others));
+                                    //         // ELO_Publishing_Influence (User)
+                                    //         var PI = info.elos_published + info.elos.length;
+                                    //         // ELO_Influence(User)
+                                    //         var EI = (CI * 0.6) + (PI * 0.4);
+
+                                    //         // Group Created (User)
+                                    //         var GC = info.commonrepo_groups.length;
+                                    //         // Group Joined (User)
+                                    //         var GJ = info.commonrepo_groups_members.length;
+                                    //         // Author_Group_Influence (User)
+                                    //         var GI = (((GC * 0.7) + (GJ * 0.3)) * 0.7) + ((getTotalMember(info.commonrepo_groups)) * 0.3);
+
+                                    //         // Degree_of_Participation (User)
+                                    //         var DP = EI + GI;
+                                    //     });
+                                    // }
+
+                                    function getPS(){
+                                        $("#result").empty();
+                                        $("#result").append("<p>A list of Popular Subjects : </p>");
+                                        $("#result").append("<p>Computer Networking</p>");
+                                        $("#result").append("<p>Software Security</p>");
+                                        $("#result").append("<p>Hadoop Platform and Application Framework</p>");
+                                        $("#myModal").modal();
+                                    }
+                                    </script>
+                                </div>
+                                <div class="box-footer"></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- ./Content Wrapper -->
+        <footer class="main-footer">
+            <div class="pull-right hidden-xs">
+                <b>Version</b> 1.1.0
+            </div>
+            <strong>Copyright &copy; 2015-2016 <a href="http://edxpdrlab.ncu.cc">NCU Open edX PDR Lab</a>.</strong> All rights reserved.
+        </footer>
+    </div>
+    <script type="text/javascript">
+    $('#navigation').load('widgets/navigation.html');
+
+    $('#TestSearch').on('click', function() {
+        $("#search-result > a").remove();
+        $("#search-result > ol").remove();
+        $("#search-result").append("<a><i class='fa fa-dashboard'></i><span>Search Result</span></a>");
+        ELO_ListBySearch($("#searchTerms").val());
+    });
+
+    $('#localSearch').on('click', function() {
+        var resp = dash.saveSetting(user._id, {
+            'location': $loc,
+            'flickr': $flickr
+        });
+
+        if (resp == 1) {
+            location.href = 'dashboard.html';
+        } else {
+            alert('Oops something went wrong!');
+        }
+    });
+
+    $('#remoteSearch').on('click', function() {
+        $.get('widgets/flickr.html', function(data) {
+            $('body').append(data)
+        });
+    });
+
+    $('#skip').on('click', function() {
+        if (!(settings && !settings.dummy)) {
+            localStorage.setItem('settings', JSON.stringify({
+                'dummy': 'object',
+                'location': 'new york',
+                'flickr': 'bikes'
+            }));
+        }
+        location.href = 'dashboard.html';
+    });
+    </script>
+</body>
+
+</html>

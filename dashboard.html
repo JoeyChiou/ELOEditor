@@ -1,10 +1,44 @@
+<!--
+#
+# Copyright 2016 edX PDR Lab, National Central University, Taiwan.
+#
+#     http://edxpdrlab.ncu.cc/
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# Created By: joeyc0916@gmail.com
+# Maintained By: joeyc0916@gmail.com
+#
+-->
 <!DOCTYPE html>
 <html>
 
 <head>
     <meta charset="UTF-8">
-    <title>Common Repo | Dashboard</title>
+    <title>ELO Editor | Dashboard</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <!-- jQuery 2.1.4 -->
+    <script src="assets/js/jquery.min.js" type="text/javascript"></script>
+    <!-- jQuery UI 1.11.4 -->
+    <script src="assets/js/jquery-ui.min.js" type="text/javascript"></script>
+    <!-- Bootstrap 3.3.4 -->
+    <script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
+    <!-- SlimScroll -->
+    <script src="plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <!-- FastClick -->
+    <script src="plugins/fastclick/fastclick.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="assets/js/app.js" type="text/javascript"></script>
     <!-- bootstrap 3.3.4 -->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <!-- font Awesome 4.3.0 -->
@@ -16,26 +50,57 @@
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link href="assets/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
-    <script type="text/javascript" src="controller/auth.js"></script>
+    <!--<script type="text/javascript" src="controller/auth.js"></script>-->
     <script type="text/javascript" src="controller/dbfunc.js"></script>
     <script type="text/javascript" src="controller/ELO_Functions.js"></script>
+    <script type="text/javascript" src="controller/user_Functions.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script type="text/javascript">
-    if (!JSON.parse(localStorage.getItem('settings'))) location.href = 'settings.html';
+    //if (!JSON.parse(localStorage.getItem('settings'))) location.href = 'settings.html';
     </script>
 </head>
 
 <body class="skin-blue sidebar-mini fixed">
+    <a id="gplus" href="https://plus.google.com/share?url={URL}" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"></a>
+    <!-- Modal -->
+    <div id="dashboardModal1" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Join Author Group by Similarity</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Author Group: Java Programing</p>
+                    <p>Discription: This is a group for Java Programing.</p>
+                    <p>Creator: Joey</p>
+                    <p>Created Date: 2015-2016/1/1</p>
+                    <p>Number of Group: 100</p>
+                    <p>Similarity Teaching Category:</p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;1. Timothy K. Shih: 98.71%</p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;2. Yu-Ren Chen: 93.21%</p>
+                    <p>Similarity Teaching Subject Area:</p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;1. Timothy K. Shih: 98.71%</p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;2. Yu-Ren Chen: 93.21%</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="groupJoin()">Confirm to Join</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="wrapper">
         <!-- header logo: style can be found in header.less -->
         <header class="main-header">
             <!-- Logo -->
             <a href="dashboard.html" class="logo">
                 <!-- mini logo for sidebar mini 50x50 pixels -->
-                <span class="logo-mini"><b>CR</b></span>
+                <span class="logo-mini"><b>EE</b></span>
                 <!-- logo for regular state and mobile devices -->
-                <span class="logo-lg"><b>C</b>ommon</b> <b>R</b>epo</span>
+                <span class="logo-lg"><b>E</b>LO</b> <b>E</b>ditor</span>
             </a>
-
             <!-- Header Navbar: style can be found in header.less -->
             <nav class="navbar navbar-static-top" role="navigation">
                 <!-- Sidebar toggle button-->
@@ -48,7 +113,6 @@
                 </div>
             </nav>
         </header>
-
         <!-- Left side column. contains the logo and sidebar -->
         <aside class="main-sidebar">
             <!-- sidebar: style can be found in sidebar.less -->
@@ -67,153 +131,226 @@
                 </div>
                 <!-- sidebar menu: : style can be found in sidebar.less -->
                 <ul class="sidebar-menu">
-                    
                 </ul>
             </section>
         </aside>
-
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
             <section class="content-header">
                 <h1>
-                    Welcome to your Common Repo Dashboard
+                    Welcome to your ELO Editor Dashboard
                 </h1>
                 <ol class="breadcrumb">
                     <li class="active"><a href="#"><i class="fa fa-dashboard"></i>Main</a></li>
                 </ol>
             </section>
-
             <!-- Main content -->
             <section class="content">
                 <div class="row">
                     <!-- Get counts of all objects. -->
-                    <script>getCount();</script>
-
                     <div class="col-md-3 col-sm-6 col-xs-12">
                         <div class="info-box">
                             <span class="info-box-icon bg-aqua"><i class="ion ion-document-text"></i></span>
                             <div class="info-box-content">
-                                <span class="info-box-text">Local ELOs</span>
-                                <span class="info-box-number"></span>
-                            </div><!-- /.info-box-content -->
-                        </div><!-- /.info-box -->
-                    </div><!-- /.col -->
-
+                                <span class="info-box-text">Groups <br>Created</span>
+                                <span id="span_groups_created" class="info-box-number"></span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                    </div>
+                    <!-- /.col -->
                     <div class="col-md-3 col-sm-6 col-xs-12">
                         <div class="info-box">
                             <span class="info-box-icon bg-green"><i class="ion ion-cloud"></i></span>
                             <div class="info-box-content">
-                                <span class="info-box-text">Remote ELOs</span>
-                                <span class="info-box-number"></span>
-                            </div><!-- /.info-box-content -->
-                        </div><!-- /.info-box -->
-                    </div><!-- /.col -->
-                    
-                    <div class="col-md-3 col-sm-6 col-xs-12">
-                        <div class="info-box">
-                            <span class="info-box-icon bg-red"><i class="fa fa-google-plus"></i></span>
-                            <div class="info-box-content">
-                                <span class="info-box-text">Likes</span>
-                                <span class="info-box-number"></span>
-                            </div><!-- /.info-box-content -->
-                        </div><!-- /.info-box -->
-                    </div><!-- /.col -->
-
+                                <span class="info-box-text">Groups <br>Followed</span>
+                                <span id="span_groups_joined" class="info-box-number"></span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                    </div>
+                    <!-- /.col -->
                     <div class="col-md-3 col-sm-6 col-xs-12">
                         <div class="info-box">
                             <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
                             <div class="info-box-content">
-                                <span class="info-box-text">Members</span>
+                                <span class="info-box-text">Friends <br>as Authors</span>
+                                <span id="span_friends" class="info-box-number"></span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-red"><i class="fa fa-google-plus"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Friends <br>in Google+</span>
                                 <span class="info-box-number"></span>
-                            </div><!-- /.info-box-content -->
-                        </div><!-- /.info-box -->
-                    </div><!-- /.col -->
-                </div><!-- /.row -->
-
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
                 <div class="row">
-                    <div class="col-md-12">
-                      <!-- LOCAL ELO LIST -->
-                      <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Local ELOs</h3>
-                            <div class="box-tools pull-right">
-                                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                                <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    <!-- LOCAL ELO LIST -->
+                    <div class="col-md-6">
+                        <div class="box">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Local ELOs</h3>
+                                <div class="box-tools pull-right">
+                                    <span class="label label-info">ELOs</span>
+                                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                    <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                                </div>
                             </div>
-                        </div><!-- /.box-header -->
-                        <div class="box-body no-padding">
-                            <div id="localELO">
-                                <script>ELO_List("localELO");</script>
+                            <!-- /.box-header -->
+                            <div class="box-body no-padding" style="height:118px;overflow:auto;">
+                                <input style="display:none;" id="fileImportDialog" type="file" nwdirectory/>
+                                <div id="localELO"></div>
                             </div>
-                        </div><!-- /.box-body -->
-                        <div class="box-footer text-center">
-                          <a href="repo-local.html" class="uppercase">View All Local ELOs</a>
-                        </div><!-- /.box-footer -->
-                      </div><!--/.box -->
-                    </div><!-- /.col -->
-                    <!-- local ELOs -->
-                    
-                    <div class="col-md-12">
-                      <!-- LOCAL ELO LIST -->
-                      <div class="box box-danger">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Remote ELOs</h3>
-                            <div class="box-tools pull-right">
-                                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                                <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            <!-- /.box-body -->
+                            <div class="box-footer text-center">
+                                <!-- <a href="repo-local.html" class="uppercase">View All Local ELOs</a> -->
                             </div>
-                        </div><!-- /.box-header -->
-                        <div class="box-body no-padding">
-                            <div id="remoteELO">
-                                <script>ELO_List("remoteELO");</script>
+                            <!-- /.box-footer -->
+                        </div>
+                        <!--/.box -->
+                    </div>
+                    <!-- PUBLISHED ELO LIST -->
+                    <div class="col-md-6">
+                        <div class="box box-danger">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Published ELOs</h3>
+                                <div class="box-tools pull-right">
+                                    <span class="label label-danger">ELOs</span>
+                                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                    <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                                </div>
                             </div>
-                        </div><!-- /.box-body -->
-                        <div class="box-footer text-center">
-                          <a href="javascript::" class="uppercase">View All Local ELOs</a>
-                        </div><!-- /.box-footer -->
-                      </div><!--/.box -->
-                    </div><!-- /.col -->
-                    <!-- remote ELOs -->
-                </div><!-- /.row -->
+                            <!-- /.box-header -->
+                            <div class="box-body no-padding" style="height:118px;overflow:auto;">
+                                <div id="publicELO"></div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-footer text-center">
+                                <!-- <a href="javascript::" class="uppercase">View All Local ELOs</a> -->
+                            </div>
+                            <!-- /.box-footer -->
+                        </div>
+                        <!--/.box -->
+                    </div>
+                </div>
+                <div class="row">
+                    <!-- REMOTE ELO LIST -->
+                    <div class="col-md-6">
+                        <div class="box">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Remote ELOs</h3>
+                                <div class="box-tools pull-right">
+                                    <span class="label label-info">ELOs</span>
+                                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                    <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                                </div>
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body no-padding" style="height:118px;overflow:auto;">
+                                <input style="display:none;" id="fileImportDialog" type="file" nwdirectory/>
+                                <div id="remoteELO"></div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-footer text-center">
+                                <!-- <a href="repo-local.html" class="uppercase">View All Local ELOs</a> -->
+                            </div>
+                            <!-- /.box-footer -->
+                        </div>
+                        <!--/.box -->
+                    </div>
+                </div>
             </section>
         </div>
         <!-- ./Content Wrapper -->
-
         <footer class="main-footer">
             <div class="pull-right hidden-xs">
-              <b>Version</b> 0.1.0
+                <b>Version</b> 1.1.0
             </div>
-            <strong>Copyright &copy; 2015 <a href="http://edxpdrlab.ncu.cc">NCU Open edX PDR Lab</a>.</strong> All rights reserved.
+            <strong>Copyright &copy; 2015-2016 <a href="http://edxpdrlab.ncu.cc">NCU Open edX PDR Lab</a>.</strong> All rights reserved.
         </footer>
     </div>
-
-    <!-- jQuery 2.1.4 -->
-    <script src="assets/js/jquery.min.js" type="text/javascript"></script>
-    <!-- jQuery UI 1.11.4 -->
-    <script src="assets/js/jquery-ui.min.js" type="text/javascript"></script>
-    <!-- Bootstrap 3.3.4 -->
-    <script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
-    <!-- SlimScroll -->
-    <script src="plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
-    <!-- FastClick -->
-    <script src="plugins/fastclick/fastclick.min.js"></script>
-    <!-- AdminLTE App -->
-    <script src="assets/js/app.js" type="text/javascript"></script>
     <script type="text/javascript">
     $('#navigation').load('widgets/navigation.html');
 
-    
     // load widgets async
-/*
-    $.get('widgets/ELO-local-lists.html', function(data) {
-        $('body').append(data);
-    });
+    /*
+        $.get('widgets/ELO-local-lists.html', function(data) {
+            $('body').append(data);
+        });
 
-    $.get('widgets/ELO-remote-lists.html', function(data) {
-        $('body').append(data);
-    });*/
+        $.get('widgets/ELO-remote-lists.html', function(data) {
+            $('body').append(data);
+        });*/
+
+    // Import an ELO for Local
+    $("#fileImportDialog").change(function(evt) {
+        var elopath = $(this).val();
+        var elotitle = elopath.split("/");
+
+        var fs = require('fs');
+        fs.readFile('collections/users.json', function(err, filedata) {
+            var content = JSON.parse(filedata);
+            var USERNAME = content.userName;
+           
+            $.getScript("controller/dbfunc.js", function(data, textStatus, jqxhr) {
+                importELO(encodeURI(elopath), encodeURI(elotitle[elotitle.length - 1]), USERNAME);
+            });
+        });
+
+        // Get the info from metadata file
+        var jsdom = require("jsdom");
+
+        jsdom.env({
+            file: elopath + "/elo_metadata.xml",
+            scripts: ["http://code.jquery.com/jquery.js"],
+            done: function(errors, window) {
+                var node;
+                var root = window.$("ELOMetadata")[0];
+                var subroot;
+                for (var count = 0; count < root.childNodes.length; count++) {
+                    subroot = root.childNodes[count]; //general
+                    if (subroot.nodeType == 1) {
+                        for (var i = 0; i < subroot.childNodes.length; i++) {
+                            node = subroot.childNodes[i];
+                            if (node.nodeType == 1) {
+                                if (node.childNodes.length > 1) {
+                                    for (var j = 0; j < node.childNodes.length; j++) {
+                                        if (node.childNodes[j].nodeType == 1)
+                                            $.getScript("controller/dbfunc.js", function(data, textStatus, jqxhr) {
+                                                importMetadata(elopath, subroot.nodeName, node.nodeName, node.childNodes[j].innerHTML);
+                                            });
+                                    }
+                                } else {
+                                    $.getScript("controller/dbfunc.js", function(data, textStatus, jqxhr) {
+                                        importMetadata(elopath, subroot.nodeName, node.nodeName, node.innerHTML);
+                                    });
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        location.href = "dashboard.html";
+    });
     </script>
+    <iframe id="iframe_dl" style="display:none;">
 </body>
 
 </html>

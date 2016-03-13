@@ -1,9 +1,32 @@
+<!--
+#
+# Copyright 2016 edX PDR Lab, National Central University, Taiwan.
+#
+#     http://edxpdrlab.ncu.cc/
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# Created By: joeyc0916@gmail.com
+# Maintained By: joeyc0916@gmail.com
+#
+-->
+
 <!DOCTYPE html>
 <html>
 
 <head>
     <meta charset="UTF-8">
-    <title>Common Repo | Sign in</title>
+    <title>ELO Editor | Sign in</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- bootstrap 3.3.4 -->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -17,15 +40,16 @@
     <link href="plugins/iCheck/square/blue.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="controller/auth.js"></script>
     <script type="text/javascript">
-    if (JSON.parse(localStorage.getItem('user'))) location.href = 'dashboard.html';
+    //if (JSON.parse(localStorage.getItem('user'))) location.href = 'dashboard.html';
     </script>
 </head>
 
 <body class="login-page">
     <div class="login-box">
         <div class="login-logo">
-            <a href="index.html"><b>C</b>ommon</b> <b>R</b>epo</a>
-        </div><!-- /.login-logo -->
+            <a href="index.html"><b>E</b>LO</b> <b>E</b>ditor</a>
+        </div>
+        <!-- /.login-logo -->
         <div class="login-box-body">
             <p class="login-box-msg">Sign in to start your session</p>
             <form action="dashboard.html" method="post">
@@ -34,35 +58,41 @@
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
                 </div>
                 <div class="form-group has-feedback">
-                    <input type="password" name="password" id="password" class="form-control" placeholder="Password"/>
+                    <input type="password" name="password" id="password" class="form-control" placeholder="Password" />
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                 </div>
-                <div class="row">
-                    <div class="col-xs-8">    
-                        <div class="checkbox icheck">
-                            <label>
-                                <input type="checkbox"> Remember Me
-                            </label>
-                        </div>                        
-                    </div><!-- /.col -->
-                    <div class="col-xs-4">
-                        <button type="submit" id="login" class="btn btn-primary btn-block btn-flat">Sign In</button>
-                    </div><!-- /.col -->
-                </div>
             </form>
-
-            <div class="social-auth-links text-center">
+            <div class="row">
+                <div class="col-xs-8">
+                    <div class="checkbox icheck">
+                        <!--
+                        <label>
+                            <input type="checkbox"> Remember Me
+                        </label>
+                        -->
+                    </div>
+                </div>
+                <!-- /.col -->
+                <div class="col-xs-4">
+                    <button id="login" class="btn btn-primary btn-block btn-flat" onclick="login()">Sign In</button>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!--<div class="social-auth-links text-center">
                 <p>- OR -</p>
                 <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in using Facebook</a>
                 <a href="#" class="btn btn-block btn-social btn-google-plus btn-flat"><i class="fa fa-google-plus"></i> Sign in using Google+</a>
-            </div><!-- /.social-auth-links -->
-
-            <a href="#">I forgot my password</a><br>
+            </div>-->
+            <!-- /.social-auth-links -->
+            <!--
+            <a href="#">I forgot my password</a>
+            <br>
+            -->
             <a href="register.html" class="text-center">Register a new membership</a>
-
-        </div><!-- /.login-box-body -->
-    </div><!-- /.login-box -->
-
+        </div>
+        <!-- /.login-box-body -->
+    </div>
+    <!-- /.login-box -->
     <!-- jQuery 2.1.4 -->
     <script src="assets/js/jquery.min.js" type="text/javascript"></script>
     <!-- jQuery UI 1.11.4 -->
@@ -72,11 +102,11 @@
     <!-- iCheck -->
     <script src="plugins/iCheck/icheck.min.js" type="text/javascript"></script>
     <script type="text/javascript">
-    $(function () {
+    $(function() {
         $('input').iCheck({
-          checkboxClass: 'icheckbox_square-blue',
-          radioClass: 'iradio_square-blue',
-          increaseArea: '20%' // optional
+            checkboxClass: 'icheckbox_square-blue',
+            radioClass: 'iradio_square-blue',
+            increaseArea: '20%' // optional
         });
     });
 
@@ -111,25 +141,62 @@
         }
     }
 
-    $('#login').on('click', function() {
-        if (triggerFormVal()) {
-            $('#form-val').addClass('hide');
-            var resp = dash.authUser($('#userid').val().trim(), $('#password').val().trim());
-            if (resp == 1) {
-                location.href = 'dashboard.html';
-            } else if (resp == 2) {
-                location.href = 'settings.html';
-            } else if (resp == 3) {
-                alert('Invalid Userid or password');
-            } else {
-                alert('No user exists with this ID');
-            }
-        } else {
-            $('#form-val').removeClass('hide');
-        }
-    });
-    </script>
+    // $('#login').on('click', function() {
+    //     if (triggerFormVal()) {
+    //         $('#form-val').addClass('hide');
+    //         var resp = dash.authUser($('#userid').val().trim(), $('#password').val().trim());
+    //         if (resp == 1) {
+    //             location.href = 'dashboard.html';
+    //         } else if (resp == 2) {
+    //             location.href = 'settings.html';
+    //         } else if (resp == 3) {
+    //             alert('Invalid Userid or password');
+    //         } else {
+    //             alert('No user exists with this ID');
+    //         }
+    //     } else {
+    //         $('#form-val').removeClass('hide');
+    //     }
+    // });
 
+    function login() {
+        var request = require('request');
+
+        request({
+            url: 'http://commonrepo.herokuapp.com/api/v1/auth/login/',
+            method: 'POST',
+            json: true,
+            body: {
+                'username': $("#userid").val().trim(),
+                'password': $("#password").val().trim()
+            }
+        }, function(error, response, body) {
+            var AUTHKEY = body.auth_token;
+
+            request({
+                url: 'http://www.commonrepo.com/api/v1/auth/me/',
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Token ' + AUTHKEY
+                }
+            }, function(error, response, body) {
+                if (!error && response.statusCode == 200) {
+                    var info = JSON.parse(body);
+
+                    var fs = require('fs');
+                    fs.writeFile('collections/users.json', "{ \"userID\": \"" + info.id + "\", \"AUTHKEY\": \"" + AUTHKEY + "\" , \"userName\": \"" + info.username + "\", \"email\": \"" + info.email + "\"}", function(err) {
+                        if (err) throw err;
+                        location.href = "dashboard.html";
+                    });
+
+                    console.log("body:" + body);
+                } else {
+                    //alert("Check your account or password and try it again, please.");
+                }
+            });
+        });
+    }
+    </script>
 </body>
 
 </html>

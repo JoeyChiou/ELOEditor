@@ -1,0 +1,1212 @@
+<!--
+#
+# Copyright 2016 edX PDR Lab, National Central University, Taiwan.
+#
+#     http://edxpdrlab.ncu.cc/
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# Created By: joeyc0916@gmail.com
+# Maintained By: joeyc0916@gmail.com
+#
+-->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>ELO Editor | ELO Metadata Search</title>
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <!-- bootstrap 3.3.4 -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- font Awesome 4.3.0 -->
+    <link href="assets/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <!-- Ionicons 2.0.1 -->
+    <link href="assets/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+    <!-- Theme style -->
+    <link href="assets/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link href="assets/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="controller/settings.js"></script>
+    <script type="text/javascript" src="controller/dbfunc.js"></script>
+    <script type="text/javascript" src="controller/ELO_Functions.js"></script>
+</head>
+
+<body class="skin-blue sidebar-mini fixed">
+    <div class="wrapper">
+        <!-- header logo: style can be found in header.less -->
+        <header class="main-header">
+            <!-- Logo -->
+            <a href="dashboard.html" class="logo">
+                <!-- mini logo for sidebar mini 50x50 pixels -->
+                <span class="logo-mini"><b>EE</b></span>
+                <!-- logo for regular state and mobile devices -->
+                <span class="logo-lg"><b>E</b>LO</b> <b>E</b>ditor</span>
+            </a>
+            <!-- Header Navbar: style can be found in header.less -->
+            <nav class="navbar navbar-static-top" role="navigation">
+                <!-- Sidebar toggle button-->
+                <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                </a>
+                <!-- Navbar Right Menu -->
+                <div class="navbar-custom-menu">
+                    <div id="navigation"></div>
+                </div>
+            </nav>
+        </header>
+        <!-- Left side column. contains the logo and sidebar -->
+        <aside class="main-sidebar">
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar">
+                <!-- Sidebar user panel -->
+                <div class="user-panel">
+                    <div class="pull-left image">
+                        <img src="assets/img/avatar5.png" class="img-circle" alt="User Image" />
+                    </div>
+                    <div class="pull-left info">
+                        <p>
+                            <span class='uname'></span>
+                        </p>
+                        <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                    </div>
+                </div>
+                <!-- sidebar menu: : style can be found in sidebar.less -->
+                <ul class="sidebar-menu">
+                    <li class="treeview">
+                        <a href="#" onclick="showDiv('general')">
+                            <i class="fa fa-dashboard"></i> <span>General</span> <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="#metadata-General-identifier"><i class="fa fa-circle-o"></i>identifier</a></li>
+                            <li><a href="#metadata-General-title"><i class="fa fa-circle-o"></i>title</a></li>
+                            <li><a href="#metadata-General-language"><i class="fa fa-circle-o"></i>language</a></li>
+                            <li><a href="#metadata-General-description"><i class="fa fa-circle-o"></i>description</a></li>
+                            <li><a href="#metadata-General-keyword"><i class="fa fa-circle-o"></i>keyword</a></li>
+                            <li><a href="#metadata-General-coverage"><i class="fa fa-circle-o"></i>coverage</a></li>
+                            <li><a href="#metadata-General-structure"><i class="fa fa-circle-o"></i>structure</a></li>
+                            <li><a href="#metadata-General-aggregationLevel"><i class="fa fa-circle-o"></i>aggregationLevel</a></li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#" onclick="showDiv('lifecycle')">
+                            <i class="fa fa-dashboard"></i> <span>Life Cycle</span> <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="#metadata-LifeCycle-version"><i class="fa fa-circle-o"></i>version</a></li>
+                            <li><a href="#metadata-LifeCycle-status"><i class="fa fa-circle-o"></i>status</a></li>
+                            <li><a href="#metadata-LifeCycle-contribute"><i class="fa fa-circle-o"></i>contribute</a></li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#" onclick="showDiv('metametadata')">
+                            <i class="fa fa-dashboard"></i> <span>Meta-metadata</span> <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="#metadata-Meta-metadata-identifier"><i class="fa fa-circle-o"></i>identifier</a></li>
+                            <li><a href="#metadata-Meta-metadata-contribute"><i class="fa fa-circle-o"></i>contribute</a></li>
+                            <li><a href="#metadata-Meta-metadata-metadataSchema"><i class="fa fa-circle-o"></i>metadataSchema</a></li>
+                            <li><a href="#metadata-Meta-metadata-language"><i class="fa fa-circle-o"></i>language</a></li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#" onclick="showDiv('technical')">
+                            <i class="fa fa-dashboard"></i> <span>Technical</span> <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="#metadata-Technical-format"><i class="fa fa-circle-o"></i>format</a></li>
+                            <li><a href="#metadata-Technical-size"><i class="fa fa-circle-o"></i>size</a></li>
+                            <li><a href="#metadata-Technical-location"><i class="fa fa-circle-o"></i>location</a></li>
+                            <li><a href="#metadata-Technical-requirement"><i class="fa fa-circle-o"></i>requirement</a></li>
+                            <li><a href="#metadata-Technical-installationRemarks"><i class="fa fa-circle-o"></i>installationRemarks</a></li>
+                            <li><a href="#metadata-Technical-otherPlatformRequirements"><i class="fa fa-circle-o"></i>otherPlatformRequirements</a></li>
+                            <li><a href="#metadata-Technical-duration"><i class="fa fa-circle-o"></i>duration</a></li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#" onclick="showDiv('educational')">
+                            <i class="fa fa-dashboard"></i> <span>Educational</span> <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="#metadata-Educational-interactivityType"><i class="fa fa-circle-o"></i>interactivityType</a></li>
+                            <li><a href="#metadata-Educational-learningResourceType"><i class="fa fa-circle-o"></i>learningResourceType</a></li>
+                            <li><a href="#metadata-Educational-interactivityLevel"><i class="fa fa-circle-o"></i>interactivityLevel</a></li>
+                            <li><a href="#metadata-Educational-semanticDensity"><i class="fa fa-circle-o"></i>semanticDensity</a></li>
+                            <li><a href="#metadata-Educational-intendedEndUserRole"><i class="fa fa-circle-o"></i>intendedEndUserRole</a></li>
+                            <li><a href="#metadata-Educational-context"><i class="fa fa-circle-o"></i>context</a></li>
+                            <li><a href="#metadata-Educational-typicalAgeRange"><i class="fa fa-circle-o"></i>typicalAgeRange</a></li>
+                            <li><a href="#metadata-Educational-difficulty"><i class="fa fa-circle-o"></i>difficulty</a></li>
+                            <li><a href="#metadata-Educational-typicalLearningTime"><i class="fa fa-circle-o"></i>typicalLearningTime</a></li>
+                            <li><a href="#metadata-Educational-description"><i class="fa fa-circle-o"></i>description</a></li>
+                            <li><a href="#metadata-Educational-language"><i class="fa fa-circle-o"></i>language</a></li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#" onclick="showDiv('rights')">
+                            <i class="fa fa-dashboard"></i> <span>Rights</span> <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="#metadata-Rights-cost"><i class="fa fa-circle-o"></i>cost</a></li>
+                            <li><a href="#metadata-Rights-copyrightAndOtherRestrictions"><i class="fa fa-circle-o"></i>copyrightAndOtherRestrictions</a></li>
+                            <li><a href="#metadata-Rights-description"><i class="fa fa-circle-o"></i>description</a></li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#" onclick="showDiv('relation')">
+                            <i class="fa fa-dashboard"></i> <span>Relation</span> <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="#metadata-Relation-kind"><i class="fa fa-circle-o"></i>kind</a></li>
+                            <li><a href="#metadata-Relation-resource"><i class="fa fa-circle-o"></i>resource</a></li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#" onclick="showDiv('annotation')">
+                            <i class="fa fa-dashboard"></i> <span>Annotation</span> <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="#metadata-Annotation-entity"><i class="fa fa-circle-o"></i>entity</a></li>
+                            <li><a href="#metadata-Annotation-date"><i class="fa fa-circle-o"></i>date</a></li>
+                            <li><a href="#metadata-Annotation-description"><i class="fa fa-circle-o"></i>description</a></li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#" onclick="showDiv('classification')">
+                            <i class="fa fa-dashboard"></i> <span>Classification</span> <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="#metadata-Classification-purpose"><i class="fa fa-circle-o"></i>purpose</a></li>
+                            <li><a href="#metadata-Classification-taxonPath"><i class="fa fa-circle-o"></i>taxonPath</a></li>
+                            <li><a href="#metadata-Classification-description"><i class="fa fa-circle-o"></i>description</a></li>
+                            <li><a href="#metadata-Classification-keyword"><i class="fa fa-circle-o"></i>keyword</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </section>
+        </aside>
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1>
+                    Metadata Search
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="dashboard.html"><i class="fa fa-dashboard"></i>Main</a></li>
+                    <li class="active">Metadata Search</li>
+                </ol>
+            </section>
+            <!-- Main content -->
+            <section class="content">
+                <div class="row">
+                    <!-- left column -->
+                    <div id="searchresults" class="col-md-12">
+                        <div class="box-body">
+                            <div class="callout callout-info">
+                                <h4>Tips</h4>
+                                <p>Press "Search" button to start search!</p>
+                            </div>
+                        </div>
+                        <div id="general" class="box box-info">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">General</h3>
+                                <p>The General category can be used to describe general information about the SCORM Content Model Component as a whole.</p>
+                            </div>
+                            <!-- /.box-header -->
+                            <!-- form start -->
+                            <!--<form role="form">-->
+                            <div class="box-body">
+                                <div class="box-header">
+                                    <h4 id="metadata-General-indetifier" class="box-title">identifier</h4>
+                                    <p>The &lt;identifier&gt; element represents a mechanism for assigning a globally unique label that identifies the SCORM Content Model Component. The notion of assigning a globally unique identifier to a component is important when dealing with multiple facets of learning content development (e.g., versioning, maintenance, etc.).</p>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="form-group">
+                                    <label for="general-catalog" data-container="body" data-toggle="popover" data-placement="right" title="Catalog">Catalog</label>
+                                    <input type="text" class="form-control" placeholder="URI" id="general-identifier-catalog" name="catalog">
+                                    <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                    <label for="general-entry" data-container="body" data-toggle="popover" data-placement="right" title="Entry">Entry</label>
+                                    <input type="text" class="form-control" placeholder="http://www.adlnet.gov/content/CO_01" id="general-identifier-entry" name="entry">
+                                    <label class="control-label hide" for="general-entry"><i class="fa fa-times-circle-o"></i> Required</label>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-body">
+                                <div class="box-header">
+                                    <h4 id="metadata-General-title" class="box-title">title</h4>
+                                    <p>The &lt;title&gt; element represents the name given to the learning object.</p>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="form-group">
+                                    <label for="general-catalog" data-container="body" data-toggle="popover" data-placement="right" data-content="The <title> element represents the name given to the learning object." title="title">title</label>
+                                    <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="general-title" name="title">
+                                    <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-body">
+                                <div class="box-header">
+                                    <h4 id="metadata-General-language" class="box-title">language</h4>
+                                    <p>The &lt;language&gt; element represents the primary human language or languages used within the SCORM Content Model Component to communicate to the intended user. The Language element can be repeated. This allows for the ability to describe components that are built to support multiple languages.</p>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="form-group">
+                                    <label for="general-catalog" data-container="body" data-toggle="popover" data-placement="right" title="language">language</label>
+                                    <input type="text" class="form-control" placeholder="en<" id="general-language" name="language">
+                                    <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-body">
+                                <div class="box-header">
+                                    <h4 id="metadata-General-description" class="box-title">description</h4>
+                                    <p>The &lt;description&gt; element represents a textual description of the SCORM Content Model Component being described by the metadata. The Description element allows for a narrative description of the component.</p>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="form-group">
+                                    <label for="general-catalog" data-container="body" data-toggle="popover" data-placement="right" title="description">description</label>
+                                    <input type="text" class="form-control" placeholder="Textual description of the learning object" id="general-description" name="description">
+                                    <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-body">
+                                <div class="box-header">
+                                    <h4 id="metadata-General-keyword" class="box-title">keyword</h4>
+                                    <p>The &lt;keyword&gt; element shall be used to define common keywords or phrases that describe the learning object. When creating keyword(s), the creator should pick words or phrases that are very succinct and specific to the SCORM component. The Keyword element consists of one word or phrase. If more than one Keyword is desired, the creator should use multiple instances of the Keyword element.</p>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="form-group">
+                                    <label for="general-catalog" data-container="body" data-toggle="popover" data-placement="right" title="keyword">keyword</label>
+                                    <input type="text" class="form-control" placeholder="Textual description of the learning object" id="general-keyword" name="keyword">
+                                    <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-body">
+                                <div class="box-header">
+                                    <h4 id="metadata-General-coverage" class="box-title">coverage</h4>
+                                    <p>The &lt;coverage&gt; element shall be used to describe the time, culture, geography or region to which the SCORM Content Model Component applies.</p>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="form-group">
+                                    <label for="general-catalog" data-container="body" data-toggle="popover" data-placement="right" title="coverage">coverage</label>
+                                    <input type="text" class="form-control" placeholder="Circa, 16th century France" id="general-coverage" name="coverage">
+                                    <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-body">
+                                <div class="box-header">
+                                    <h4 id="metadata-General-structure" class="box-title">structure</h4>
+                                    <p>The &lt;structure&gt; element shall describe the underlying organizational structure of the SCORM Content Model Component.</p>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="form-group">
+                                    <label for="general-catalog" data-container="body" data-toggle="popover" data-placement="right" title="structure">structure</label>
+                                    <select class="form-control" id="general-structure" name="structure">
+                                        <option value="atomic">atomic: An object that is indivisible</option>
+                                        <option value="collection">collection: A set of objects with no specified relationship between them</option>
+                                        <option value="networked">networked: A set of objects with relationships that are unspecified</option>
+                                        <option value="hierarchical">hierarchical: A set of objects whose relationships can be represented by a tree structure</option>
+                                        <option value="linear">linear: A set of objects that are fully ordered. Example: A set of objects that are connected by “previous” and “next” relationships</option>
+                                    </select>
+                                    <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-body">
+                                <div class="box-header">
+                                    <h4 id="metadata-General-aggregationLevel" class="box-title">aggregationLevel</h4>
+                                    <p>The &lt;aggregationLevel&gt; element shall describe the functional granularity of the learning object.</p>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="form-group">
+                                    <label for="general-catalog" data-container="body" data-toggle="popover" data-placement="right" title="aggregationLevel">aggregationLevel</label>
+                                    <input type="text" class="form-control" placeholder="LOMv1.0" id="general-aggregationLevel" name="aggregationlevel">
+                                    <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-footer">
+                                <button class="btn btn-primary" onclick="mtSearch('general')">Search</button>
+                            </div>
+                            <!--</form>-->
+                        </div>
+                        <div id="lifecycle" class="box box-info">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Life Cycle</h3>
+                                <p>The Life Cycle category groups the features related to the history and current state of the SCORM Content Model Component and those who have affected the component during its evolution. The typical types of information collected in this category include the status of the component (e.g., is the component in its final state or is it still in a draft format), a version identifier indicating the version of the component and a list of individuals/organizations that have affected the component in one manner or another.</p>
+                            </div>
+                            <!-- /.box-header -->
+                            <!-- form start -->
+                            <!--<form role="form">-->
+                            <div class="box-body">
+                                <div class="box-header">
+                                    <h4 id="metadata-LifeCycle-version" class="box-title">version</h4>
+                                    <p>The &lt;version&gt; element shall describe the edition of the SCORM Content Model Component. A component may have several versions or editions during its lifetime. The &lt;version&gt; element allows for the description of the version of the component.</p>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="form-group">
+                                    <label for="general-catalog" data-container="body" data-toggle="popover" data-placement="right" title="version">version</label>
+                                    <input type="text" class="form-control" placeholder="1.0 alpha" id="lifecycle-version" name="version">
+                                    <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-body">
+                                <div class="box-header">
+                                    <h4 id="metadata-LifeCycle-status" class="box-title">status</h4>
+                                    <p>The &lt;status&gt; element shall describe the completion status or condition of the SCORM Content Model Component. A component’s status may change during its lifetime (draft, final, etc.). The &lt;status&gt; element allows for the description of the status of the component.</p>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="form-group">
+                                    <label for="general-catalog" data-container="body" data-toggle="popover" data-placement="right" data-content="The <status> element shall describe the completion status or condition of the SCORM Content Model Component. A component’s status may change during its lifetime (draft, final, etc.). The <status> element allows for the description of the status of the component." title="status">status</label>
+                                    <select class="form-control" id="lifecycle-status">
+                                        <option value="draft">draft: The component is in a draft state (as determined by the developer)</option>
+                                        <option value="final">final: The component is in a final state (as determined by the developer)</option>
+                                        <option value="revised">revised: The component has been revised since the last version</option>
+                                        <option value="unavailable">unavailable: The status information is unavailable</option>
+                                    </select>
+                                    <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-body">
+                                <div class="box-header">
+                                    <h4 id="metadata-LifeCycle-contribute" class="box-title">contribute</h4>
+                                    <p>The &lt;contribute&gt; element shall be used to describe those entities (i.e., people, organizations) that have contributed to the state of the SCORM Content Model Component during its lifecycle (e.g., creation, edits, reviews, publications, etc.). The Contribute element enables capturing of all those individuals or organizations involved.</p>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="form-group">
+                                    <label for="general-catalog" data-container="body" data-toggle="popover" data-placement="right" data-content="The <role> element defines the kind or type of contribution made by the contributor (identified by the Entity element). The IEEE has defined a set of typical roles that are involved with the lifecycle of the component." title="role">role</label>
+                                    <select class="form-control" id="lifecycle-contribute-role">
+                                        <option value="author">author</option>
+                                        <option value="publisher">publisher</option>
+                                        <option value="unknown">unknown</option>
+                                        <option value="initiator">initiator</option>
+                                        <option value="terminator">terminator</option>
+                                        <option value="validator">validator</option>
+                                        <option value="editor">editor</option>
+                                        <option value="graphical designer">graphical designer</option>
+                                        <option value="technical implementer">technical implementer</option>
+                                        <option value="content provider">content provider</option>
+                                        <option value="technical validator">technical validator</option>
+                                        <option value="educational validator">educational validator</option>
+                                        <option value="script writer">script writer</option>
+                                        <option value="instructional designer">instructional designer</option>
+                                        <option value="subject matter expert">subject matter expert</option>
+                                    </select>
+                                    <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                    <label for="general-entry" data-container="body" data-toggle="popover" data-placement="right" data-content="The <entity> element identifies the entity or entities that may have contributed during the development lifecycle of the SCORM Content Model Component. An entity can be an individual person, organization, etc. If more than one entity is listed, the entities shall be ordered as most relevant first." title="entity">entity</label>
+                                    <input type="text" class="form-control" placeholder="http://www.adlnet.gov/content/CO_01" id="lifecycle-contribute-entity" name="entity">
+                                    <label class="control-label hide" for="general-entry"><i class="fa fa-times-circle-o"></i> Required</label>
+                                    <label for="general-entry" data-container="body" data-toggle="popover" data-placement="right" data-content="The <date> element identifies the date of the contribution made by the entity." title="date">date</label>
+                                    <input type="text" class="form-control" placeholder="http://www.adlnet.gov/content/CO_01" id="lifecycle-contribute-date" name="date">
+                                    <label class="control-label hide" for="general-entry"><i class="fa fa-times-circle-o"></i> Required</label>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-footer">
+                                <button class="btn btn-primary" onclick="mtSearch('lifecycle')">Search</button>
+                            </div>
+                            <!--</form>-->
+                        </div>
+                        <div id="metametadata" class="box box-info">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Meta-Metadata</h3>
+                                <p>The Meta-Metadata category provides elements that describe the metadata record itself and not the SCORM Content Model Component the record is describing. This category describes how the metadata instance itself can be identified, who created the metadata instance, how, when and with what references.</p>
+                            </div>
+                            <!-- /.box-header -->
+                            <!-- form start -->
+                            <!--<form role="form">-->
+                            <div class="box-body">
+                                <div class="box-header">
+                                    <h4 id="metadata-Meta-metadata-identifier" class="box-title">identifier</h4>
+                                    <p>The &lt;identifier&gt; element represents a mechanism for assigning a globally unique label that identifies the metadata record that describes the SCORM Content Model Component.</p>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="form-group">
+                                    <label for="general-catalog" data-container="body" data-toggle="popover" data-placement="right" data-content="The <catalog> element represents the name or designator of the identification or cataloging scheme for the entry. There are a variety of cataloging systems available. SCORM does not require the use of any one particular cataloging system. Organizations are free to choose any cataloging scheme that meets their organizations practices or policies." title="catalog">catalog</label>
+                                    <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="meta-metadata-identifier-catalog" name="catalog">
+                                    <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                    <label for="general-catalog" data-container="body" data-toggle="popover" data-placement="right" data-content="The <entry> element represents the value of the identifier within the identification or cataloging scheme (refer to the <catalog> element) that designates or identifies the metadata. Identifiers can take on various formats. The IEEE requires that the actual identifier value be represented as a CharacterString. Organizations are free to choose any mechanism to create unique identifiers that meets their organizations practices or policies. It is recommended that a common scheme be chosen." title="entry">entry</label>
+                                    <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="meta-metadata-identifier-entry" name="entry">
+                                    <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-body">
+                                <div class="box-header">
+                                    <h4 id="metadata-Meta-metadata-contribute" class="box-title">contribute</h4>
+                                    <p>The &lt;contribute&gt; element shall be used to describe those entities (i.e., people, organizations) that have contributed to the state of the SCORM Content Model Component during its lifecycle (e.g., creation, edits, reviews, publications, etc.). The Contribute element enables capturing of all those individuals or organizations involved.</p>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="form-group">
+                                    <label for="general-catalog" data-container="body" data-toggle="popover" data-placement="right" data-content="The <role> element defines the kind or type of contribution made by the contributor (identified by the Entity element). The IEEE has defined a set of typical roles that are involved with the lifecycle of the component." title="role">role</label>
+                                    <select class="form-control" id="lifecycle-contribute-role">
+                                        <option value="creator">creator</option>
+                                        <option value="validator">validator</option>
+                                    </select>
+                                    <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                    <label for="general-entry" data-container="body" data-toggle="popover" data-placement="right" data-content="The <entity> element identifies the entity or entities that may have contributed during the development lifecycle of the SCORM Content Model Component. An entity can be an individual person, organization, etc. If more than one entity is listed, the entities shall be ordered as most relevant first." title="entity">entity</label>
+                                    <input type="text" class="form-control" placeholder="http://www.adlnet.gov/content/CO_01" id="lifecycle-contribute-entity" name="entity">
+                                    <label class="control-label hide" for="general-entry"><i class="fa fa-times-circle-o"></i> Required</label>
+                                    <label for="general-entry" data-container="body" data-toggle="popover" data-placement="right" data-content="The <date> element identifies the date of the contribution made by the entity." title="date">date</label>
+                                    <input type="text" class="form-control" placeholder="http://www.adlnet.gov/content/CO_01" id="lifecycle-contribute-date" name="date">
+                                    <label class="control-label hide" for="general-entry"><i class="fa fa-times-circle-o"></i> Required</label>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-body">
+                                <div class="box-header">
+                                    <h4 id="metadata-Meta-metadata-metadataSchema" class="box-title">metadataSchema</h4>
+                                    <p>The &lt;metadataSchema&gt; element represents the name and version of the authoritative specification used to create the metadata instance. If multiple values are provided, then the metadata instance shall conform to multiple metadata schemas.</p>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="form-group">
+                                    <label for="general-catalog" data-container="body" data-toggle="popover" data-placement="right" data-content="The <metadataSchema> element represents the name and version of the authoritative specification used to create the metadata instance. If multiple values are provided, then the metadata instance shall conform to multiple metadata schemas." title="metadataSchema">metadataSchema</label>
+                                    <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="meta-metadata-metadataSchema" name="metadataSchema">
+                                    <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-body">
+                                <div class="box-header">
+                                    <h4 id="metadata-Meta-metadata-language" class="box-title">language</h4>
+                                    <p>The &lt;language&gt; element represents the language of the metadata instance (i.e., the language of all values found in LangStrings). This value represents the default language for all LangStrings. If a value for this data element is not present in a metadata instance, then there is no default language for LangString values. If this value is provided, it is not necessary to indicate a language value for LangString elements.</p>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="form-group">
+                                    <label for="general-catalog" data-container="body" data-toggle="popover" data-placement="right" data-content="The <language> element represents the language of the metadata instance (i.e., the language of all values found in LangStrings). This value represents the default language for all LangStrings. If a value for this data element is not present in a metadata instance, then there is no default language for LangString values. If this value is provided, it is notnecessary to indicate a language value for LangString elements." title="language">language</label>
+                                    <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="meta-metadata-language" name="language">
+                                    <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-footer">
+                                <button class="btn btn-primary" onclick="mtSearch('metametadata')">Search</button>
+                            </div>
+                            <!--</form>-->
+                        </div>
+                        <div id="technical" class="box box-info">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Technical</h3>
+                                <p>The Technical category describes all of the technical characteristics and requirements of the SCORM Content Model Component.</p>
+                            </div>
+                            <!-- /.box-header -->
+                            <!-- form start -->
+                            <!--<form role="form">-->
+                            <div class="box-body">
+                                <div class="box-header">
+                                    <h4 id="metadata-Technical-format" class="box-title">format</h4>
+                                    <p>The &lt;format&gt; element represents the technical datatype(s) of all of the components used in the makeup of the SCORM Content Model Component. This element is used to identify any potential software needs to access and use the component.</p>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="form-group">
+                                    <label for="general-catalog" data-container="body" data-toggle="popover" data-placement="right" data-content="The <format> element represents the technical datatype(s) of all of the components used in the makeup of the SCORM Content Model Component. This element is used to identify any potential software needs to access and use the component." title="format">format</label>
+                                    <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="technical-format" name="format">
+                                    <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-body">
+                                <div class="box-header">
+                                    <h4 id="metadata-Technical-size" class="box-title">size</h4>
+                                    <p>The &lt;size&gt; element represents the size of the digital SCORM Content Model Component in bytes. The size is represented as a decimal value (radix 10). Only the digits “0” through “9” should be used. This data element shall refer to the actual size of the SCORM Component. If the component is compressed, then this data element shall refer to the uncompressed size.</p>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="form-group">
+                                    <label for="general-catalog" data-container="body" data-toggle="popover" data-placement="right" data-content="The <size> element represents the size of the digital SCORM Content Model Component in bytes. The size is represented as a decimal value (radix 10). Only the digits “0” through “9” should be used. This data element shall refer to the actual size of the SCORM Component. If the component is compressed, then this data element shall refer to the uncompressed size." title="size">size</label>
+                                    <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="technical-size" name="size">
+                                    <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-body">
+                                <div class="box-header">
+                                    <h4 id="metadata-Technical-location" class="box-title">location</h4>
+                                    <p>The &lt;location&gt; element is a string that specifies the location of the SCORM Content Model Component described by the metadata. This element could be used to describe one or more alternate locations where the SCORM Content Model Component can also be found, in addition to the content package itself (e.g., a known fixed location).</p>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="form-group">
+                                    <label for="general-catalog" data-container="body" data-toggle="popover" data-placement="right" data-content="The <location> element is a string that specifies the location of the SCORM Content Model Component described by the metadata. This element could be used to describe one or more alternate locations where the SCORM Content Model Component can also be found, in addition to the content package itself (e.g., a known fixed location)." title="location">location</label>
+                                    <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="technical-location" name="location">
+                                    <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-body">
+                                <div class="box-header">
+                                    <h4 id="metadata-Technical-location" class="box-title">requirement</h4>
+                                    <p>The &lt;requirement&gt; element expresses the technical capabilities necessary for using the SCORM Content Model Component. The &lt;requirement&gt; element is repeatable. If multiple requirements are needed, then all of the requirements are required (logical connector is an AND).</p>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="form-group">
+                                    <label for="general-catalog" data-container="body" data-toggle="popover" data-placement="right" data-content="The <requirement> element expresses the technical capabilities necessary for using the SCORM Content Model Component. The <requirement> element is repeatable. If multiple requirements are needed, then all of the requirements are required (logical connector is an AND)." title="requirement">requirement</label>
+                                    <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="technical-requirement" name="requirement">
+                                    <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-body">
+                                <div class="box-header">
+                                    <h4 id="metadata-Technical-orComposite" class="box-title">orComposite</h4>
+                                    <p>The &lt;orComposite&gt; element represents a single requirement. Multiple &lt;orComposite&gt; elements are connected with a logical connecter of “or”.</p>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="form-group">
+                                    <label for="general-catalog" data-container="body" data-toggle="popover" data-placement="right" data-content="The <orComposite> element represents a single requirement. Multiple <orComposite> elements are connected with a logical connecter of “or”." title="orComposite">orComposite</label>
+                                    <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="technical-orComposite" name="orComposite">
+                                    <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-body">
+                                <div class="box-header">
+                                    <h4 id="metadata-Technical-orComposite" class="box-title">orComposite</h4>
+                                    <p>The &lt;orComposite&gt; element represents a single requirement. Multiple &lt;orComposite&gt; elements are connected with a logical connecter of “or”.</p>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="form-group">
+                                    <label for="general-catalog" data-container="body" data-toggle="popover" data-placement="right" data-content="The <type> element represents the technology required to use the SCORM Content Model Component (e.g., hardware, software, network, etc.).
+                                            If the metadata instance contains a <type> element then a corresponding <name> element shall exist to describe more details about the type." title="type">type</label>
+                                    <select class="form-control" id="technical-orComposite-type">
+                                        <option value="operating system">Operating System</option>
+                                        <option value="browser">Browser</option>
+                                    </select>
+                                    <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                    <label for="general-catalog" data-container="body" data-toggle="popover" data-placement="right" data-content="The <name> element represents the required technology to use the SCORM Content Model Component. The value used for the Name element depends on the value identified by the Value element. If the metadata instance contains a <name> element then a corresponding <type> element shall exist to describe more details about the required technology." title="name">name</label>
+                                    <select class="form-control" id="technical-orComposite-name">
+                                        <option value="pc-dos">PC-DOS</option>
+                                        <option value="ms-windows">Microsoft Windows</option>
+                                        <option value="macos">MacOS</option>
+                                        <option value="unix">UNIX</option>
+                                        <option value="multi-os">Multi OS</option>
+                                        <option value="none">none</option>
+                                        <option value="any">any</option>
+                                        <option value="netscape communicator">Netscape Communicator</option>
+                                        <option value="ms-internet explorer">Microsoft Internet Explorer</option>
+                                        <option value="mozilla firefox">Mozilla Firefox</option>
+                                        <option value="google chrome">Google Chrome</option>
+                                        <option value="apple safari">Apple Safari</option>
+                                        <option value="opera">Opera</option>
+                                        <option value="amaya">Amaya</option>
+                                    </select>
+                                    <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                    <label for="general-catalog" data-container="body" data-toggle="popover" data-placement="right" data-content="The <minimumVersion> element represents the lowest possible version of the required technology to use the SCORM Content Model Component" title="minimumVersion">minimumVersion</label>
+                                    <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="technical-orComposite-minimumVersion" name="minimumVersion">
+                                    <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                    <label for="general-catalog" data-container="body" data-toggle="popover" data-placement="right" data-content="The <maximumVersion> element represents the lowest possible version of the required technology to use the SCORM Content Model Component" title="maximumVersion">maximumVersion</label>
+                                    <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="technical-orComposite-maximumVersion" name="maximunVersion">
+                                    <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-body">
+                                <div class="box-header">
+                                    <h4 id="metadata-Technical-installationRemarks" class="box-title">installationRemarks</h4>
+                                    <p>The &lt;installationRemarks&gt; element is used to represent any specific instructions on how to install the SCORM Content Model Component. This element could be used to describe to the user (e.g., LMS, Content Developer, Authoring Tool) of the component any particular instructions for use. It may be used to describe, in more detail, the technical requirements for the SCORM component.</p>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="form-group">
+                                    <label for="general-catalog" data-container="body" data-toggle="popover" data-placement="right" data-content="The <installationRemarks> element is used to represent any specific instructions on how to install the SCORM Content Model Component. This element could be used to describe to the user (e.g., LMS, Content Developer, Authoring Tool) of the component any particular instructions for use. It may be used to describe, in more detail, the technical requirements for the SCORM component." title="installationRemarks">installationRemarks</label>
+                                    <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="technical-installationRemarks" name="installationRemarks">
+                                    <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-body">
+                                <div class="box-header">
+                                    <h4 id="metadata-Technical-otherPlatformRequirements" class="box-title">otherPlatformRequirements</h4>
+                                    <p>The &lt;otherPlatformRequirements&gt; element is used to represent any specific instructions on how to install the SCORM Content Model Component. This element could be used to describe to the user (e.g., LMS, Content Developer, Authoring Tool) of the component any particular instructions for use. It may be used to describe, in more detail, the technical requirements for the SCORM component.</p>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="form-group">
+                                    <label for="general-catalog" data-container="body" data-toggle="popover" data-placement="right" data-content="The <otherPlatformRequirements> element is used to represent any specific instructions on how to install the SCORM Content Model Component. This element could be used to describe to the user (e.g., LMS, Content Developer, Authoring Tool) of the component any particular instructions for use. It may be used to describe, in more detail, the technical requirements for the SCORM component." title="otherPlatformRequirements">otherPlatformRequirements</label>
+                                    <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="technical-otherPlatformRequirements" name="otherPlatformRequirements">
+                                    <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-body">
+                                <div class="box-header">
+                                    <h4 id="metadata-Technical-duration" class="box-title">duration</h4>
+                                    <p>The &lt;duration&gt; element represents the time a continuous SCORM Content Model Component takes when played at intended speed. This element is useful for sounds, movies, simulations and the like.</p>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="form-group">
+                                    <label for="general-catalog" data-container="body" data-toggle="popover" data-placement="right" data-content="The <duration> element represents the time a continuous SCORM Content Model Component takes when played at intended speed. This element is useful for sounds, movies, simulations and the like." title="duration">duration</label>
+                                    <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="technical-duration" name="duration">
+                                    <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-footer">
+                                <button class="btn btn-primary" onclick="mtSearch('technical')">Search</button>
+                            </div>
+                            <!--</form>-->
+                        </div>
+                        <div id="educational" class="box box-info">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Educational</h3>
+                                <p>The Educational category describes the key educational or pedagogic characteristics of the SCORM Content Model Component. This category allows for the description of the educational characteristics and is typically used by teachers, managers, authors and learners.</p>
+                            </div>
+                            <!-- /.box-header -->
+                            <!-- form start -->
+                            <!--<form role="form">-->
+                            <div class="box-body">
+                                <div class="box-header">
+                                    <h4 id="metadata-Educational-interactivityType" class="box-title">interactivityType</h4>
+                                    <p>The &lt;interactivityType&gt; element represents the dominant mode of learning supported by the SCORM Content Model Component.</p>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="form-group">
+                                    <label for="general-catalog" data-container="body" data-toggle="popover" data-placement="right" data-content="The <interactivityType> element represents the dominant mode of learning supported by the SCORM Content Model Component." title="interactivityType">interactivityType</label>
+                                    <select class="form-control" id="educational-interactivityType">
+                                        <option value="active">active: Active learning (e.g., learning by doing) is supported by content that directly induces productive action by the learner</option>
+                                        <option value="expositive">expositive: Expositive learning (e.g., passive learning) occurs when the learner’s job mainly consists of absorbing the content exposed to them</option>
+                                        <option value="mixed">mixed: A blend of active and expositive interactivity types</option>
+                                    </select>
+                                    <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-body">
+                                <div class="box-header">
+                                    <h4 id="metadata-Educational-learningResourceType" class="box-title">learningResourceType</h4>
+                                    <p>The &lt;learningResourceType&gt; element represents the specific kind of the SCORM Content Model Component. This element is repeatable in order to fully describe the types of resources used in the component.</p>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="form-group">
+                                    <label for="general-catalog" data-container="body" data-toggle="popover" data-placement="right" data-content="The <learningResourceType> element represents the specific kind of the SCORM Content Model Component. This element is repeatable in order to fully describe the types of resources used in the component." title="learningResourceType">learningResourceType</label>
+                                    <select class="form-control" id="educational-learningResourceType">
+                                        <option value="exercise">exercise</option>
+                                        <option value="simulation">simulation</option>
+                                        <option value="questionnaire">questionnaire</option>
+                                        <option value="diagram">diagram</option>
+                                        <option value="figure">figure</option>
+                                        <option value="graph">graph</option>
+                                        <option value="index">index</option>
+                                        <option value="slide">slide</option>
+                                        <option value="table">table</option>
+                                        <option value="narrative text">narrative text</option>
+                                        <option value="exam">exam</option>
+                                        <option value="experiment">experiment</option>
+                                        <option value="problem statement">problem statement</option>
+                                        <option value="self assessment">self assessment</option>
+                                        <option value="lecture">lecture</option>
+                                    </select>
+                                    <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-body">
+                                <div class="box-header">
+                                    <h4 id="metadata-Educational-interactivityLevel" class="box-title">interactivityLevel</h4>
+                                    <p>The &lt;interactivityLevel&gt; represents the degree of interactivity characterizing the SCORM Content Model Component. Interactivity in this context refers to the degree to which the learner can influence the aspect or behavior of the component.</p>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="form-group">
+                                    <label for="general-catalog" data-container="body" data-toggle="popover" data-placement="right" data-content="The <interactivityLevel> represents the degree of interactivity characterizing the SCORM Content Model Component. Interactivity in this context refers to the degree to which the learner can influence the aspect or behavior of the component." title="interactivityLevel">interactivityLevel</label>
+                                    <select class="form-control" id="educational-interactivityLevel">
+                                        <option value="very low">very low</option>
+                                        <option value="low">low</option>
+                                        <option value="medium">medium</option>
+                                        <option value="high">high</option>
+                                        <option value="very high">very high</option>
+                                    </select>
+                                    <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-body">
+                                <div class="box-header">
+                                    <h4 id="metadata-Educational-semanticDensity" class="box-title">semanticDensity</h4>
+                                    <p>The &lt;semanticDensity&gt; represents the degree of conciseness of the SCORM Content Model Component. The semantic density of a SCORM component may be estimated in terms of its size, span or, in the case of self-timed resources such as audio or video, duration.</p>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="form-group">
+                                    <label for="general-catalog" data-container="body" data-toggle="popover" data-placement="right" data-content="The <semanticDensity> represents the degree of conciseness of the SCORM Content Model Component. The semantic density of a SCORM component may be estimated in terms of its size, span or, in the case of self-timed resources such as audio or video, duration." title="semanticDensity">semanticDensity</label>
+                                    <select class="form-control" id="educational-semanticDensity">
+                                        <option value="very low">very low</option>
+                                        <option value="low">low</option>
+                                        <option value="medium">medium</option>
+                                        <option value="high">high</option>
+                                        <option value="very high">very high</option>
+                                    </select>
+                                    <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-body">
+                                <div class="box-header">
+                                    <h4 id="metadata-Educational-intendedEndUserRole" class="box-title">intendedEndUserRole</h4>
+                                    <p>The &lt;intendedEndUserRole&gt; element represents the principal user(s) for which the SCORM Content Model Component was designed. If multiple elements are used, the most dominant role should be first.</p>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="form-group">
+                                    <label for="general-catalog" data-container="body" data-toggle="popover" data-placement="right" data-content="The <intendedEndUserRole> element represents the principal user(s) for which the SCORM Content Model Component was designed. If multiple elements are used, the most dominant role should be first." title="intendedEndUserRole">intendedEndUserRole</label>
+                                    <select class="form-control" id="educational-intendedEndUserRole">
+                                        <option value="teacher">teacher</option>
+                                        <option value="author">author</option>
+                                        <option value="learner">learner</option>
+                                        <option value="manager">manager</option>
+                                    </select>
+                                    <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-body">
+                                <div class="box-header">
+                                    <h4 id="metadata-Educational-context" class="box-title">context</h4>
+                                    <p>The &lt;context&gt; element represents the principal environment within which the learning and use of the SCORM Content Model Component is intended to take plac.</p>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="form-group">
+                                    <label for="general-catalog" data-container="body" data-toggle="popover" data-placement="right" data-content="The <context> element represents the principal environment within which the learning and use of the SCORM Content Model Component is intended to take plac." title="context">context</label>
+                                    <select class="form-control" id="educational-context">
+                                        <option value="school">school</option>
+                                        <option value="higher education">higher education</option>
+                                        <option value="training">training</option>
+                                        <option value="other">other</option>
+                                    </select>
+                                    <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-body">
+                                <div class="box-header">
+                                    <h4 id="metadata-Educational-typicalAgeRange" class="box-title">typicalAgeRange</h4>
+                                    <p>The &lt;typicalAgeRange&gt; element represents the age of the typical end user. This element shall refer to the developmental age, if that would be different from the chronological age. The IEEE Standard recommends that, when applicable, the value should be formatted as minimum age – maximum age or minimum age – (e.g., 18 – 25, or 18-). The values of this element do not necessarily have to be represented numerically (e.g., adults only, suitable for children over 7).</p>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="form-group">
+                                    <label for="general-catalog" data-container="body" data-toggle="popover" data-placement="right" data-content="The <typicalAgeRange> element represents the age of the typical end user. This element shall refer to the developmental age, if that would be different from the chronological age. The IEEE Standard recommends that, when applicable, the value should be formatted as minimum age – maximum age or minimum age – (e.g., 18 – 25, or 18-). The values of this element do not necessarily have to be represented numerically (e.g., adults only, suitable for children over 7)." title="typicalAgeRange">typicalAgeRange</label>
+                                    <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="educational-typicalAgeRange" name="typicalAgeRange">
+                                    <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-body">
+                                <div class="box-header">
+                                    <h4 id="metadata-Educational-difficulty" class="box-title">difficulty</h4>
+                                    <p>The &lt;difficulty&gt; element represents how hard it is to work with or through the SCORM Content Model Component for the typical intended target audience. The typical target audience can be characterized by the &lt;context&gt; and &lt;typicalAgeRange&gt; elements.</p>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="form-group">
+                                    <label for="general-catalog" data-container="body" data-toggle="popover" data-placement="right" data-content="The <difficulty> element represents how hard it is to work with or through the SCORM Content Model Component for the typical intended target audience. The typical target audience can be characterized by the <context> and <typicalAgeRange> elements." title="difficulty">difficulty</label>
+                                    <select class="form-control" id="educational-difficulty">
+                                        <option value="very easy">very easy</option>
+                                        <option value="easy">easy</option>
+                                        <option value="medium">medium</option>
+                                        <option value="difficult">difficult</option>
+                                        <option value="very difficult">very difficult</option>
+                                    </select>
+                                    <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-body">
+                                <div class="box-header">
+                                    <h4 id="metadata-Educational-typicalLearningTime" class="box-title">typicalLearningTime</h4>
+                                    <p>The &lt;typicalLearningTime&gt; element represents the approximate of typical time it takes to work with or through the SCORM Content Model Component for the typical intended target audience. The typical target audience can be characterized by the &lt;context&gt; and &lt;typicalAgeRange&gt; elements.</p>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="form-group">
+                                    <label for="general-catalog" data-container="body" data-toggle="popover" data-placement="right" data-content="The <typicalLearningTime> element represents the approximate of typical time it takes to work with or through the SCORM Content Model Component for the typical intended target audience. The typical target audience can be characterized by the <context> and <typicalAgeRange> elements." title="typicalLearningTime">typicalLearningTime</label>
+                                    <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="educational-typicalLearningTime" name="typicalLearningTime">
+                                    <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-body">
+                                <div class="box-header">
+                                    <h4 id="metadata-Educational-description" class="box-title">description</h4>
+                                    <p>The &lt;description&gt; element shall be used to comment on how the SCORM Content Model Component is to be used.</p>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="form-group">
+                                    <label for="general-catalog" data-container="body" data-toggle="popover" data-placement="right" data-content="The <description> element shall be used to comment on how the SCORM Content Model Component is to be used." title="description">description</label>
+                                    <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="educational-description" name="description">
+                                    <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-body">
+                                <div class="box-header">
+                                    <h4 id="metadata-Educational-language" class="box-title">language</h4>
+                                    <p>The &lt;language&gt; element represents the human language used by the typical intended user of the SCORM Content Model Component. The typical target audience can be characterized by the &lt;context&gt; and &lt;typicalAgeRange&gt; elements.</p>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="form-group">
+                                    <label for="general-catalog" data-container="body" data-toggle="popover" data-placement="right" data-content="The <language> element represents the human language used by the typical intended user of the SCORM Content Model Component. The typical target audience can be characterized by the <context> and <typicalAgeRange> elements." title="language">language</label>
+                                    <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="educational-language" name="language">
+                                    <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-footer">
+                                <button class="btn btn-primary" onclick="mtSearch('educational')">Search</button>
+                            </div>
+                            <!--</form>-->
+                        </div>
+                        <div id="rights" class="box box-info">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Rights</h3>
+                                <p>The Rights category describes the intellectual property rights and conditions of use for the SCORM Content Model Component. This element shall be used to describe any and all digital rights of the SCORM Component (cost for use, copyright, etc.).</p>
+                            </div>
+                            <!-- /.box-header -->
+                            <!-- form start -->
+                            <!--<form role="form">-->
+                            <div class="box-body">
+                                <div class="box-header">
+                                    <h4 id="metadata-Rights-cost" class="box-title">cost</h4>
+                                    <p>The &lt;cost&gt; element represents whether the SCORM Content Model Component requires some sort of payment.</p>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="form-group">
+                                    <label for="general-catalog" data-container="body" data-toggle="popover" data-placement="right" data-content="The <cost> element represents whether the SCORM Content Model Component requires some sort of payment." title="cost">cost</label>
+                                    <select class="form-control" id="rights-cost">
+                                        <option value="yes">yes</option>
+                                        <option value="no">no</option>
+                                    </select>
+                                    <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-body">
+                                <div class="box-header">
+                                    <h4 id="metadata-Rights-copyrightAndOtherRestrictions" class="box-title">copyrightAndOtherRestrictions</h4>
+                                    <p>The &lt;copyrightAndOtherRestrictions&gt; element describes whether copyright or other restrictions apply to the use of the SCORM Content Model Component.</p>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="form-group">
+                                    <label for="general-catalog" data-container="body" data-toggle="popover" data-placement="right" data-content="The <copyrightAndOtherRestrictions> element describes whether copyright or other restrictions apply to the use of the SCORM Content Model Component." title="copyrightAndOtherRestrictions">copyrightAndOtherRestrictions</label>
+                                    <select class="form-control" id="rights-copyrightAndOtherRestrictions">
+                                        <option value="yes">yes</option>
+                                        <option value="no">no</option>
+                                    </select>
+                                    <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-body">
+                                <div class="box-header">
+                                    <h4 id="metadata-Rights-description" class="box-title">description</h4>
+                                    <p>The &lt;description&gt; element allows for comments on the conditions of use of the SCORM Content Model Component. This element can be used to describe any cost, copyright or other restrictions about the SCORM Content Model Component.</p>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="form-group">
+                                    <label for="general-catalog" data-container="body" data-toggle="popover" data-placement="right" data-content="The <description> element allows for comments on the conditions of use of the SCORM Content Model Component. This element can be used to describe any cost, copyright or other restrictions about the SCORM Content Model Component." title="description">description</label>
+                                    <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="rights-description" name="description">
+                                    <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-footer">
+                                <button class="btn btn-primary" onclick="mtSearch('rights')">Search</button>
+                            </div>
+                            <!--</form>-->
+                        </div>
+                        <div id="relation" class="box box-info">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Relation</h3>
+                                <p>The Relation category defines the relationship between the SCORM Content Model Component and other components, if any. The Relation element is allowed to be repeated. To define multiple relationships, one could create several instances of this category. If there is more than one target component, then each target shall have a new relationship instance.</p>
+                            </div>
+                            <!-- /.box-header -->
+                            <!-- form start -->
+                            <!--<form role="form">-->
+                            <div class="box-body">
+                                <div class="box-header">
+                                    <h4 id="metadata-Relation-kind" class="box-title">kind</h4>
+                                    <p>The &lt;kind&gt; element describes the nature of the relationship between the SCORM Content Model Component and the target component identified by the resource..</p>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="form-group">
+                                    <label for="general-catalog" data-container="body" data-toggle="popover" data-placement="right" data-content="The <kind> element describes the nature of the relationship between the SCORM Content Model Component and the target component identified by the resource." title="kind">kind</label>
+                                    <select class="form-control" id="relation-kind">
+                                        <option value="ispartof">ispartof</option>
+                                        <option value="haspart">haspart</option>
+                                        <option value="isversionof">isversionof</option>
+                                        <option value="hasversion">hasversion</option>
+                                        <option value="isformatof">isformatof</option>
+                                        <option value="hasformat">hasformat</option>
+                                        <option value="references">references</option>
+                                        <option value="isreferencedby">isreferencedby</option>
+                                        <option value="isbasedon">isbasedon</option>
+                                        <option value="isbasisfor">isbasisfor</option>
+                                        <option value="requires">requires</option>
+                                        <option value="isrequiredby">isrequiredby</option>
+                                    </select>
+                                    <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-body">
+                                <div class="box-header">
+                                    <h4 id="metadata-Relation-resource" class="box-title">resource</h4>
+                                    <p>The &lt;resource&gt; element describes the nature of the relationship between the SCORM Content Model Component and the target component identified by the resource..</p>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="form-group">
+                                    <label for="general-catalog" data-container="body" data-toggle="popover" data-placement="right" data-content="The <catalog> element represents the name or designator of the identification or cataloging scheme for the entry. There are a variety of cataloging systems available. SCORM does not require the use of any one particular cataloging system. Organizations are free to choose any cataloging scheme that meets their organizations practices or policies. Some types of cataloging systems are: 1. Universal Resource Identifier (URI) 2. Universal Resource Name (URN) 3. Digital Object Identifier (DOI) 4. International Standard Book Numbers (ISBN) 5. International Standard Serial Numbers (ISSN)." title="Catalog">Catalog</label>
+                                    <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="relation-resource-identifier-catalog" name="Catalog">
+                                    <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                    <label for="general-catalog" data-container="body" data-toggle="popover" data-placement="right" data-content="The <entry> element represents the value of the identifier within the identification or cataloging scheme (refer to the <catalog> element) that designates or identifies the target SCORM Content Model Component. Identifiers can take on various formats. The IEEE requires that the actual identifier value be represented as a CharacterString. Organizations are free to choose any mechanism to create unique identifiers that meets their organizations practices or policies. It is recommended that a common scheme be chosen." title="entry">entry</label>
+                                    <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="relation-resource-identifier-entry" name="entry">
+                                    <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                    <label for="general-catalog" data-container="body" data-toggle="popover" data-placement="right" data-content="The <description> element describes the target SCORM Content Model Component." title="description">description</label>
+                                    <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="relation-resource-description" name="description">
+                                    <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-footer">
+                                <button class="btn btn-primary" onclick="mtSearch('relation')">Search</button>
+                            </div>
+                            <!--</form>-->
+                        </div>
+                        <div id="annotation" class="box box-info">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Annotation</h3>
+                                <p>The Annotation category provides comments on the educational use of the SCORM Content Model Component and information on when and by whom the comments were created. This category enables educators to share their assessments of SCORM Content Model Components, suggestions for use, etc.</p>
+                            </div>
+                            <!-- /.box-header -->
+                            <!-- form start -->
+                            <!--<form role="form">-->
+                            <div class="box-body">
+                                <div class="box-header">
+                                    <h4 id="metadata-Annotation-entity" class="box-title">entity</h4>
+                                    <p>The &lt;entity&gt; element describes the nature of the relationship between the SCORM Content Model Component and the target component identified by the resource.</p>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="form-group">
+                                    <label for="general-catalog" data-container="body" data-toggle="popover" data-placement="right" data-content="The <entity> element identifies the entity or entities that that have created the annotation." title="entity">entity</label>
+                                    <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="annotation-entity" name="entity">
+                                    <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-body">
+                                <div class="box-header">
+                                    <h4 id="metadata-Annotation-date" class="box-title">date</h4>
+                                    <p>The &lt;date&gt; element identifies the date the annotation was created.</p>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="form-group">
+                                    <label for="general-catalog" data-container="body" data-toggle="popover" data-placement="right" data-content="The <date> element identifies the date the annotation was created." title="date">date</label>
+                                    <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="annotation-date" name="date">
+                                    <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-body">
+                                <div class="box-header">
+                                    <h4 id="metadata-Annotation-description" class="box-title">description</h4>
+                                    <p>The &lt;description&gt; element shall be used to represent the contents of the annotation.</p>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="form-group">
+                                    <label for="general-catalog" data-container="body" data-toggle="popover" data-placement="right" data-content="The <description> element shall be used to represent the contents of the annotation." title="description">description</label>
+                                    <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="annotation-description" name="description">
+                                    <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-footer">
+                                <button class="btn btn-primary" onclick="mtSearch('annotation')">Search</button>
+                            </div>
+                            <!--</form>-->
+                        </div>
+                        <div id="classification" class="box box-info">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Classification</h3>
+                                <p>The Classification category describes where the SCORM Content Model Component falls within a particular classification system. Multiple Classification categories may be used to define multiple classifications. The Classification category is typically used to link to a controlled vocabulary or classification system.</p>
+                            </div>
+                            <!-- /.box-header -->
+                            <!-- form start -->
+                            <!--<form role="form">-->
+                            <div class="box-body">
+                                <div class="box-header">
+                                    <h4 id="metadata-Classification-purpose" class="box-title">purpose</h4>
+                                    <p>The &lt;purpose&gt; element defines the purpose for classifying the SCORM Content Model Component.</p>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="form-group">
+                                    <label for="general-catalog" data-container="body" data-toggle="popover" data-placement="right" data-content="The <purpose> element defines the purpose for classifying the SCORM Content Model Component." title="purpose">purpose</label>
+                                    <select class="form-control" id="classification-purpose">
+                                        <option value="discipline">discipline</option>
+                                        <option value="idea">idea</option>
+                                        <option value="prerequisite">prerequisite</option>
+                                        <option value="educational objective">educational objective</option>
+                                        <option value="accessibility restrictions">accessibility restrictions</option>
+                                        <option value="educational level">educational level</option>
+                                        <option value="skill level">skill level</option>
+                                        <option value="security level">security level</option>
+                                        <option value="competency">competency</option>
+                                    </select>
+                                    <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-body">
+                                <div class="box-header">
+                                    <h4 id="metadata-Classification-taxonPath" class="box-title">taxonPath</h4>
+                                    <p>The &lt;taxonPath&gt; element describes a taxonomic path in a specific classification system. Each succeeding level is a refinement in the definition of the proceeding level.</p>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="form-group">
+                                    <label for="general-catalog" data-container="body" data-toggle="popover" data-placement="right" data-content="The <source> element describes or names the classification system. This data element may use any recognized official taxonomy or any user-defined taxonomy." title="source">source</label>
+                                    <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="classification-taxonPath-source" name="source">
+                                    <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                    <label for="general-catalog" data-container="body" data-toggle="popover" data-placement="right" data-content="The <id> element describes the identifier of the taxon. For example, the element can be a number or letter combination provided by the source of the taxonomy." title="id">id</label>
+                                    <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="classification-taxonPath-taxon-id" name="id">
+                                    <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                    <label for="general-catalog" data-container="body" data-toggle="popover" data-placement="right" data-content="The <entry> element shall contain a textual label of the taxon." title="entry">entry</label>
+                                    <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="classification-taxonPath-taxon-entry" name="entry">
+                                    <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-body">
+                                <div class="box-header">
+                                    <h4 id="metadata-Classification-description" class="box-title">description</h4>
+                                    <p>The &lt;description&gt; element contains a description of the SCORM Content Model Component relative to the stated Purpose (&lt;purpose&gt;) of the specific classification, such as discipline, idea, skill level, educational objective, etc.</p>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="form-group">
+                                    <label for="general-catalog" data-container="body" data-toggle="popover" data-placement="right" data-content="The <description> element contains a description of the SCORM Content Model Component relative to the stated Purpose (<purpose>) of the specific classification, such as discipline, idea, skill level, educational objective, etc." title="description">description</label>
+                                    <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="classification-description" name="description">
+                                    <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-body">
+                                <div class="box-header">
+                                    <h4 id="metadata-Classification-keyword" class="box-title">keyword</h4>
+                                    <p>The &lt;keyword&gt; element contains keywords and phrases descriptive of the SCORM Content Model Component relative to the stated Purpose (&lt;purpose&gt;) of the specific classification, such as discipline, idea, skill level, educational objective, etc.</p>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="form-group">
+                                    <label for="general-catalog" data-container="body" data-toggle="popover" data-placement="right" data-content="The <description> element contains keywords and phrases descriptive of the SCORM Content Model Component relative to the stated Purpose (<purpose>) of the specific classification, such as discipline, idea, skill level, educational objective, etc." title="keyword">keyword</label>
+                                    <input type="text" class="form-control" placeholder="Sharable Content Object Reference Model" id="classification-keyword" name="keyword">
+                                    <label class="control-label hide" for="general-catalog"><i class="fa fa-times-circle-o"></i> Required</label>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-footer">
+                                <button class="btn btn-primary" onclick="mtSearch('classification')">Search</button>
+                            </div>
+                            <!--</form>-->
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- ./Content Wrapper -->
+        <footer class="main-footer">
+            <div class="pull-right hidden-xs">
+                <b>Version</b> 0.1 Alpha
+            </div>
+            <strong>Copyright &copy; 2015-2016 <a href="http://edxpdrlab.ncu.cc">NCU Open edX PDR Lab</a>.</strong> All rights reserved.
+        </footer>
+    </div>
+    <!-- jQuery 2.1.4 -->
+    <script src="assets/js/jquery.min.js" type="text/javascript"></script>
+    <!-- jQuery UI 1.11.4 -->
+    <script src="assets/js/jquery-ui.min.js" type="text/javascript"></script>
+    <!-- Bootstrap 3.3.4 -->
+    <script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
+    <!-- SlimScroll -->
+    <script src="plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <!-- FastClick -->
+    <script src="plugins/fastclick/fastclick.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="assets/js/app.js" type="text/javascript"></script>
+    <script type="text/javascript">
+    $('#navigation').load('widgets/navigation.html');
+
+    function chooseFile(name) {
+        var chooser = $(name);
+        chooser.change(function(evt) {
+            console.log($(this).val());
+        });
+
+        chooser.trigger('click');
+    }
+
+    $('#openfile').on('click', chooseFile('fileDialog'));
+    //chooseFile('#fileDialog');
+
+    $('#skip').on('click', function() {
+        if (!(settings && !settings.dummy)) {
+            localStorage.setItem('settings', JSON.stringify({
+                'dummy': 'object',
+                'location': 'new york',
+                'flickr': 'bikes'
+            }));
+        }
+        location.href = 'dashboard.html';
+    });
+
+    $(function() {
+        $('[data-toggle="popover"]').popover();
+        hideDiv();
+    });
+
+    /*$('#accordion').accordion({
+      collapsible: true
+    });*/
+
+    function hideDiv() {
+        $("#general").hide();
+        $("#lifecycle").hide();
+        $("#metametadata").hide();
+        $("#technical").hide();
+        $("#educational").hide();
+        $("#rights").hide();
+        $("#relation").hide();
+        $("#annotation").hide();
+        $("#classification").hide();
+    }
+
+    function showDiv(divname) {
+        hideDiv();
+        $("#MTdiv").remove();
+        $("#" + divname).show();
+    }
+
+    function mtSearch(divname) {
+        var str = divname;
+        var inputs = $("#" + divname + " input");
+
+        for (var i = 0; i < inputs.length; i++) {
+            if (inputs[i].value != "") {
+                str += "," + inputs[i].getAttribute("name");
+                str += "," + inputs[i].value;
+                break;
+            }
+            //alert(inputs[i].value);
+        }
+
+        MT_Search(str);
+    }
+    </script>
+</body>
+
+</html>
