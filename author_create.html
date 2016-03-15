@@ -20,7 +20,6 @@
 # Maintained By: joeyc0916@gmail.com
 #
 -->
-
 <!DOCTYPE html>
 <html>
 
@@ -69,33 +68,22 @@
             var querystring = require('querystring');
             var request = require('request');
 
-            var form = {
-                name: $("#groupName").val(),
-                creator: content.userID,
-                create_date: $("#groupDate").val(),
-                description: $("#groupDpt").val()
-                    //author: 'http://commonrepo.herokuapp.com/api/v1/users/' + content.userID + '/',
-                    //original_type: '1'
-            };
-
-            var formData = querystring.stringify(form);
-
             request({
                 url: 'http://www.commonrepo.com/api/v2/groups/',
                 method: 'POST',
                 headers: {
-                    'Authorization': 'Token ' + content.AUTHKEY,
-                    'Content-Type': 'application/x-www-form-urlencoded'
+                    'Authorization': 'Token ' + content.AUTHKEY
                 },
-                body: formData
+                json: true,
+                body: {
+                    "name": $("#groupName").val(),
+                    "creator": content.userID,
+                    "create_date": $("#groupDate").val(),
+                    "description": $("#groupDpt").val()
+                }
             }, function(error, response, body) {
-                console.log("rep:" + response.statusCode);
-                if (!error && response.statusCode == 200) {
-                    /*var info = JSON.parse(body);
-                    for (var i = 0; i < info.length; i++) {
-                        alert(info[i].url);
-                    }*/
-                    alert("Create Successful...");
+                if (!error && response.statusCode == 201) {
+                    console.log("Create group successful.");
                 }
             });
         });

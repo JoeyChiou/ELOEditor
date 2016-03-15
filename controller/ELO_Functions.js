@@ -124,22 +124,39 @@ function localContextMenu(eloid, elotitle, eloname, elopath) {
             zip.addLocalFolder(elopath);
             zip.writeZip(elopath + elotitle + ".zip");
 
+            console.log("upload: " + elopath + elotitle + ".zip");
             var fs = require('fs');
             fs.readFile('collections/users.json', function(err, filedata) {
                 var content = JSON.parse(filedata);
                 var querystring = require('querystring');
                 var request = require('request');
 
-                var form = {
+                /*var form = {
                     name: elotitle,
                     author: content.userID,
                     original_type: '1',
                     file: fs.createReadStream(elopath + elotitle + ".zip")
-                };
-
-                //var formData = querystring.stringify(form);
+                };*/
 
                 request({
+                    url: 'http://commonrepo.herokuapp.com/api/v2/elos/',
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Token ' + content.AUTHKEY
+                    },
+                    json: true,
+                    body: {
+                        "name": elotitle,
+                        "author": content.userID,
+                        "original_type": '1',
+                        "file": fs.createReadStream(elopath + elotitle + ".zip")
+                    }
+                }, function(error, response, body) {
+                    console.log("response:" + response.statusCode);
+                    if (!error && response.statusCode == 200)
+                        console.log("Publish request finish.");
+                });
+                /*request({
                     url: 'http://commonrepo.herokuapp.com/api/v2/elos/',
                     method: 'POST',
                     headers: {
@@ -148,8 +165,20 @@ function localContextMenu(eloid, elotitle, eloname, elopath) {
                     },
                     formData: form
                 }, function(error, response, body) {
-                    if (!error && response.statusCode == 200) {}
-                });
+                    console.log("response:" + response.statusCode);
+                    if (!error && response.statusCode == 200) {
+
+                    } else {
+                        var info = JSON.parse(body);
+                        var arr = $.map(info, function(el) {
+                            return el
+                        });
+                        console.log("length" + arr.length);
+                        for (var i = 0; i < arr.length; i++) {
+                            console.log("count " + i + " :" + arr[i]);
+                        }
+                    }
+                });*/
             });
             location.href = "dashboard.html";
         }

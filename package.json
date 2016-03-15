@@ -1,6 +1,6 @@
 {
   "name": "ELOEditor",
-  "version": "1.1.0",
+  "version": "1.1.2",
   "description": "ELO Editor for Common Repository",
   "main": "index.html",
   "private": true,
