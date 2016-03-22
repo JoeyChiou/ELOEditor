@@ -207,26 +207,49 @@
         $("#localGCB ul").append(li);
     });
 
-
+    //Flow Control = CPS + Maintain function execution state
     $("#convert").on('click', function() {
-        Units_mkdirectory();
+        function serial(fn, r, cb) {
+            var count = 0;
+            next(r);
+            function next(r){
+                if(count < fn.length){
+                    fn[count](r, next);
+                    count++;
+                }
+                else{
+                    cb(r);
+                }
+            }
+        };
 
-        setTimeout(function(){
-            Units_create_static_file();
-        }, 400);
-
-        setTimeout(function(){
-            mycopyfile_exe();
-        }, 950);
-
-        setTimeout(function(){
-            modify_html();
-        }, 1100);
-
+        //Using next function for callback
+        serial([
+            function (r, next){
+                setTimeout(function(){ 
+                    Units_mkdirectory();
+                    next(2*r);
+                }, 50);
+            },
+            function (r, next){
+                setTimeout(function(){ 
+                    Units_create_static_file();
+                    next(2*r);
+                }, 100);
+            },
+            function (r, next){
+                setTimeout(function(){ 
+                    mycopyfile_exe();
+                    next(2*r);
+                }, 200);
+            },
+            function (r, next){
+                setTimeout(function(){ 
+                    modify_html();
+                    next(2*r);
+                }, 300);
+            }], 1, function(r){console.log(r)});
     });
-
-
-  //chooseFile('#fileDialog');
 
     $('#skip').on('click', function() {
         if (!(settings && !settings.dummy)) {

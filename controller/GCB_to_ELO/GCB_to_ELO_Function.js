@@ -146,7 +146,7 @@ function open_aggregation_file(){
 	}
 	else{
 		if(x.value = ""){
-			message += "Select a GCB file";
+			message += "Please select a GCB file";
 		}
 		else{
 			message += "The files property is not supported by your browerser!";
