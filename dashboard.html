@@ -301,51 +301,66 @@
     $("#fileImportDialog").change(function(evt) {
         var elopath = $(this).val();
         var elotitle = elopath.split("/");
-
         var fs = require('fs');
-        fs.readFile('collections/users.json', function(err, filedata) {
-            var content = JSON.parse(filedata);
-            var USERNAME = content.userName;
-           
-            $.getScript("controller/dbfunc.js", function(data, textStatus, jqxhr) {
-                importELO(encodeURI(elopath), encodeURI(elotitle[elotitle.length - 1]), USERNAME);
-            });
-        });
+        var count = 0;
 
-        // Get the info from metadata file
-        var jsdom = require("jsdom");
 
-        jsdom.env({
-            file: elopath + "/elo_metadata.xml",
-            scripts: ["http://code.jquery.com/jquery.js"],
-            done: function(errors, window) {
-                var node;
-                var root = window.$("ELOMetadata")[0];
-                var subroot;
-                for (var count = 0; count < root.childNodes.length; count++) {
-                    subroot = root.childNodes[count]; //general
-                    if (subroot.nodeType == 1) {
-                        for (var i = 0; i < subroot.childNodes.length; i++) {
-                            node = subroot.childNodes[i];
-                            if (node.nodeType == 1) {
-                                if (node.childNodes.length > 1) {
-                                    for (var j = 0; j < node.childNodes.length; j++) {
-                                        if (node.childNodes[j].nodeType == 1)
-                                            $.getScript("controller/dbfunc.js", function(data, textStatus, jqxhr) {
-                                                importMetadata(elopath, subroot.nodeName, node.nodeName, node.childNodes[j].innerHTML);
-                                            });
+        fs.readdir(elopath, function(err, files){
+            if(err) throw err;
+
+            for(var i = 0 in files){                                                    // i for index
+                if(files[i] == "elo_aggregation.xml"){
+                    count = 1;
+
+                    fs.readFile('collections/users.json', function(err, filedata) {
+                        var content = JSON.parse(filedata);
+                        var USERNAME = content.userName;
+                       
+                        $.getScript("controller/dbfunc.js", function(data, textStatus, jqxhr) {
+                            importELO(encodeURI(elopath), encodeURI(elotitle[elotitle.length - 1]), USERNAME);
+                        });
+                    });
+
+                    // Get the info from metadata file
+                    var jsdom = require("jsdom");
+
+                    jsdom.env({
+                        file: elopath + "/elo_metadata.xml",
+                        scripts: ["http://code.jquery.com/jquery.js"],
+                        done: function(errors, window) {
+                            var node;
+                            var root = window.$("ELOMetadata")[0];
+                            var subroot;
+                            for (var count = 0; count < root.childNodes.length; count++) {
+                                subroot = root.childNodes[count]; //general
+                                if (subroot.nodeType == 1) {
+                                    for (var i = 0; i < subroot.childNodes.length; i++) {
+                                        node = subroot.childNodes[i];
+                                        if (node.nodeType == 1) {
+                                            if (node.childNodes.length > 1) {
+                                                for (var j = 0; j < node.childNodes.length; j++) {
+                                                    if (node.childNodes[j].nodeType == 1)
+                                                        $.getScript("controller/dbfunc.js", function(data, textStatus, jqxhr) {
+                                                            importMetadata(elopath, subroot.nodeName, node.nodeName, node.childNodes[j].innerHTML);
+                                                        });
+                                                }
+                                            } else {
+                                                $.getScript("controller/dbfunc.js", function(data, textStatus, jqxhr) {
+                                                    importMetadata(elopath, subroot.nodeName, node.nodeName, node.innerHTML);
+                                                });
+                                            }
+                                        }
                                     }
-                                } else {
-                                    $.getScript("controller/dbfunc.js", function(data, textStatus, jqxhr) {
-                                        importMetadata(elopath, subroot.nodeName, node.nodeName, node.innerHTML);
-                                    });
                                 }
                             }
                         }
-                    }
+                    });
                 }
             }
-        });
+            if(count != 1){
+                alert("It is not an ELO !");
+            }
+        })
 
         location.href = "dashboard.html";
     });

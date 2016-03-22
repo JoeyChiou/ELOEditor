@@ -1,6 +1,6 @@
-/* author: Jeremy																				 */
-/* 1.function gcb_manifest_content will write any other files under	package of course builder.   */
-/* 2.function gcb_manifest will call gcb_manifest_content() to write the manifest.json.			 */
+// Author: jeremy55662004@gmail.com
+// 1.function gcb_manifest_content will write any other files under	package of course builder.
+// 2.function gcb_manifest will call gcb_manifest_content() to write the manifest.json.
 
 
 

@@ -1,9 +1,9 @@
-/* author: Jeremy																				       */
-/* 1.function Units_open_aggregation_file() will create elo_aggreagation file.						   */
-/* 2.function Units_mkdirectory() uses createfile() to create elo_aggregation.xml, elo_manifest.xml    */
-/*   and elo_metadata.xml under directory. 															   */
-/* 3.function units_open_manifest_file will create elo_manifest.xml. 								   */
-/* 4.function pad will generate a four-digit number ex: 0001.										   */
+// Author: jeremy55662004@gmail.com
+// 1.function Units_open_aggregation_file() will create elo_aggreagation file.
+// 2.function Units_mkdirectory() uses createfile() to create elo_aggregation.xml, elo_manifest.xml
+//   and elo_metadata.xml under directory.
+// 3.function units_open_manifest_file will create elo_manifest.xml. 								   
+// 4.function pad will generate a four-digit number ex: 0001.
 
 
 
