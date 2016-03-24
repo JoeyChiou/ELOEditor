@@ -23,6 +23,7 @@ function gcb_manifest_content(filepath){
 
 
 /* function gcb_manifest will call gcb_manifest_content() to write the manifest.json. */
+/* Flow Control = CPS + Maintain function execution state */
 function gcb_manifest(){
 	var fs = require("fs");
 	var y = document.getElementById("fileImportDialog");
@@ -31,86 +32,122 @@ function gcb_manifest(){
 	var gcb_path = file.path.replace(file.name, "") + "GCB" + new_file_name.replace(/ /g, "_");
 	var count = 0;
 
-	fs.open(gcb_path + "/manifest.json", "w", function(err,fd){
-		if(err) throw err;
+	function serial(fn, r, cb) {
+        var count = 0;
+        next(r);
+        function next(r){
+            if(count < fn.length){
+                fn[count](r, next);
+                count++;
+            }
+            else{
+                cb(r);
+            }
+        }
+    };
 
-		else{
-			var buf = new Buffer("{\n  \"entities\": [");
+	serial([
+        function (r, next){
+            setTimeout(function(){
 
-			fs.write(fd, buf, 0, buf.length, 0, function(err, written, buffer){
-				if(err) throw err;
-    			console.log(err, written, buffer);
-			})
+            	fs.appendFile(gcb_path + "/manifest.json", "{\n  \"entities\": [", function(err){
+													
+					if(err) throw err;
+			  		console.log(' First line of manifest.json was add!');
+				})
+                
+                next(2*r);
+            }, 50);
+        },
+        function (r, next){
+            setTimeout(function(){ 
+                fs.readdir(gcb_path + "/files/assets/css/", function(err, files){
+					for(var i = 0 in files){
 
-			fs.readdir(gcb_path + "/files/assets/css/", function(err, files){
-				for(var i = 0 in files){
-
-					var n = files[i].lastIndexOf(".");
-   					if(files[i].substr(n+1, files[i].length) == "css"){
-						gcb_manifest_content("\"files/assets/css/" + files[i] + "\"");
+						var n = files[i].lastIndexOf(".");
+	   					if(files[i].substr(n+1, files[i].length) == "css"){
+							gcb_manifest_content("\"files/assets/css/" + files[i] + "\"");
+						}
 					}
-				}
-			})
-
-			fs.readdir(gcb_path + "/files/assets/html/", function(err, files){
-				for(var i = 0 in files){
-					gcb_manifest_content("\"files/assets/html/" + files[i] + "\"");
-				}
-			})
-
-			fs.readdir(gcb_path + "/files/assets/img/", function(err, files){
-				for(var i = 0 in files){
-					gcb_manifest_content("\"files/assets/img/" + files[i] + "\"");
-				}
-
-				fs.appendFile(gcb_path + "/manifest.json", 
-				"\n\t{\n\t  \"is_draft\": false,\n\t  \"path\": \"files/course.yaml\"\n\t},", function(err){
-										
-				if(err) throw err;
-  				console.log("record course.yaml was complete!");
 				})
 
-				console.log("image");
-			})
-
-			fs.readdir(gcb_path + "/files/data/", function(err, files){
-				for(var i = 0 in files){
-					gcb_manifest_content("\"files/data/" + files[i] + "\"");
-				}
-			})
-
-			fs.readdir(gcb_path + "/models/", function(err, files){
-				for(var i = 0 in files){
-					count += 1;
-					console.log(count);
-					if( files.length == count){
-						fs.appendFile(gcb_path + "/manifest.json",
-						"\n\t{\n\t  \"is_draft\": false,\n\t  \"path\": \"models/" + files[i] + "\"\n\t}", function(err){
-										
-						if(err) throw err;
-						})
+                next(2*r);
+            }, 100);
+        },
+        function (r, next){
+            setTimeout(function(){ 
+                fs.readdir(gcb_path + "/files/assets/html/", function(err, files){
+					for(var i = 0 in files){
+						gcb_manifest_content("\"files/assets/html/" + files[i] + "\"");
 					}
-					else{
-						gcb_manifest_content("\"models/" + files[i] + "\"");
-					}
-				}
-			})
+				})
 
-			setTimeout(function(){
-				fs.appendFile(gcb_path + "/manifest.json",
+                next(2*r);
+            }, 150);
+        },
+        function (r, next){
+            setTimeout(function(){ 
+                fs.readdir(gcb_path + "/files/assets/img/", function(err, files){
+					for(var i = 0 in files){
+						gcb_manifest_content("\"files/assets/img/" + files[i] + "\"");
+					}
+
+					fs.appendFile(gcb_path + "/manifest.json", 
+					"\n\t{\n\t  \"is_draft\": false,\n\t  \"path\": \"files/course.yaml\"\n\t},", function(err){
+											
+					if(err) throw err;
+	  				console.log("record course.yaml was complete!");
+					})
+
+					console.log("image");
+				})
+
+                next(2*r);
+            }, 200);
+        },
+        function (r, next){
+            setTimeout(function(){ 
+                fs.readdir(gcb_path + "/files/data/", function(err, files){
+					for(var i = 0 in files){
+						gcb_manifest_content("\"files/data/" + files[i] + "\"");
+					}
+				})
+
+                next(2*r);
+            }, 250);
+        },
+        function (r, next){
+            setTimeout(function(){ 
+                fs.readdir(gcb_path + "/models/", function(err, files){
+					for(var i = 0 in files){
+						count += 1;
+						console.log(count);
+						if( files.length == count){
+							fs.appendFile(gcb_path + "/manifest.json",
+							"\n\t{\n\t  \"is_draft\": false,\n\t  \"path\": \"models/" + files[i] + "\"\n\t}", function(err){
+											
+							if(err) throw err;
+							})
+						}
+						else{
+							gcb_manifest_content("\"models/" + files[i] + "\"");
+						}
+					}
+				})
+
+                next(2*r);
+            }, 300);
+        },
+        function (r, next){
+            setTimeout(function(){ 
+                fs.appendFile(gcb_path + "/manifest.json",
 				"\n  ],\n  \"raw\": \"course:/new_course::ns_new_course\",\n  \"version\": \"1.3\"\n}", function(err){
 				
 				if(err) throw err;
 				console.log("raw was added");
 				})
-			}, 20)
 
-			fs.close(fd, function(err){										//close course.yaml file
-				if(err) throw err;
-				console.log("manifest.json closed successfully !");
-			})
-
-		}
-	})
-
+                next(2*r);
+            }, 350);
+        }], 1, function(r){console.log(r)});
 };

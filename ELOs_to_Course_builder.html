@@ -207,26 +207,68 @@
         $("#localELO ul").append(li);
     });
 
-
+    //Flow Control = CPS + Maintain function execution state
     $("#convert").on('click', function() {
-        gcbmkdirectory(mygcbcopyfile2);
-        copy_html_file();
-        GCB_css();
-        course_yaml();
-        setTimeout(function(){
-            gcb_course_json();
-        }, 50);
-        setTimeout(function(){
-            gcb_manifest();
-        }, 150);
-        setTimeout(function () {
-            alert("Notice! After conversion was complete please add gmail under /files/course.yaml\n" + 
-                "For example: \nadmin_user_emails: '[example@gmail.com]'");
-        },200);
+        function serial(fn, r, cb) {
+            var count = 0;
+            next(r);
+            function next(r){
+                if(count < fn.length){
+                    fn[count](r, next);
+                    count++;
+                }
+                else{
+                    cb(r);
+                }
+            }
+        };
+
+        //Using next function for callback
+        serial([
+            function (r, next){
+                setTimeout(function(){ 
+                    gcbmkdirectory(mygcbcopyfile2);
+                    next(2*r);
+                }, 50);
+            },
+            function (r, next){
+                setTimeout(function(){ 
+                    copy_html_file();
+                    next(2*r);
+                }, 100);
+            },
+            function (r, next){
+                setTimeout(function(){ 
+                    GCB_css();
+                    next(2*r);
+                }, 150);
+            },
+            function (r, next){
+                setTimeout(function(){ 
+                    course_yaml();
+                    next(2*r);
+                }, 200);
+            },
+            function (r, next){
+                setTimeout(function(){ 
+                    gcb_course_json();
+                    next(2*r);
+                }, 250);
+            },
+            function (r, next){
+                setTimeout(function(){ 
+                    gcb_manifest();
+                    next(2*r);
+                }, 300);
+            },
+            function (r, next){
+                setTimeout(function(){ 
+                    alert("Notice! After conversion was complete please add gmail under /files/course.yaml\n" + 
+                    "For example: \nadmin_user_emails: '[example@gmail.com]'");
+                    next(2*r);
+                }, 350);
+            }], 1, function(r){console.log(r)});
     });
-
-
-  //chooseFile('#fileDialog');
 
     $('#skip').on('click', function() {
         if (!(settings && !settings.dummy)) {
@@ -239,9 +281,6 @@
         location.href = 'dashboard.html';
     });
 
-    /*$('#view').on('click', function(){
-        location.href = 'repo-local.html';
-    });*/
     </script>
 </body>
 
