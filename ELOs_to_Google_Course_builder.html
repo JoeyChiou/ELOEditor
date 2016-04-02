@@ -76,11 +76,11 @@
             <!-- Content Header (Page header) -->
             <section class="content-header">
                 <h1>
-                    Convert course of ELOs to Course Builder
+                    Convert course of ELOs to Google Course Builder
                 </h1>
                 <ol class="breadcrumb">
                     <li><a href="dashboard.html"><i class="fa fa-dashboard"></i>Main</a></li>
-                    <li class="active">Convert course of ELOs to Course Builder</li>
+                    <li class="active">Convert course of ELOs to Google Course Builder</li>
                 </ol>
             </section>
 
@@ -91,7 +91,7 @@
                         <div class="form-group">
                             <label for="importTerms">Import your course of ELOs:</label>
                             <br>
-                            <button id="buttonImport" class="btn btn-primary" onclick="$('#fileImportDialog').click();"><i class="fa fa-folder-open"></i>Import course of ELOs</button>
+                            <button id="buttonImport" class="btn btn-primary active" onclick="$('#fileImportDialog').click();"><i class="fa fa-folder-open"></i>Import course of ELOs</button>
                             <input style="display:none;" id="fileImportDialog" type="file" nwdirectory />
                             <!--nwdirectory will return the path of directory -->
                             
@@ -127,12 +127,12 @@
                         <!--/.box -->
 
                         <br/>
-                        <button type="button" id="convert" class="btn bg-olive">
-                            <i class="fa fa-exchange"></i>
+                        <button type="button" id="convert" class="btn btn-primary active">
+                            <i class="glyphicon glyphicon-transfer"></i>
                             Convert
                         </button>
-                        <button type="button" id="skip" class="btn bg-gray">
-                            <i class="fa fa-sign-out"></i>
+                        <button type="button" id="skip" class="btn btn-info active">
+                            <i class="glyphicon glyphicon-log-out"></i>
                             Skip
                         </button>
                         <!-- <button type="button" id="view" class="btn btn-info">
