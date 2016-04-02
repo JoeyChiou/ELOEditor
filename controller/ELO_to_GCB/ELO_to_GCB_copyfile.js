@@ -31,21 +31,43 @@ function gcbmkdirectory(callback){						// make directory
 	var file = y.files[0];
 	var new_file_name = file.name.replace(/ELO/, "");
 	var gcb_path = file.path.replace(file.name, "") + "GCB" + new_file_name.replace(/ /g, "_");
+	var message = "";
 
 	console.log("Going to create GCB file");
 
-	fs.mkdirSync(gcb_path , function(err){
-		if(err) throw err;
-	})
-	gcbcreatedir("/files");
-	gcbcreatedir("/models");
-	gcbcreatedir("/files/assets");
-	gcbcreatedir("/files/data");
-	gcbcreatedir("/files/views");
-	gcbcreatedir("/files/assets/css");
-	gcbcreatedir("/files/assets/html");
-	gcbcreatedir("/files/assets/img");
-	(callback && typeof(callback) === "function") && callback();
+	if("files" in y){
+		if(y.files.length == 0){
+			message = "Select an ELO file.";
+		}
+		else{
+			if("name" in file){
+				message += "You selected a file : " + file.name + "<br>";
+			}
+
+			fs.mkdirSync(gcb_path , function(err){
+				if(err) throw err;
+			})
+			gcbcreatedir("/files");
+			gcbcreatedir("/models");
+			gcbcreatedir("/files/assets");
+			gcbcreatedir("/files/data");
+			gcbcreatedir("/files/views");
+			gcbcreatedir("/files/assets/css");
+			gcbcreatedir("/files/assets/html");
+			gcbcreatedir("/files/assets/img");
+			(callback && typeof(callback) === "function") && callback();
+		}
+	}
+	else{
+		if(y.value = ""){
+			message += "Please select a GCB file";
+		}
+		else{
+			message += "The files property is not supported by your browerser!";
+		}
+	}
+	
+	document.getElementById("demo").innerHTML = message;
 };
 
 
