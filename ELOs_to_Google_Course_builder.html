@@ -6,7 +6,7 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>ELO Editor | Course builder to ELOs</title>
+	<title>ELO Editor | ELOs to Google_Course_builder</title>
 	<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- bootstrap 3.3.4 -->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -79,7 +79,7 @@
                     Convert course of ELOs to Google Course Builder
                 </h1>
                 <ol class="breadcrumb">
-                    <li><a href="dashboard.html"><i class="fa fa-dashboard"></i>Main</a></li>
+                    <li><a href="dashboard.html"><i class="glyphicon glyphicon-home"></i>Home</a></li>
                     <li class="active">Convert course of ELOs to Google Course Builder</li>
                 </ol>
             </section>
@@ -94,6 +94,13 @@
                             <button id="buttonImport" class="btn btn-primary active" onclick="$('#fileImportDialog').click();"><i class="fa fa-folder-open"></i>Import course of ELOs</button>
                             <input style="display:none;" id="fileImportDialog" type="file" nwdirectory />
                             <!--nwdirectory will return the path of directory -->
+                            
+                            <div class="pull-right">
+                                <button type="button" id="skip" class="btn btn-info active">
+                                    <i class="glyphicon glyphicon-home"></i>
+                                    Home
+                                </button>
+                            </div>
                             
                             <div id="path">
                             </div>
@@ -131,14 +138,6 @@
                             <i class="glyphicon glyphicon-transfer"></i>
                             Convert
                         </button>
-                        <button type="button" id="skip" class="btn btn-info active">
-                            <i class="glyphicon glyphicon-log-out"></i>
-                            Skip
-                        </button>
-                        <!-- <button type="button" id="view" class="btn btn-info">
-                            <i class="fa fa-eye"></i>
-                            View
-                        </button> -->
                         <br>
                         <!-- test to read file -->
                         <br>
@@ -209,6 +208,7 @@
 
     //Flow Control = CPS + Maintain function execution state
     $("#convert").on('click', function() {
+        
         function serial(fn, r, cb) {
             var count = 0;
             next(r);

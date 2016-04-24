@@ -6,7 +6,7 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>ELO Editor | Course builder to ELOs</title>
+	<title>ELO Editor | An Unit of Course builder to ELOs</title>
 	<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- bootstrap 3.3.4 -->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -79,7 +79,7 @@
                     Convert Units of Course Builder to ELOs
                 </h1>
                 <ol class="breadcrumb">
-                    <li><a href="dashboard.html"><i class="fa fa-dashboard"></i>Main</a></li>
+                    <li><a href="dashboard.html"><i class="glyphicon glyphicon-home"></i>Home</a></li>
                     <li class="active">Convert Units of Course Builder to ELOs</li>
                 </ol>
             </section>
@@ -95,6 +95,13 @@
                             <input style="display:none;" id="fileImportDialog" type="file" nwdirectory />
                             <!--nwdirectory will return the path of directory -->
                             
+                            <div class="pull-right">
+                                <button type="button" id="skip" class="btn btn-info active">
+                                    <i class="glyphicon glyphicon-home"></i>
+                                    Home
+                                </button>
+                            </div>
+
                             <div id="path">
                             </div>
 
@@ -130,10 +137,6 @@
                         <button type="button" id="convert" class="btn btn-primary active">
                             <i class="glyphicon glyphicon-transfer"></i>
                             Convert
-                        </button>
-                        <button type="button" id="skip" class="btn btn-info active">
-                            <i class="glyphicon glyphicon-log-out"></i>
-                            Skip
                         </button>
                         <button type="button" id="view" class="btn btn-info active">
                             <i class="glyphicon glyphicon-eye-open"></i>
@@ -187,6 +190,7 @@
     <script type="text/javascript" src="controller/Units_of_GCB_to_ELO/Units_of_GCB_to_ELO_Function.js"></script>
     <script type="text/javascript" src="controller/Units_of_GCB_to_ELO/Units_copyfile.js"></script>
     <script type="text/javascript" src="controller/Units_of_GCB_to_ELO/Units_modify_GCB_html.js"></script>
+    <script type="text/javascript" src="controller/Units_of_GCB_to_ELO/Units_edit_elo_metadata.js"></script>
     <script type="text/javascript">
     $('#navigation').load('widgets/navigation.html');
 
@@ -213,6 +217,7 @@
 
     //Flow Control = CPS + Maintain function execution state
     $("#convert").on('click', function() {
+        
         function serial(fn, r, cb) {
             var count = 0;
             next(r);
@@ -252,6 +257,12 @@
                     modify_html();
                     next(2*r);
                 }, 300);
+            },
+            function (r, next){
+                setTimeout(function(){ 
+                    exe_edit_metadata();
+                    next(2*r);
+                }, 400);
             }], 1, function(r){console.log(r)});
     });
 
@@ -269,6 +280,11 @@
     $('#view').on('click', function(){
         location.href = 'dashboard.html';
     });
+    
+    $('#edit_metadata').on('click', function(){
+        location.href = 'GCB_to_ELO_metadata.html';
+    });
+
     </script>
 </body>
 

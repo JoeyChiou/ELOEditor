@@ -79,7 +79,7 @@
                     Convert course of Course Builder to ELOs
                 </h1>
                 <ol class="breadcrumb">
-                    <li><a href="dashboard.html"><i class="fa fa-dashboard"></i>Main</a></li>
+                    <li><a href="dashboard.html"><i class="glyphicon glyphicon-home"></i>Home</a></li>
                     <li class="active">Convert course of Course Builder to ELOs</li>
                 </ol>
             </section>
@@ -94,6 +94,13 @@
                             <button id="buttonImport" class="btn btn-primary active" onclick="$('#fileImportDialog').click();"><i class="fa fa-folder-open"></i> Import course of GCB</button>
                             <input style="display:none;" id="fileImportDialog" type="file" nwdirectory />
                             <!-- nwdirectory will return the path of directory -->
+                            
+                            <div class="pull-right">
+                                <button type="button" id="skip" class="btn btn-info active">
+                                    <i class="glyphicon glyphicon-home"></i>
+                                    Home
+                                </button>
+                            </div>
                             
                             <div id="path">
                             </div>
@@ -130,10 +137,6 @@
                         <button type="button" id="convert" class="btn btn-primary active">
                             <i class="glyphicon glyphicon-transfer"></i>
                             Convert
-                        </button>
-                        <button type="button" id="skip" class="btn btn-info active">
-                            <i class="glyphicon glyphicon-log-out"></i>
-                            Skip
                         </button>
                         <button type="button" id="view" class="btn btn-info active">
                             <i class="glyphicon glyphicon-eye-open"></i>
@@ -187,6 +190,7 @@
     <script type="text/javascript" src="controller/GCB_to_ELO/GCB_to_ELO_Function.js"></script>
     <script type="text/javascript" src="controller/GCB_to_ELO/copyfile.js"></script>
     <script type="text/javascript" src="controller/GCB_to_ELO/modify_GCB_html.js"></script>
+    <script type="text/javascript" src="controller/GCB_to_ELO/edit_elo_metadata.js"></script>
     <script type="text/javascript">
     $('#navigation').load('widgets/navigation.html');
 
@@ -213,6 +217,7 @@
 
     //Flow Control = CPS + Maintain function execution state
     $("#convert").on('click', function() {
+        
         function serial(fn, r, cb) {
             var count = 0;
             next(r);
@@ -265,6 +270,12 @@
                     modify_html();
                     next(2*r);
                 }, 500);
+            },
+            function (r, next){
+                setTimeout(function(){ 
+                    edit_metadata();
+                    next(2*r);
+                }, 600);
             }], 1, function(r){console.log(r)});
     });
 
@@ -281,6 +292,10 @@
 
     $('#view').on('click', function(){
         location.href = 'dashboard.html';
+    });
+
+    $('#edit_metadata').on('click', function(){
+        location.href = 'GCB_to_ELO_metadata.html';
     });
 
     </script>
