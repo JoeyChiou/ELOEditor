@@ -85,7 +85,7 @@
                 </div>
                 <!-- sidebar menu: : style can be found in sidebar.less -->
                 <ul class="sidebar-menu">
-                    <li class="active treeview">
+                    <li class="treeview">
                         <a href="#" onclick="showDiv('general')">
                             <i class="glyphicon glyphicon-list"></i> <span>General</span> <i class="fa fa-angle-left pull-right"></i>
                         </a>
@@ -216,6 +216,7 @@
                     <span><i class="fa fa-folder-open"></i> Choose file</span>
                     <input type="file" id="fileImport" class="import" onchange="importmetadata(event)"/>
                 </div>
+                <p id ="demo"></p>
                 <div class="pull-right">
                     <button type="button" id="skip" class="btn btn-info active">
                         <i class="glyphicon glyphicon-home"></i>
@@ -478,7 +479,7 @@
                                 </div><!-- /.box-body -->
 
                                 <div class="box-footer">
-                                    <button type="submit" class="btn btn-primary" onclick="saveFunction()">Save</button>
+                                    <button type="button" class="btn btn-primary" onclick="saveFunction()">Save</button>
                                     <button type="reset" class="btn btn-primary" value="Reset">Reset</button>
                                 </div>
                             </form>
@@ -577,7 +578,7 @@
                                 </div><!-- /.box-body -->
 
                                 <div class="box-footer">
-                                    <button type="submit" class="btn btn-primary" onclick="saveFunction()">Save</button>
+                                    <button type="button" class="btn btn-primary" onclick="saveFunction()">Save</button>
                                     <button type="reset" class="btn btn-primary" value="Reset">Reset</button>
                                 </div>
                             </form>
@@ -753,7 +754,7 @@
                                 </div><!-- /.box-body -->
 
                                 <div class="box-footer">
-                                    <button type="submit" class="btn btn-primary" onclick="saveFunction()">Save</button>
+                                    <button type="button" class="btn btn-primary" onclick="saveFunction()">Save</button>
                                     <button type="reset" class="btn btn-primary" value="Reset">Reset</button>
                                 </div>
                             </form>
@@ -988,7 +989,7 @@
                                 </div><!-- /.box-body -->
 
                                 <div class="box-footer">
-                                    <button type="submit" class="btn btn-primary" onclick="saveFunction()">Save</button>
+                                    <button type="button" class="btn btn-primary" onclick="saveFunction()">Save</button>
                                     <button type="reset" class="btn btn-primary" value="Reset">Reset</button>
                                 </div>
                             </form>
@@ -1055,7 +1056,7 @@
                                 </div><!-- /.box-body -->
 
                                 <div class="box-footer">
-                                    <button type="submit" class="btn btn-primary" onclick="saveFunction()">Save</button>
+                                    <button type="button" class="btn btn-primary" onclick="saveFunction()">Save</button>
                                     <button type="reset" class="btn btn-primary" value="Reset">Reset</button>
                                 </div>
                             </form>
@@ -1127,7 +1128,7 @@
                                 </div><!-- /.box-body -->
 
                                 <div class="box-footer">
-                                    <button type="submit" class="btn btn-primary" onclick="saveFunction()">Save</button>
+                                    <button type="button" class="btn btn-primary" onclick="saveFunction()">Save</button>
                                     <button type="reset" class="btn btn-primary" value="Reset">Reset</button>
                                 </div>
                             </form>
@@ -1186,7 +1187,7 @@
                                 </div><!-- /.box-body -->
 
                                 <div class="box-footer">
-                                    <button type="submit" class="btn btn-primary" onclick="saveFunction()">Save</button>
+                                    <button type="button" class="btn btn-primary" onclick="saveFunction()">Save</button>
                                     <button type="reset" class="btn btn-primary" value="Reset">Reset</button>
                                 </div>
                             </form>
@@ -1285,7 +1286,7 @@
                                 </div><!-- /.box-body -->
 
                                 <div class="box-footer">
-                                    <button type="submit" class="btn btn-primary" onclick="saveFunction()">Save</button>
+                                    <button type="button" class="btn btn-primary" onclick="saveFunction()">Save</button>
                                     <button type="reset" class="btn btn-primary" value="Reset">Reset</button>
                                 </div>
                             </form>
@@ -1328,6 +1329,7 @@
         var fs = require("fs");
         var x = document.getElementById("fileImport");
         var file = x.files[0];
+        var message = "";
 
         if('files' in x){
             if (x.files.length == 0) {
@@ -1337,7 +1339,9 @@
                 var data = fs.readFileSync(file.path).toString();
                 parser = new DOMParser;
                 xmlDoc = parser.parseFromString(data,"text/xml");
-
+                if("name" in file){
+                    message += "You selected a file : " + file.path + "<br>";
+                }
 
                 general = xmlDoc.getElementsByTagName("general")[0];
                 //[0] means itself
@@ -1894,9 +1898,10 @@
                 console.log("The files property is not supported by your browser!");
             }
         }
+        document.getElementById("demo").innerHTML = message;
     };
 
-    $(function() {
+    $(document).ready(function(){
         $('[data-toggle="popover"]').popover();
         hideDiv();
     });
@@ -1920,10 +1925,6 @@
 
     $('#skip').on('click', function() {
         location.href = 'dashboard.html';
-    });
-
-    $(function () {
-        $('[data-toggle="popover"]').popover()
     });
 
     </script>

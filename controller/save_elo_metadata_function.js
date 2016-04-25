@@ -4,7 +4,7 @@ function saveFunction(){
 	var x = document.getElementById("fileImport");
     var file = x.files[0];  
 
-    if('files' in x){
+    if("files" in x){
         if (x.files.length == 0) {
         	alert("Select one or more files.");
         }
@@ -23,15 +23,15 @@ function saveFunction(){
 
         	//lifecycle
         	var lifecycle_version_value1 = $("input[id=lifecycle-version]").val();
-        	var lifecycle_status_value1 = $("#lifecycle-status").find("selected").text();
-        	var lifecycle_role_value1 = $("#lifecycle-contribute-role").find("selected").text();
+        	var lifecycle_status_value1 = $("#lifecycle-status").find(":selected").text();
+        	var lifecycle_role_value1 = $("#lifecycle-contribute-role").find(":selected").text();
         	var lifecycle_entity1 = $("#lifecycle-contribute-entity").val();
         	var lifecycle_date1 = $("#lifecycle-contribute-date").val();
 
         	//metametadata
         	var metametadata_catalog1 = $("#meta-metadata-identifier-catalog").val();
         	var metametadata_entry1 = $("#meta-metadata-identifier-entry").val();
-        	var metametadata_role_value1 = $("#metametadata-contribute-role").find("selected").text();
+        	var metametadata_role_value1 = $("#metametadata-contribute-role").find(":selected").text();
         	var metametadata_entity1 = $("#metametadata-contribute-entity").val();
         	var metametadata_date1 = $("#metametadata-contribute-date").val();
         	var metametadata_schema1 = $("input[id=meta-metadata-metadataSchema]").val();
@@ -42,8 +42,8 @@ function saveFunction(){
         	var technical_size1 = $("input[id=technical-size]").val();
         	var technical_location1 = $("input[id=technical-location]").val();
         	var technical_requirement1 = $("input[id=technical-requirement]").val();
-        	var technical_type1 = $("#technical-orComposite-type").find("selected").text();
-        	var technical_name1 = $("#technical-orComposite-name").find("selected").text();
+        	var technical_type1 = $("#technical-orComposite-type").find(":selected").text();
+        	var technical_name1 = $("#technical-orComposite-name").find(":selected").text();
         	var technical_minversion1 = $("input[id=technical-orComposite-minimumVersion]").val();
         	var technical_maxversion1 = $("input[id=technical-orComposite-maximumVersion]").val();
         	var technical_installationremark1 = $("input[id=technical-installationRemarks]").val();
@@ -51,7 +51,7 @@ function saveFunction(){
         	var technical_duration1 = $("input[id=technical-duration]").val();
 
         	//educational
-        	var interactivitytype_value1 = $("#educational-interactivityType").find("selected").text();
+        	var interactivitytype_value1 = $("#educational-interactivityType").find(":selected").text();
         	var learningresourcetype_value1 = $("#educational-learningResourceType").find(":selected").text();
         	var interactivityLevel_value1 = $("#educational-interactivityLevel").find(":selected").text();
         	var semanticDensity_value1 = $("#educational-semanticDensity").find(":selected").text();
@@ -143,7 +143,7 @@ function saveFunction(){
         	fs.writeFile(file.path, 
     		//general
 			"<ELOMetadata>\n  <general>\n    <identifier>\n      <catalog>" + general_catalog_value1 + "</catalog>\n" + 
-			"      <entry>"+general_entry_value1+"</entry>\n    </identifier>\n    <title>\n      " + 
+			"      <entry>" + general_entry_value1 + "</entry>\n    </identifier>\n    <title>\n      " + 
 			"<string language=\"en\">" + general_title_value1 + "</string>\n    </title>\n    <language>" + 
 			general_language_value1 +"</language>\n    <description>\n      <string language=\"en\">" + 
 			general_description_value1 + "</string>\n    </description>\n" + 
@@ -219,15 +219,16 @@ function saveFunction(){
 			"  <classification>\n    <purpose>\n      <source>LOMv1.0</source>\n      <value>" + 
 			classification_purpose_value1 + "</value>\n    </purpose>\n" + 
 			"    <taxonPath>\n      <source>\n        <string language=\"en\">" + classification_source1 + 
-			"</string>\n      </source>\n      <taxon>\n        <id>" + classification_id1 + "</id>\n        <entry>\n          <string language=\"en\">" + classification_entry1 + "</string>\n        " + 
+			"</string>\n      </source>\n      <taxon>\n        <id>" + classification_id1 + 
+            "</id>\n        <entry>\n          <string language=\"en\">" + classification_entry1 + "</string>\n        " + 
 			"</entry>\n      </taxon>\n    </taxonPath>\n    <description>\n      <string language=\"en\">" + 
 			classification_description1 + "</string>\n    </description>\n    <keyword>\n      <string language=\"en\">" + 
 			classification_keyword1 + "</string>\n    </keyword>\n  </classification>\n</ELOMetadata>",  function(err) {
 			   if (err) {
 			       return console.error(err);
 			   }
-			   alert("Complete saving!");
 			})
+            alert("Complete saving!");
 		}
     }
 
