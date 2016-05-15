@@ -249,33 +249,45 @@
             },
             function (r, next){
                 setTimeout(function(){ 
-                    open_manifest_file();
+                    content_of_elo_aggregation();
                     next(2*r);
                 }, 200);
             },
             function (r, next){
                 setTimeout(function(){ 
-                    create_static_file();
+                    last_line_of_elo_aggregation();
                     next(2*r);
                 }, 300);
             },
             function (r, next){
                 setTimeout(function(){ 
-                    mycopyfile();
+                    open_manifest_file();
                     next(2*r);
                 }, 400);
             },
             function (r, next){
                 setTimeout(function(){ 
-                    modify_html();
+                    create_static_file();
                     next(2*r);
                 }, 500);
             },
             function (r, next){
                 setTimeout(function(){ 
-                    edit_metadata();
+                    mycopyfile();
                     next(2*r);
                 }, 600);
+            },
+            function (r, next){
+                setTimeout(function(){ 
+                    modify_html();
+                    next(2*r);
+                }, 700);
+            },
+            function (r, next){
+                setTimeout(function(){ 
+                    edit_metadata();
+                    next(2*r);
+                }, 800);
             }], 1, function(r){console.log(r)});
     });
 
