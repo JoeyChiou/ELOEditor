@@ -242,19 +242,19 @@ function copy_html_file(){
 		for(var j = 0; j < resoursefile.length; j++){
 
 			var extIndex = resoursefile[j].lastIndexOf(".");
-				if(extIndex != -1){
-   					var name = resoursefile[j].substr(0, extIndex);
- 					var ext = resoursefile[j].substr(extIndex+1, resoursefile[j].length); 
-				}
-				console.log(ext);
+			if(extIndex != -1){
+					var name = resoursefile[j].substr(0, extIndex);
+					var ext = resoursefile[j].substr(extIndex+1, resoursefile[j].length); 
+			}
+			console.log(ext);
 
-				if(ext == "html"){
-					resoure_path[j] = elo_course_path + "/" + cnfile[i] + "/" + resoursefile[j];
-					console.log(resoure_path[j]);
+			if(ext == "html"){
+				resoure_path[j] = elo_course_path + "/" + cnfile[i] + "/" + resoursefile[j];
+				console.log(resoure_path[j]);
 
-					fs.createReadStream(resoure_path[j])
-					.pipe(fs.createWriteStream(GCB_path + "/files/assets/html/" + resoursefile[j]));
-				}
+				fs.createReadStream(resoure_path[j])
+				.pipe(fs.createWriteStream(GCB_path + "/files/assets/html/" + resoursefile[j].replace(/_/g, " ")));
+			}
 		}
 	}
    	
