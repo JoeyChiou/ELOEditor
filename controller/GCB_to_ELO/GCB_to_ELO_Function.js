@@ -48,8 +48,6 @@ function open_aggregation_file(){
 							}
 
 							var count = 0;
-							var count1 = 0;
-							var count2 = 0;
 							var count3 = 0;
 							var urlnamearr = [];
 
@@ -65,7 +63,7 @@ function open_aggregation_file(){
 									count += 1;
 									var myunit = [];
 									myunit[count] = obj.units[j].title;
-									console.log(myunit);
+									//console.log(myunit);
 
 									for(var i = 0; i < obj.lessons.length; i++){
 										if((obj.lessons[i].auto_index == true)&&
@@ -98,40 +96,10 @@ function open_aggregation_file(){
 								if(err) throw err;
 							})
 
-							for(var j = 0; j < obj.units.length; j++){
-								if(obj.units[j].type == "U"){
-									count1 += 1;
-									for(var i = 0; i < obj.lessons.length; i++){			//for lessons & fewer than its length 
-										if((obj.lessons[i].auto_index == true)&&
-											(obj.units[j].unit_id == obj.lessons[i].unit_id)){
-										
-											count2 += 1;
-											var mynotes = obj.lessons[i].notes.split("/");
-											mynotes[2] = mynotes[2].replace(/ /g, "_");		//change path to correct
-											mynotes[2] = mynotes[2].replace(/.html/, "");
-											console.log(mynotes[2]);
-
-											fs.appendFile(elo_course_path + "/elo_aggregation.xml",
-											"\t\t<content id=\"tn" + pad(count2,4) + "\" tid=\"cn" + pad(count1,4) + 
-											"\" type=\"tn\" url_name=\"" + mynotes[2] + "\"/>\n", function(err){
-
-												if(err) throw err;
-											})
-										}
-									}
-								}
-							}
-
-							fs.appendFile(elo_course_path + "/elo_aggregation.xml",
-							"\t</contents>\n</manifest>",function(err){
-								if(err) throw err;
-							})
-
 							fs.close(fd, function(){							//close aggregation.xml file
   								console.log('Done');
 							})
 						})
-
 					}
 				})
 
@@ -210,6 +178,84 @@ function pad(n, width, z){
 	z = z || '0';
 	n = n + '';
 	return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;    //if statement & to be string
+};
+
+
+function content_of_elo_aggregation(){
+	var x = document.getElementById("fileImportDialog");
+	var fs = require("fs");
+	var buf = new Buffer(1000000);											// buffer like an array (1MB)
+	var file = x.files[0];													// x.files[0] for the first file 
+	var elo_course_path = file.path.replace(file.name, "") + "ELO_" + file.name.replace(/ /g, "_");
+	var coursejsonpath = file.path + "/files/data/course.json";				// To find where is course.json file
+
+	fs.open(coursejsonpath, "r", function(err, fd){
+		if(err){
+			return console.error(err);
+		}
+		console.log("course.json opened successfully!");
+		console.log("Going to read the course.json file");
+		fs.read(fd, buf, 0, buf.length, 0, function(err, bytes){			//read course.json file
+			if(err){
+				console.log(err);
+			}
+			else if(bytes > 0){
+				var content = buf.slice(0, bytes).toString();    			//read all file and becoming string
+				var obj = JSON.parse(content);								//convert to javascript (object)
+
+				var count1 = 0;
+				var count2 = 0;
+
+				for(var j = 0; j < obj.units.length; j++){
+					if(obj.units[j].type == "U"){
+						count1 += 1;
+						for(var i = 0; i < obj.lessons.length; i++){			//for lessons & fewer than its length 
+							if((obj.lessons[i].auto_index == true)&&
+								(obj.units[j].unit_id == obj.lessons[i].unit_id)){
+							
+								count2 += 1;
+								var mynotes = obj.lessons[i].notes.split("/");		//note
+								var myvideo = obj.lessons[i].video;					//video
+								mynotes[2] = mynotes[2].replace(/ /g, "_");			//change path to correct
+								mynotes[2] = mynotes[2].replace(/.html/, "");
+								console.log(mynotes[2]);
+
+								fs.appendFile(elo_course_path + "/elo_aggregation.xml",
+								"\t\t<content id=\"tn" + pad(count2,4) + "\" tid=\"cn" + pad(count1,4) + 
+								"\" type=\"tn\" video=\"" +  myvideo + "\" url_name=\"" + 
+								mynotes[2] + "\"/>\n", function(err){
+
+									if(err) throw err;
+
+								})
+							}
+						}
+					}
+				}
+			}
+		})
+
+		fs.close(fd, function(err){										//close course.json file
+			if(err){
+				console.log(err);
+			}
+			console.log("GCB File closed successfully !");
+		})
+	})
+};
+
+
+function last_line_of_elo_aggregation(){
+	var x = document.getElementById("fileImportDialog");
+	var message = "";
+	var fs = require("fs");
+	var file = x.files[0];											// x.files[0] for the first file 
+	var elo_course_path = file.path.replace(file.name, "") + "ELO_" + file.name.replace(/ /g, "_");
+
+	fs.appendFile(elo_course_path + "/elo_aggregation.xml",
+		"\t</contents>\n</manifest>",function(err){
+			if(err) throw err;
+	})
 };
 
 
