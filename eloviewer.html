@@ -147,8 +147,8 @@
                     ELO Viewer
                 </h1>
                 <ol class="breadcrumb">
-                    <li><a href="dashboard.html"><i class="fa fa-dashboard"></i>Main</a></li>
-                    <li class="active">Search</li>
+                    <li><a href="dashboard.html"><i class="glyphicon glyphicon-home"></i>Home</a></li>
+                    <li class="active">ELO Viewer</li>
                 </ol>
             </section>
             <!-- Main content -->
@@ -158,13 +158,20 @@
                         <div class="box box-info">
                             <div class="box-header with-border">
                                 <input style="display:none;" id="saveELODialog" type="file" nwdirectory/>
-                                <h3 class="box-title">ELO Preview</h3>
+                                <h3 class="box-title"><strong>ELO Preview</strong></h3>
+                                <i class="glyphicon glyphicon-file"></i>
                                 <button type="button" class="btn btn-danger" onclick="saveELO('newELO')">Save</button>
+                                <button type="button" class="btn btn-primary" style="float: right;" data-toggle="collapse" data-target="#myiframe1">collapse</button>
                                 <!-- -->
                             </div>
                             <!-- /.box-header -->
                             <div class="box-body">
-                                <iframe name="iframe01" width="100%" height="500" src="" frameborder="0" seamless>
+                                <iframe id="myiframe1" name="iframe01" width="100%" height="500" src="" frameborder="0" seamless>
+                                </iframe>
+                                <h3 class="box-title" style="display:inline"><strong>Video</strong></h3>
+                                <i class="glyphicon glyphicon-film"></i>
+                                <button type="button" class="btn btn-primary" style="float: right;" data-toggle="collapse" data-target="#myiframe2">collapse</button>
+                                <iframe id="myiframe2" name="iframe02" width="100%" height="500" src="" frameborder="0" seamless class="collapse">
                                 </iframe>
                             </div>
                         </div>
