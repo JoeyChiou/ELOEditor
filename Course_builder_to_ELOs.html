@@ -79,7 +79,7 @@
                     Convert course of Course Builder to ELOs
                 </h1>
                 <ol class="breadcrumb">
-                    <li><a href="dashboard.html"><i class="fa fa-dashboard"></i>Main</a></li>
+                    <li><a href="dashboard.html"><i class="glyphicon glyphicon-home"></i>Home</a></li>
                     <li class="active">Convert course of Course Builder to ELOs</li>
                 </ol>
             </section>
@@ -91,9 +91,16 @@
                         <div class="form-group">
                             <label for="importTerms">Import your course of Course Builder:</label>
                             <br>
-                            <button id="buttonImport" class="btn btn-primary" onclick="$('#fileImportDialog').click();"><i class="fa fa-folder-open"></i> Import course of GCB</button>
+                            <button id="buttonImport" class="btn btn-primary active" onclick="$('#fileImportDialog').click();"><i class="fa fa-folder-open"></i> Import course of GCB</button>
                             <input style="display:none;" id="fileImportDialog" type="file" nwdirectory />
                             <!-- nwdirectory will return the path of directory -->
+                            
+                            <div class="pull-right">
+                                <button type="button" id="skip" class="btn btn-info active">
+                                    <i class="glyphicon glyphicon-home"></i>
+                                    Home
+                                </button>
+                            </div>
                             
                             <div id="path">
                             </div>
@@ -127,17 +134,17 @@
                         <!--/.box -->
 
                         <br/>
-                        <button type="button" id="convert" class="btn bg-olive">
-                            <i class="fa fa-exchange"></i>
+                        <button type="button" id="convert" class="btn btn-primary active">
+                            <i class="glyphicon glyphicon-transfer"></i>
                             Convert
                         </button>
-                        <button type="button" id="skip" class="btn bg-gray">
-                            <i class="fa fa-sign-out"></i>
-                            Skip
-                        </button>
-                        <button type="button" id="view" class="btn btn-info">
-                            <i class="fa fa-eye"></i>
+                        <button type="button" id="view" class="btn btn-info active">
+                            <i class="glyphicon glyphicon-eye-open"></i>
                             View
+                        </button>
+                        <button type="button" id="edit_metadata" class="btn btn-info active">
+                            <i class="glyphicon glyphicon-edit"></i>
+                            Edit Metadata
                         </button>
                         <br>
                         <!-- test to read file -->
@@ -183,6 +190,7 @@
     <script type="text/javascript" src="controller/GCB_to_ELO/GCB_to_ELO_Function.js"></script>
     <script type="text/javascript" src="controller/GCB_to_ELO/copyfile.js"></script>
     <script type="text/javascript" src="controller/GCB_to_ELO/modify_GCB_html.js"></script>
+    <script type="text/javascript" src="controller/GCB_to_ELO/edit_elo_metadata.js"></script>
     <script type="text/javascript">
     $('#navigation').load('widgets/navigation.html');
 
@@ -209,6 +217,7 @@
 
     //Flow Control = CPS + Maintain function execution state
     $("#convert").on('click', function() {
+        
         function serial(fn, r, cb) {
             var count = 0;
             next(r);
@@ -224,10 +233,11 @@
         };
 
         //Using next function for callback
+        //The purpose of setTimeout is to continue to count the variable "count"
         serial([
             function (r, next){
                 setTimeout(function(){ 
-                    mkdirectory();
+                    mkdirectory();                      //mkdirectory() will execute after count++
                     next(2*r);
                 }, 50);
             },
@@ -239,27 +249,45 @@
             },
             function (r, next){
                 setTimeout(function(){ 
-                    open_manifest_file();
+                    content_of_elo_aggregation();
                     next(2*r);
                 }, 200);
             },
             function (r, next){
                 setTimeout(function(){ 
-                    create_static_file();
+                    last_line_of_elo_aggregation();
                     next(2*r);
                 }, 300);
             },
             function (r, next){
                 setTimeout(function(){ 
-                    mycopyfile();
+                    open_manifest_file();
                     next(2*r);
                 }, 400);
             },
             function (r, next){
                 setTimeout(function(){ 
-                    modify_html();
+                    create_static_file();
                     next(2*r);
                 }, 500);
+            },
+            function (r, next){
+                setTimeout(function(){ 
+                    mycopyfile();
+                    next(2*r);
+                }, 600);
+            },
+            function (r, next){
+                setTimeout(function(){ 
+                    modify_html();
+                    next(2*r);
+                }, 700);
+            },
+            function (r, next){
+                setTimeout(function(){ 
+                    edit_metadata();
+                    next(2*r);
+                }, 800);
             }], 1, function(r){console.log(r)});
     });
 
@@ -277,6 +305,11 @@
     $('#view').on('click', function(){
         location.href = 'dashboard.html';
     });
+
+    $('#edit_metadata').on('click', function(){
+        location.href = 'GCB_to_ELO_metadata.html';
+    });
+
     </script>
 </body>
 

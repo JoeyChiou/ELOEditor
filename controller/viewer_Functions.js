@@ -71,10 +71,11 @@ function viewELO(elopath) {
                         contentnode.TID = window.$("content")[j].getAttribute("tid");
                         contentnode.TYPE = window.$("content")[j].getAttribute("type");
                         contentnode.URL_NAME = window.$("content")[j].getAttribute("url_name");
+                        contentnode.VIDEO = window.$("content")[j].getAttribute("video");
 
                         tnArray[i] = contentnode;
 
-                        $("#ul_" + containernode.ID).append("<li class='list-group-item list-group-item-danger' onclick=iframe01.location.href='" + path + window.$("content")[j].getAttribute("tid") + "/" + contentnode.URL_NAME + ".html'>" + window.$("content")[j].getAttribute("url_name").toString() + "</li>");
+                        $("#ul_" + containernode.ID).append("<li class='list-group-item list-group-item-danger' onclick=\"iframe01.location.href='" + path + window.$("content")[j].getAttribute("tid") + "/" + contentnode.URL_NAME + ".html'; iframe02.location.href=\'https://www.youtube.com/embed/" + contentnode.VIDEO + "\'\">" + window.$("content")[j].getAttribute("url_name").toString() + "</li>");
                     }
                 }
             }
@@ -215,6 +216,12 @@ function ContentNode(ID, TID, TYPE, URL_NAME) {
     this.TYPE = TYPE;
     this.URL_NAME = URL_NAME;
 }
+
+function pad(n, width, z){
+    z = z || '0';
+    n = n + '';
+    return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;    //if statement & to be string
+};
 
 // Global Varible and Global Functions
 var gui = require("nw.gui");

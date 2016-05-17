@@ -105,13 +105,15 @@ function Units_open_aggregation_file(myunitfile, k){
 										
 											count2 += 1;
 											var mynotes = obj.lessons[i].notes.split("/");
+											var myvideo = obj.lessons[i].video;
 											mynotes[2] = mynotes[2].replace(/ /g, "_");		// change path to correct
 											mynotes[2] = mynotes[2].replace(/.html/, "");
 											console.log(mynotes[2]);
+											console.log(myvideo);
 
 											fs.appendFile(units_elo_path + "/" + myunitfile + "/elo_aggregation.xml",
 											"\t\t<content id=\"tn" + pad(count2,4) + "\" tid=\"cn" + pad(count1,4) + 
-											"\" type=\"tn\" url_name=\"" + mynotes[2] + "\"/>\n", function(err){
+											"\" type=\"tn\" video=\"" +  myvideo + "\" url_name=\"" + mynotes[2] + "\"/>\n", function(err){
 
 												if(err) throw err;
 											})

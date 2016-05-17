@@ -94,7 +94,7 @@ function ELO_locallist() {
 
                     $("#localELO_ul").append("<li id='localELO_li_" + eloid + "' onclick=intentView('" + encodeURI(elopath) + "') oncontextmenu=localContextMenu('" + eloid + "','" + encodeURI(title) + "','" + name + "','" + encodeURI(elopath) + "')></li>");
                     $("#localELO_li_" + eloid).append("<img src='assets/img/book-64.png' alt='User Image'></img>");
-                    $("#localELO_li_" + eloid).append("<a class='users-list-date'>" + title + "</a>");
+                    $("#localELO_li_" + eloid).append("<a class='users-list-date' style='word-wrap:break-word'>" + title + "</a>");
                     $("#localELO_li_" + eloid).append("<span class='users-list-date'>" + name + "</span>");
                 }
             }
